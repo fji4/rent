@@ -14,3 +14,5 @@ Make sure you put your own database URI into `config/index.json`.
 `sudo npm install cookie-parser`
 
 `sudo npm install cookie-parser -g`
+## how to setup branch
+https://stackoverflow.com/questions/1519006/how-do-you-create-a-remote-git-branch
