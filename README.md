@@ -9,6 +9,8 @@ First, `npm install`. Then make sure you have two terminals open; in one, type `
 Make sure you put your own database URI into `config/index.json`.
 
 ## Start code
-sudo npm install cookie-session
-sudo npm install cookie-parser
-sudo npm install cookie-parser -g
+`sudo npm install cookie-session`
+
+`sudo npm install cookie-parser`
+
+`sudo npm install cookie-parser -g`
