@@ -16,3 +16,5 @@ Make sure you put your own database URI into `config/index.json`.
 `sudo npm install cookie-parser -g`
 ## how to setup branch
 https://stackoverflow.com/questions/1519006/how-do-you-create-a-remote-git-branch
+## google map api key
+AIzaSyDeS_Giswu2KngF138sF4-5uX2Y8euZDKs
