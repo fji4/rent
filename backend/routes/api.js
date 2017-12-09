@@ -28,6 +28,7 @@ module.exports = function(router, passport) {
         res.status(200).json({ message: "logged out "});
     });
 
+
     return router;
 }
 
