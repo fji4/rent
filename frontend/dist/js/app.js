@@ -44035,49 +44035,254 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var Home = function (_Component) {
     _inherits(Home, _Component);
 
-    function Home() {
+    function Home(props) {
         _classCallCheck(this, Home);
 
-        return _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this, props));
+
+        _this.state = {
+            log_in: false,
+            register: false
+        };
+
+        _this.showlog = _this.showlog.bind(_this);
+        _this.closelog = _this.closelog.bind(_this);
+        _this.showregister = _this.showregister.bind(_this);
+        _this.closeregister = _this.closeregister.bind(_this);
+        return _this;
     }
 
     _createClass(Home, [{
+        key: 'showlog',
+        value: function showlog(e) {
+            console.log("show log modal");
+            e.preventDefault();
+            this.setState({ log_in: true, register: false });
+        }
+    }, {
+        key: 'closelog',
+        value: function closelog(e) {
+            console.log("close log modal");
+            e.preventDefault();
+            this.setState({ log_in: false });
+        }
+    }, {
+        key: 'showregister',
+        value: function showregister(e) {
+            console.log("show register modal");
+            e.preventDefault();
+            this.setState({ register: true, log_in: false });
+        }
+    }, {
+        key: 'closeregister',
+        value: function closeregister(e) {
+            console.log("close register modal");
+            e.preventDefault();
+            this.setState({ register: false });
+        }
+    }, {
         key: 'render',
         value: function render() {
+            console.log("start");
             return _react2.default.createElement(
                 'div',
                 { className: 'Home' },
                 _react2.default.createElement(
-                    _semanticUiReact.Card,
-                    null,
+                    'div',
+                    { className: 'bar' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'home_acc' },
+                        _react2.default.createElement(
+                            'div',
+                            null,
+                            'Home'
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { onClick: this.showlog },
+                            'Account'
+                        )
+                    ),
                     _react2.default.createElement(
                         'h1',
                         null,
-                        'Welcome to MP2!'
-                    ),
+                        'Subleasing'
+                    )
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'content' },
                     _react2.default.createElement(
-                        'span',
+                        'ul',
                         null,
                         _react2.default.createElement(
-                            _reactRouterDom.Link,
-                            { to: '/login' },
+                            'li',
+                            null,
+                            _react2.default.createElement(SubButton, { showlog: this.showlog })
+                        ),
+                        _react2.default.createElement(
+                            'li',
+                            null,
+                            _react2.default.createElement(RentButton, null)
+                        )
+                    )
+                ),
+                _react2.default.createElement(
+                    _semanticUiReact.Modal,
+                    {
+                        open: this.state.log_in,
+                        onClose: this.closelog
+                    },
+                    _react2.default.createElement(
+                        _semanticUiReact.Modal.Header,
+                        null,
+                        'Log In'
+                    ),
+                    _react2.default.createElement('i', { className: 'close icon', onClick: this.closelog }),
+                    _react2.default.createElement(
+                        _semanticUiReact.Modal.Content,
+                        null,
+                        _react2.default.createElement(
+                            'form',
+                            { className: 'ui form' },
                             _react2.default.createElement(
-                                _semanticUiReact.Button,
+                                'div',
+                                { className: 'field' },
+                                _react2.default.createElement(
+                                    'label',
+                                    null,
+                                    'Username'
+                                ),
+                                _react2.default.createElement('input', { type: 'text', name: 'username', placeholder: 'username' })
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'field' },
+                                _react2.default.createElement(
+                                    'label',
+                                    null,
+                                    'Password'
+                                ),
+                                _react2.default.createElement('input', { type: 'text', name: 'password', placeholder: 'password' })
+                            ),
+                            _react2.default.createElement(
+                                'div',
                                 null,
-                                'Login'
+                                _react2.default.createElement(
+                                    'button',
+                                    { className: 'ui button', type: 'submit' },
+                                    'Submit'
+                                )
                             )
                         ),
                         _react2.default.createElement(
-                            _reactRouterDom.Link,
-                            { to: '/register' },
+                            'div',
+                            { className: 'reg' },
                             _react2.default.createElement(
-                                _semanticUiReact.Button,
+                                'div',
                                 null,
-                                'Register'
+                                ' You don\'t have an account?'
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                null,
+                                _react2.default.createElement(
+                                    _semanticUiReact.Button,
+                                    { onClick: this.showregister },
+                                    'register'
+                                )
                             )
                         )
+                    )
+                ),
+                _react2.default.createElement(
+                    _semanticUiReact.Modal,
+                    {
+                        open: this.state.register,
+                        onClose: this.closeregister
+                    },
+                    _react2.default.createElement(
+                        _semanticUiReact.Modal.Header,
+                        null,
+                        'Register'
                     ),
-                    _react2.default.createElement('br', null)
+                    _react2.default.createElement('i', { className: 'close icon', onClick: this.closeregister }),
+                    _react2.default.createElement(
+                        _semanticUiReact.Modal.Content,
+                        null,
+                        _react2.default.createElement(
+                            'form',
+                            { className: 'ui form' },
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'field' },
+                                _react2.default.createElement(
+                                    'label',
+                                    null,
+                                    'Username'
+                                ),
+                                _react2.default.createElement('input', { type: 'text', name: 'username', placeholder: 'username' })
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'field' },
+                                _react2.default.createElement(
+                                    'label',
+                                    null,
+                                    'Email'
+                                ),
+                                _react2.default.createElement('input', { type: 'text', name: 'email', placeholder: 'abc@mail.com' })
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'field' },
+                                _react2.default.createElement(
+                                    'label',
+                                    null,
+                                    'Password'
+                                ),
+                                _react2.default.createElement('input', { type: 'text', name: 'password', placeholder: 'password' })
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'field' },
+                                _react2.default.createElement(
+                                    'label',
+                                    null,
+                                    'Re-enter Password'
+                                ),
+                                _react2.default.createElement('input', { type: 'text', name: 're-password', placeholder: 'confirm password' })
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                null,
+                                _react2.default.createElement(
+                                    'button',
+                                    { className: 'ui button', type: 'submit' },
+                                    'Submit'
+                                )
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'reg' },
+                            _react2.default.createElement(
+                                'div',
+                                null,
+                                ' Already have an account? '
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                null,
+                                _react2.default.createElement(
+                                    _semanticUiReact.Button,
+                                    { onClick: this.showlog },
+                                    'log in'
+                                )
+                            )
+                        )
+                    )
                 )
             );
         }
@@ -44086,7 +44291,85 @@ var Home = function (_Component) {
     return Home;
 }(_react.Component);
 
+var SubButton = function (_Component2) {
+    _inherits(SubButton, _Component2);
+
+    function SubButton() {
+        _classCallCheck(this, SubButton);
+
+        return _possibleConstructorReturn(this, (SubButton.__proto__ || Object.getPrototypeOf(SubButton)).apply(this, arguments));
+    }
+
+    _createClass(SubButton, [{
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                    _semanticUiReact.Button,
+                    { className: 'theButtons', id: 'subb', onClick: this.props.showlog },
+                    'Want to sublease'
+                )
+            );
+        }
+    }]);
+
+    return SubButton;
+}(_react.Component);
+
+var RentButton = function (_Component3) {
+    _inherits(RentButton, _Component3);
+
+    function RentButton() {
+        _classCallCheck(this, RentButton);
+
+        return _possibleConstructorReturn(this, (RentButton.__proto__ || Object.getPrototypeOf(RentButton)).apply(this, arguments));
+    }
+
+    _createClass(RentButton, [{
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                    _reactRouterDom.Link,
+                    { to: '/SearchList' },
+                    _react2.default.createElement(
+                        _semanticUiReact.Button,
+                        { id: 'rentb', className: 'theButtons' },
+                        'Want to rent'
+                    )
+                )
+            );
+        }
+    }]);
+
+    return RentButton;
+}(_react.Component);
+
 exports.default = Home;
+
+//{<Card>
+//    <h1>Welcome to MP2!</h1>
+
+//    <span>
+//        <Link to="/login">
+//            <Button>
+//                Login
+//            </Button>
+//        </Link>
+
+//        <Link to="/register">
+//            <Button>
+//                Register
+//            </Button>
+//        </Link>
+//    </span>
+
+//    <br />
+//</Card>}
 
 /***/ }),
 /* 447 */
@@ -63489,7 +63772,7 @@ exports = module.exports = __webpack_require__(79)(undefined);
 
 
 // module
-exports.push([module.i, ".Home {\n  color: skyblue;\n  text-align: center;\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  -webkit-transform: translate(-50%, -50%);\n          transform: translate(-50%, -50%); }\n", ""]);
+exports.push([module.i, ".Home {\n  width: 100%;\n  height: 100%;\n  /*padding-top: 3%;*/\n  /*background-color: #e2fcf9;*/\n  /*background-image: url('http://www.gettyimages.com/detail/500726091');*/\n  background-image: url(\"http://eskipaper.com/images/bokeh-lights-night-city-1.jpg\");\n  background-size: cover;\n  background-clip: content-box;\n  background-repeat: no-repeat;\n  background-position: center;\n  opacity: 0.95; }\n\n.Home h1 {\n  margin: 0 auto;\n  font-size: 40px;\n  font-weight: bold;\n  -webkit-transform: translateX(-8%);\n          transform: translateX(-8%); }\n\n.bar {\n  /*border-bottom-color: white;*/\n  padding: 10px 15px 10px 0px;\n  border-bottom: 2px solid rgba(255, 255, 255, 0.3);\n  text-align: center;\n  color: #f3e5d1; }\n\n.home_acc {\n  float: right;\n  text-align: center;\n  margin-top: 10px; }\n\n.home_acc div {\n  display: inline-block;\n  margin-right: 7px;\n  border-radius: 25px;\n  -webkit-box-shadow: 0 0 0 1px #fff;\n          box-shadow: 0 0 0 1px #fff;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  height: 27px;\n  width: 80px;\n  padding-top: 4px;\n  font-size: small;\n  background-color: rgba(255, 255, 255, 0.15);\n  font-weight: 900; }\n\n/*background-image: url('http://blog.apartmenthunterz.com/wp-content/uploads/2014/02/bigstock-Los-Angeles-At-Night-40568431.jpg');*/\n/*background-image: url('http://eskipaper.com/images/bokeh-lights-night-city-1.jpg');\r\n    background-size: auto;\r\n    background-clip: content-box;\r\n    background-size: 130% auto;\r\n    background-repeat: no-repeat;\r\n    background-position: center;\r\n    opacity: 0.95;\r\n}*/\n.content ul {\n  margin-left: 5%;\n  padding-top: 100px;\n  padding-bottom: 130px; }\n\n.content li {\n  list-style-type: none;\n  padding: 30px 0px 10px 0px; }\n\n.theButtons {\n  color: #1f91a9;\n  width: 250px;\n  height: 50px;\n  font-size: large;\n  background: rgba(227, 253, 253, 0.11); }\n\n.but {\n  padding-left: 25%; }\n\n.Model {\n  position: fixed;\n  max-width: 330px;\n  max-height: 280px;\n  top: 50%;\n  left: 50%;\n  -webkit-transform: translate(-50%, -50%);\n          transform: translate(-50%, -50%);\n  background-color: aliceblue;\n  padding: 0px 15px 0px 15px;\n  border-radius: 8px;\n  display: none; }\n\n.Model form div {\n  padding-top: 5px;\n  text-align: center;\n  margin: auto; }\n\n.Model form div label {\n  margin-top: 5px; }\n\n.reg div {\n  font-size: inherit;\n  display: inline;\n  padding-right: 7px; }\n\n.margin {\n  width: 10%;\n  max-width: 60px;\n  min-width: 20px; }\n\n.content h1 {\n  font-size: 60px;\n  color: #1f91a9; }\n\n.content img {\n  width: 100%; }\n\n#subb {\n  background-color: rgba(243, 229, 209, 0.76);\n  color: rgba(42, 45, 88, 0.9);\n  border-radius: 25px;\n  -webkit-box-shadow: 0 0 0 1px #fff;\n          box-shadow: 0 0 0 1px #fff;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box; }\n\n#rentb {\n  background-color: rgba(255, 241, 212, 0.14);\n  color: #f3e5d1;\n  border-radius: 25px;\n  -webkit-box-shadow: 0 0 0 1px #fff;\n          box-shadow: 0 0 0 1px #fff;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box; }\n", ""]);
 
 // exports
 
@@ -65159,7 +65442,7 @@ exports = module.exports = __webpack_require__(79)(undefined);
 
 
 // module
-exports.push([module.i, "body {\n  background-color: #eee; }\n  body .alert {\n    color: red; }\n", ""]);
+exports.push([module.i, "body {\n  background-color: white; }\n  body .alert {\n    color: red; }\n", ""]);
 
 // exports
 
