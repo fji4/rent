@@ -6,6 +6,7 @@ import Home from './components/Home/Home.jsx';
 import Register from './components/Register/Register.jsx';
 import Login from './components/Login/Login.jsx';
 import Dashboard from './components/Dashboard/Dashboard.jsx';
+import Account from './components/Account/Account.jsx';
 import Detail from './components/Detail/Detail.jsx';
 import SearchList from './components/SearchList/SearchList.jsx';
 
@@ -15,10 +16,13 @@ ReactDom.render(
     <Router>
         <Switch>
             <Route exact path="/" component={Home}/>
+            <Route exact path="/account" component={Account}/>
             <Route exact path="/detail" component={Detail}/>
             <Route exact path="/login" component={Login}/>
             <Route exact path="/register" component={Register}/>
             <Route exact path="/dashboard" component={Dashboard}/>
+            <Route exact path="/searchlist" component={SearchList}/>
+
         </Switch>
     </Router>,
     document.getElementById('react-app')

@@ -30,10 +30,18 @@ app.route('/register').get(function(req, res) {
 });
 app.route('/dashboard').get(function(req,res) {
   return res.sendFile(path.join(__dirname, './backend/static/index.html'));
-})
+});
 app.route('/home').get(function(req,res) {
     return res.sendFile(path.join(__dirname, './backend/static/index.html'));
 })
+
+app.route('/account').get(function(req,res) {
+    return res.sendFile(path.join(__dirname, './backend/static/index.html'));
+})
+app.route('/searchlist').get(function(req,res) {
+    return res.sendFile(path.join(__dirname, './backend/static/index.html'));
+})
+
 app.route('/detail').get(function(req,res) {
     return res.sendFile(path.join(__dirname, './backend/static/index.html'));
 })
