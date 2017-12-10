@@ -1,0 +1,62 @@
+.theme {
+  color: aqua;
+}
+
+.addressCenter {
+  text-align: center;
+}
+
+.photo {
+  display: block;
+  margin: auto;
+  width: 80%;
+}
+
+.mappos {
+  display: block;
+  margin-left: 10%;
+  margin-bottom: 1%;
+}
+
+.outdiv {
+  position: relative;
+}
+
+.description {
+  position: absolute;
+  //display: block;
+  width: 40%;
+  top: 68%;
+  left: 50%;
+  //background-color: aqua;
+  border-collapse: collapse;
+}
+
+th, td {
+  border-collapse: collapse;
+}
+
+.boldtext {
+  font-weight: bold;
+}
+
+.bottombutton {
+  position: relative;
+  display: block;
+  padding-left: 10%;
+  padding-right: 10%;
+  //margint-top: 1%;
+  padding-bottom: 20px;
+  margin-bottom: 100px;
+}
+
+.contact {
+  position: absolute;
+  display: block;
+  left: 20%;
+}
+
+.wishlist {
+  position: absolute;
+  right: 20%;
+}
