@@ -16,3 +16,36 @@ Make sure you put your own database URI into `config/index.json`.
 `sudo npm install cookie-parser -g`
 ## how to setup branch
 https://stackoverflow.com/questions/1519006/how-do-you-create-a-remote-git-branch
+
+BACKEND:
+apartment schema{
+	location: {type:String,required: true},
+    city: {type:String, required: true},
+    price: {type:String,required: true},
+    assignedOwner: String,
+    gender: String,
+    contactPhone: {type:String, default:""},
+    contactEmail: {type: String, default:""},
+    description: String,
+    datePosted: {type: Date, default: Date.now()},
+    dateStarted: {type: Date, required: true},
+    dateEnd: {type: Date, required: true},
+    completed:{type:Boolean, default: false},
+    img : {type:[String], default: []}
+}
+
+users schema{
+	email		: String,
+    password	: String,
+    name        : String,
+    description : String,
+    ownedApt   : {type:[String],default: []},
+    wishList    : {type:[String],default: []},
+    userPic     : String
+}
+Usable instructions:
+count where sort select
+
+api url:
+http://localhost:3000/api/users
+http://localhost:3000/api/apartment

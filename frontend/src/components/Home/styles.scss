@@ -66,7 +66,8 @@
 .content ul {
     margin-left: 5%;
     padding-top: 100px;
-    padding-bottom: 130px;
+    padding-bottom: 40%;
+    background-color: rgba(0, 0, 0, 0.00);
 }
 
 .content li {
@@ -109,14 +110,16 @@
     margin-top: 5px;
 } 
 
+.reg{
+    padding-top: 10px;
+}
+
 .reg div{
     font-size: inherit;
     display: inline;
     padding-right: 7px;
 }
 
-.register{
-}
 
 .margin{
     width: 10%;
@@ -129,7 +132,7 @@
     color: #1f91a9;
 }
 
-.content img{
+.content img {
     width: 100%;
 }
 

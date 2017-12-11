@@ -232,3 +232,6 @@ export default Home
 
 //    <br />
 //</Card>}
+
+
+//if want to do full page: https://github.com/subtirelumihail/react-fullpage
