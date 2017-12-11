@@ -203,6 +203,7 @@ class Sublease extends Component {
                     <form className="uploader" encType="multipart/form-data">
                         <input type="file" id="file" />
                     </form>
+
                     <br/>
                     <Form.Checkbox label='I agree to the Terms and Conditions'  />
 
