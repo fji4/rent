@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { Menu, Icon, Image, Button, Label } from 'semantic-ui-react'
 // import {Carousel} from 'react-bootstrap'
-import Carousel from 'react-bootstrap/lib/Carousel';
-import Table from 'react-bootstrap/lib/Table';
+import {Carousel, Table} from 'react-bootstrap';
+// import Table from 'react-bootstrap/lib/Table';
 import { Link } from 'react-router-dom'
 
 import styles from './styles.scss'
@@ -51,10 +51,10 @@ class Detail extends Component {
 
                 isMarkerShown
                 pos={marker}
-                googleMapURL="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places"
+                googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLNLZK0eVgZMOPh5-3u5qe3IDvJhNSNcA&v=3.exp&libraries=geometry,drawing,places"
                 loadingElement={<div style={{ height: `100%` }} />}
                 containerElement={<div style={{ height: `300px` }} />}
-                mapElement={<div style={{ height: `100%` ,width:`40%`}} />}
+                mapElement={<div style={{ height: `100%` ,width:`100%`}} />}
             />
             </div>
         )
@@ -105,15 +105,17 @@ class Detail extends Component {
     render() {
         return(
             <div className="outdiv">
-                <Menu>
-                    <Menu.Item
-                    >
-                        <Icon name='home'/>
+                <Menu className="detailnav">
+                    <Menu.Item>
+                        <Link to="/">
+                            <Icon name='home'/>
+                        </Link>
                     </Menu.Item>
 
-                    <Menu.Item position="right"
-                    >
-                        <Icon name='user'/>
+                    <Menu.Item position="right">
+                        <Link to="/account">
+                            <Icon name='user'/>
+                        </Link>
                     </Menu.Item>
                 </Menu>
 
@@ -122,8 +124,8 @@ class Detail extends Component {
                 {this.renderAllPhoto()}
                 <br/>
                 {this.renderMap(this.state.position)}
-
-                <Table responsive className="description">
+                <div className="description">
+                <Table  className="descriptable">
                     <thead>
                         <tr>
                             <th colSpan="2">Detail</th>
@@ -158,6 +160,7 @@ class Detail extends Component {
                     </tbody>
 
                 </Table>
+                </div>
 
                 <div className="bottombutton">
                     <Button size="massive" className="contact">Contact</Button>

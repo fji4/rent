@@ -1,16 +1,38 @@
 import React, { Component } from 'react'
-import { Button, Card, Input,Icon,Checkbox } from 'semantic-ui-react'
-import { Link } from 'react-router-dom'
+import { Button, Card, Input,Icon,Checkbox, Menu, Dropdown } from 'semantic-ui-react'
+import { Link, withRouter } from 'react-router-dom';
+import {Redirect, browserHistory} from 'react-router';
 import * as axios from 'axios';
-import { GoogleMap, Marker } from "react-google-maps"
-const googleapi ='https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyDeS_Giswu2KngF138sF4-5uX2Y8euZDKs'
 
 import 'semantic-ui-css/semantic.min.css'
-
-
+import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
+const { MarkerClusterer } = require("react-google-maps/lib/components/addons/MarkerClusterer");
 import styles from './SearchList.scss'
 
 const apiURL = "https://api.themoviedb.org/3/search/movie?api_key=e7b459ccb253cab36bb660a78b72dd18&query=";
+
+const MyMapComponent = withScriptjs(withGoogleMap((props) =>
+
+    <GoogleMap
+        defaultZoom={16}
+        defaultCenter={{ lat: props.markers[0].lat, lng: props.markers[0].lng }}
+    >
+        {/*{props.isMarkerShown && <Marker position={{ lat: props.markers[0].lat, lng: props.markers[0].lng }} />}*/}
+
+            {props.markers.map(marker => (
+                <Marker
+                    clickable
+                    key={marker.lat}
+                    position={{ lat: marker.lat, lng: marker.lng }}
+                    onClick={() => {
+                        console.log("click");
+                        props.history.push('/detail');
+            }}
+                />
+            ))}
+
+    </GoogleMap>
+));
 
 const VideoList = props => {
     const videoItems = props.videos.map(video => {
@@ -39,20 +61,10 @@ const VideoListItem = props => {
             <div className="item">
                 <div className="image">
 
-                    <Link to={`/detail/${ props.video.genre_ids[0] }/${ props.video.id }`} className="active">
+                    <Link to="/detail" className="active">
                         <img src={imageUrl} />
                     </Link>
                 </div>
-                {/*<div className="middle aligned content">*/}
-                    {/*<a className="header">Title :{props.video.title}</a>*/}
-                    {/*<br/>*/}
-                    {/*<a className="header">Rate :{props.video.vote_average}</a>*/}
-                    {/*<br/>*/}
-                    {/*<a className="header">Popularity : {props.video.popularity}</a>*/}
-                    {/*<br/>*/}
-                    {/*<a className="header">ReleaseDate : {props.video.release_date}</a>*/}
-                {/*</div>*/}
-
             </div>
         </ul>
     );
@@ -68,22 +80,15 @@ class SearchList extends Component {
             selectedVideo: null,
             term: "",
             rate: "1",
-            asc:"1"
+            asc:"1",
+            position:[]
 
         };
-        // this.sortOnAsc= this.sortOnAsc.bind(this);
-        // this.sortOnDes = this.sortOnDes.bind(this);
-
         this.sortVideosAsc = this.sortVideosAsc.bind(this);
         this.sortVideosDes = this.sortVideosDes.bind(this);
 
         this.sortType = this.sortType.bind(this);
-
-
-        // this.videoSearch("and");
     }
-
-
 
     sortVideosAsc () {
         console.log ("clicked ASC");
@@ -96,8 +101,6 @@ class SearchList extends Component {
                 this.state.videos.sort((a,b) => (a.vote_average - b.vote_average))
             });
             console.log ('ascrate');
-
-
         }
         else
         {
@@ -105,10 +108,9 @@ class SearchList extends Component {
                 this.state.videos.sort((a, b) => (a.popularity - b.popularity))
             });
             console.log ('ascpop');
-
         }
-
     }
+
     sortVideosDes () {
         console.log ('clickedDes');
         this.state.asc="0";
@@ -121,7 +123,6 @@ class SearchList extends Component {
 
             });
             console.log ('desrate');
-
 
         }
         else
@@ -141,8 +142,6 @@ class SearchList extends Component {
         //let order= this.state.asc;
 
         this.setState({rate: event.target.value});
-
-
 
         if (this.state.asc==="1" && type==="1")  //ascrate
         {
@@ -210,13 +209,12 @@ class SearchList extends Component {
             console.log ('despop');
         }
     }
+
     videoSearch(term) {
         axios
             .get(
                 apiURL +
                 term
-                // "&api-key=e7b459ccb253cab36bb660a78b72dd18"
-                // this.state.apiKey
             )
             .then(response => {
                 var results;
@@ -239,80 +237,108 @@ class SearchList extends Component {
         else this.videoSearch(term);
     }
 
+    componentWillMount() {
+        this.markAddress("1010 West Main St. Urbana");
+        this.markAddress("1007 West Clark St. Urbana");
+        console.log("before render");
+    }
+
+    markAddress(addresses) {
+        var address = addresses.replace(/ /g, '+');
+        var axios = require('axios');
+        axios.get("https://maps.googleapis.com/maps/api/geocode/json?address="+address+"&key=AIzaSyDeS_Giswu2KngF138sF4-5uX2Y8euZDKs")
+            .then(function(response){
+                // console.log(response);
+                console.log(response.data.results[0].geometry.location);
+                this.setState({position: this.state.position.concat([response.data.results[0].geometry.location])})
+            }.bind(this));
+    }
+
+    renderMap() {
+        console.log(this.state.position);
+        return(
+            <div>
+                <MyMapComponent
+                    isMarkerShown
+                    markers={this.state.position}
+                    googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLNLZK0eVgZMOPh5-3u5qe3IDvJhNSNcA&v=3.exp&libraries=geometry,drawing,places"
+                    loadingElement={<div style={{ height: `100%` }} />}
+                    containerElement={<div style={{ height: `200px` }} />}
+                    mapElement={<div style={{ height: `100%` ,width:`100%`}} />}
+                />
+            </div>
+        )
+    }
+
     render() {
 
         return(
 
              <body>
                 <header>
-                  <nav>
-                    <Link to = '/account'>
-                        <Icon id ='usericon' name='user' size ='big' />
-                    </Link>
-                    <Link to = '/home'>
-                        <Icon id ='homeicon' name='home' size ='big' />
-                    </Link>
-                  </nav>
+                    <Menu fluid size="massive" className="detailnav">
+                        <Menu.Item>
+                            <Link to="/">
+                                <Icon size="large" name='home'/>
+                            </Link>
+                        </Menu.Item>
+
+                        <Menu.Menu id="filternav" position="left">
+                            <div className="period">
+                            <Input
+                                value={this.state.term}
+                                onChange={event => this.onInputChange(event.target.value)}
+                                label = 'Start Semester' list='dates' placeholder='Start Date' />
+                            <datalist id='dates'>
+                                <option value='Spring 2018' />
+                                <option value='Summer 2018' />
+                                <option value='Fall 2018' />
+                                <option value='Spring 2019' />
+                                <option value='Fall 2019' />
+                            </datalist>
+                            </div>
+
+                            <div className="period">
+                            <Input  label= 'End Semester' list='dates' placeholder='End Date' />
+                            <datalist id='semesters'>
+                                <option value='Spring 2018' />
+                                <option value='Summer 2018' />
+                                <option value='Fall 2018' />
+                                <option value='Spring 2019' />
+                                <option value='Fall 2019' />
+                            </datalist>
+                            </div>
+
+                            <div className="period">
+                            <Input label= 'Area'  list='areas'placeholder='Area' />
+                            <datalist id='areas'>
+                                <option value='North Campus' />
+                                <option value='Mid campus' />
+                                <option value='South Campus' />
+                                <option value='off Campus' />
+
+                            </datalist>
+                            </div>
+
+                            <div className="period">
+                                <Button>Submit</Button>
+                            </div>
+                        </Menu.Menu>
+
+                        <Menu.Item position="right">
+                            <Link to="/account">
+                                <Icon size="large" name='user'/>
+                            </Link>
+                        </Menu.Item>
+                    </Menu>
                 </header>
-                <div className='SearchList'>
-                    <div className= 'SearchBar'>
 
-                        <Input
-                            value={this.state.term}
-                            onChange={event => this.onInputChange(event.target.value)}
-                            label = 'Start Semester' list='dates' placeholder='Start Date' />
-                        <datalist id='dates'>
-                            <option value='Spring 2018' />
-                            <option value='Summer 2018' />
-                            <option value='Fall 2018' />
-                            <option value='Spring 2019' />
-                            <option value='Fall 2019' />
-                        </datalist>
-
-                        <Input  label= 'End Semester' list='dates' placeholder='End Date' />
-                        <datalist id='semesters'>
-                            <option value='Spring 2018' />
-                            <option value='Summer 2018' />
-                            <option value='Fall 2018' />
-                            <option value='Spring 2019' />
-                            <option value='Fall 2019' />
-                        </datalist>
-
-                        <Input  label= 'Area'  list='areas'placeholder='Area' />
-                        <datalist id='areas'>
-                            <option value='North Campus' />
-                            <option value='Mid campus' />
-                            <option value='South Campus' />
-                            <option value='off Campus' />
-
-                        </datalist>
-
-                    </div>
-
-
-
-                        {/*<label>*/}
-                            {/*Prices Low to High*/}
-                        {/*</label>*/}
-                        {/*<Icon name='checkmark box' size='big'> </Icon>*/}
-                        {/*<label>*/}
-                            {/*female only*/}
-                        {/*</label>*/}
-                        {/*<Icon name='checkmark box' size='big'> </Icon>*/}
-                        {/*<label>*/}
-                            {/*male only*/}
-                        {/*</label>*/}
-
-
-                </div>
 
 
                 <div className='row'>
                     <div className='column small'>
-                        <div id= 'googlemap'>
-                            <img src="https://upload.wikimedia.org/wikipedia/en/2/23/GoogleMaps.svg" width="300" height="300"/>
+                        {this.renderMap()}
 
-                        </div>
 
                         <div className='ui form'>
                             <div className='grouped fields'>
@@ -339,6 +365,7 @@ class SearchList extends Component {
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                     <div className='column large'>

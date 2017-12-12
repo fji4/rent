@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Button, Card } from 'semantic-ui-react'
-//import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 import styles from './Account.scss'
 

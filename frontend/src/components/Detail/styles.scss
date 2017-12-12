@@ -1,3 +1,7 @@
+* {
+  box-sizing: border-box;
+}
+
 .theme {
   color: aqua;
 }
@@ -14,8 +18,10 @@
 
 .mappos {
   display: block;
-  margin-left: 10%;
-  margin-bottom: 1%;
+  float: left;
+  width: 50%;
+  padding-left: 10%;
+  //margin-bottom: 1%;
 }
 
 .outdiv {
@@ -23,11 +29,15 @@
 }
 
 .description {
-  position: absolute;
-  //display: block;
-  width: 40%;
-  top: 68%;
-  left: 50%;
+  //position: absolute;
+  display: block;
+  float: right;
+  width: 50%;
+  padding-left: 1%;
+  padding-right: 10%;
+  //width: 40%;
+  //top: 70%;
+  //left: 50%;
   //background-color: aqua;
   border-collapse: collapse;
 }
@@ -45,8 +55,9 @@ th, td {
   display: block;
   padding-left: 10%;
   padding-right: 10%;
+  padding-top: 310px;
   //margint-top: 1%;
-  padding-bottom: 20px;
+  //padding-bottom: 20px;
   margin-bottom: 100px;
 }
 

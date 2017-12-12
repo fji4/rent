@@ -47,11 +47,13 @@ body {
 /* Left and right column */
 .column.small {
   width: 30%;
+  //float: left;
 }
 
 /* Middle column */
 .column.large {
   width: 70%;
+  //float: right;
 }
 
 /* Clear floats after the columns */
@@ -73,4 +75,20 @@ body {
   display: inline-block;
   width: 50px;
   height: 50px;
+}
+
+.usericon {
+  display: inline-block;
+  margin-left: 50%;
+}
+
+#filternav {
+  height: 50%;
+  margin: auto;
+  font-size: 15px;
+}
+
+.period {
+  display: block;
+  padding-left: 2%;
 }
