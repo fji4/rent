@@ -1,0 +1,97 @@
+#navBar {
+    margin-top: 10px;
+    position: fixed;
+    height: 40px;
+    width: 100%;
+    min-width: 600px;
+    background-color: blanchedalmond;
+    text-align: center;
+    z-index: 12;
+}
+
+#navBar h1 { 
+    float: left;
+}
+
+#navBar div {
+    float: right;
+    display: inline-block;
+    margin-top: 12px;
+    padding-right: 18px;
+}
+
+#navBar img {
+    height: 35px;
+    width: 35px;
+    border-radius: 50%;
+    margin-top: -9px;
+}
+
+#sideBar {
+    float: left;
+    width: 180px;
+    background-color: antiquewhite;
+    margin-top: 60px;
+    border-radius: 0 10px 10px 0;
+    padding-bottom: 20px;
+    //position: fixed;
+    overflow: scroll;
+}
+
+#sideBar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: #f1f1f1;
+}
+
+#sideBar li div {
+    display: block;
+    color: #000;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+#sideBar li div:hover {
+    background-color: #555;
+    color: white;
+}
+
+.touXiang {
+    width: 100px;
+    margin: 20px auto 20px auto;
+}
+
+.touXiang img {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+}
+
+.touXiang ul li {
+    font-size: x-small;
+}
+
+.acc_content {
+    position: relative;
+    margin-left: 200px;
+    width: auto;
+    min-height: 400px;
+    background-color: InfoBackground;
+    top: 60px;
+    z-index: 10;
+}
+
+.acc_content h1 {
+    text-align: center;
+}
+
+#contentTitle {
+    height: 40px;
+    padding: 15px 0 10px 20px;
+}
+
+#SubHouses {
+    padding-left: 30px;
+    margin-top: 30px;
+}

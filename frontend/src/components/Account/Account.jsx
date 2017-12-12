@@ -1,34 +1,134 @@
 import React, { Component } from 'react'
-import { Button, Card } from 'semantic-ui-react'
+import { Item, Tab, List } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
-import styles from './Account.scss'
+require('./Account.scss');
+
 
 class Account extends Component {
+
     render() {
-        return(
-            <div className="Home">
-                <Card>
-                    <h1>Welcome to MP2!</h1>
+        const panes = [
+            {
+                menuItem: 'Subleasing', render: () => <Tab.Pane attached={false}>Tab 1 Content
+                <div className="content1">
+                        <Item.Group divided> 
+                            <Item>
+                                <Item.Image size='tiny' src='https://www.americanflex.com.br/skin/adminhtml/default/default/lib/jlukic_semanticui/examples/assets/images/wireframe/image.png' />
+                                <Item.Content verticalAlign='middle'>Content A</Item.Content>
+                            </Item>
 
-                    <span>
-                        <Link to="/login">
-                            <Button>
-                                Login
-                            </Button>
+                            <Item>
+                                <Item.Image size='tiny' src='https://www.americanflex.com.br/skin/adminhtml/default/default/lib/jlukic_semanticui/examples/assets/images/wireframe/image.png' />
+                                <Item.Content verticalAlign='middle'>Content B</Item.Content>
+                            </Item>
+
+                            <Item>
+                                <Item.Image size='tiny' src='https://www.americanflex.com.br/skin/adminhtml/default/default/lib/jlukic_semanticui/examples/assets/images/wireframe/image.png' />
+                                <Item.Content content='Content C' verticalAlign='middle' />
+                            </Item>
+                        </Item.Group>
+                    </div>
+                </Tab.Pane>
+            },
+            {
+                menuItem: 'Completed', render: () => <Tab.Pane attached={false}>Tab 2 Content
+                <div className="content2">
+                        <Item.Group divided>
+                            <Item>
+                                <Item.Image size='tiny' src='https://www.americanflex.com.br/skin/adminhtml/default/default/lib/jlukic_semanticui/examples/assets/images/wireframe/image.png' />
+                                <Item.Content verticalAlign='middle'>Content A</Item.Content>
+                            </Item>
+
+                            <Item>
+                                <Item.Image size='tiny' src='https://www.americanflex.com.br/skin/adminhtml/default/default/lib/jlukic_semanticui/examples/assets/images/wireframe/image.png' />
+                                <Item.Content verticalAlign='middle'>Content B</Item.Content>
+                            </Item>
+
+                            <Item>
+                                <Item.Image size='tiny' src='https://www.americanflex.com.br/skin/adminhtml/default/default/lib/jlukic_semanticui/examples/assets/images/wireframe/image.png' />
+                                <Item.Content content='Content C' verticalAlign='middle' />
+                            </Item>
+                        </Item.Group>
+                    </div>
+                </Tab.Pane>
+            },
+            { menuItem: 'Tab 3', render: () => <Tab.Pane attached={false}>Tab 3 Content</Tab.Pane> },
+        ]
+        return (
+            <div id="everything">
+                <div id="navBar">
+                    <h1> Subleasing </h1>
+                    <div> <img src={'http://tc.sinaimg.cn/maxwidth.800/tc.service.weibo.com/static_jinrongbaguanv_com/5886a925e3bd5fc2a3adf8f9a36324c8.png'}
+                        alt="fairy" /> </div>
+                    <div> Welcome back! wuzaiyunshang</div>
+                    <div> Search </div>
+                    <div>
+                        <Link to={{ pathname: "/" }} >
+                            Home
                         </Link>
+                    </div>
 
-                        <Link to="/register">
-                            <Button>
-                                Register
-                            </Button>
-                        </Link>
-                    </span>
+                </div>
 
-                    <br />
-                </Card>
+                <div id="sideBar">
+                    <div className="touXiang">
+                        <img src={'http://tc.sinaimg.cn/maxwidth.800/tc.service.weibo.com/static_jinrongbaguanv_com/5886a925e3bd5fc2a3adf8f9a36324c8.png'}
+                            alt="fairy" />
+                        <ul>
+                            <li>welcome back! wuzaiyunshang</li>
+                            <li>email: jjj@shi.com</li>
+                            <li>tel: 88888888</li>
+                        </ul>
+                    </div>
+                    <ul>
+                        <li><div><Link to="/Account">History</Link></div></li>
+                        <li><div><Link to="/watchlist">Watchlist</Link></div></li>
+                        <li><div><Link to="/personalInfo">Personal Info</Link></div></li>
+                        <li><div><Link to="/Notifications">Notification</Link></div></li>
+                    </ul>
+                </div>
+
+                <div className="acc_content">
+                    {
+                        //<h1 id="contentTitle">
+                        //    Subleasing houses:
+                        //</h1>
+                        //<div className="subHouses">
+                        //    <Houselist />
+                        //</div>
+                    }
+                    <Tab menu={{ secondary: true, pointing: true }} panes={panes} />
+                </div>
+
+
             </div>
         )
+    }
+}
+
+
+class Houselist extends Component {
+    render() {
+        return (
+
+            <Item.Group divided>
+                <Item>
+                    <Item.Image size='tiny' src='https://www.americanflex.com.br/skin/adminhtml/default/default/lib/jlukic_semanticui/examples/assets/images/wireframe/image.png' />
+                    <Item.Content verticalAlign='middle'>Content A</Item.Content>
+                </Item>
+
+                <Item>
+                    <Item.Image size='tiny' src='https://www.americanflex.com.br/skin/adminhtml/default/default/lib/jlukic_semanticui/examples/assets/images/wireframe/image.png' />
+                    <Item.Content verticalAlign='middle'>Content B</Item.Content>
+                </Item>
+
+                <Item>
+                    <Item.Image size='tiny' src='https://www.americanflex.com.br/skin/adminhtml/default/default/lib/jlukic_semanticui/examples/assets/images/wireframe/image.png' />
+                    <Item.Content content='Content C' verticalAlign='middle' />
+                </Item>
+            </Item.Group>
+        );
     }
 }
 
