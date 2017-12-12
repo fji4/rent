@@ -13,7 +13,7 @@ import Account from './components/Account/Account.jsx';
 import Notifications from './components/Notifications/Notifications.jsx';
 
 import styles from './styles/main.scss';
-
+ 
 
 ReactDom.render(
     <Router>

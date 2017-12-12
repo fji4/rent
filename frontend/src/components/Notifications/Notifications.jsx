@@ -91,4 +91,4 @@ class Houselist extends Component {
     }
 }
 
-export default Notifications
+export default Notifications 

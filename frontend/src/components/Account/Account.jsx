@@ -13,7 +13,7 @@ class Account extends Component {
             {
                 menuItem: 'Subleasing', render: () => <Tab.Pane attached={false}>Tab 1 Content
                 <div className="content1">
-                        <Item.Group divided>
+                        <Item.Group divided> 
                             <Item>
                                 <Item.Image size='tiny' src='https://www.americanflex.com.br/skin/adminhtml/default/default/lib/jlukic_semanticui/examples/assets/images/wireframe/image.png' />
                                 <Item.Content verticalAlign='middle'>Content A</Item.Content>
