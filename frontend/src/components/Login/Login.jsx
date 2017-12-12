@@ -80,7 +80,7 @@ class Login extends Component {
                     <p>{this.state.message}</p>
                     <Input type="submit" />
                     <h4>No account yet? Click <Link to="/register">here</Link> to Register!</h4>
-
+                    <a href="/auth/facebook" className="btn btn-primary"><span class="fa fa-facebook"></span> Facebook</a>
                     <Link to="/dashboard"><p>Go to Dashboard</p></Link>
                 </div>
             </Card>

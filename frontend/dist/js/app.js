@@ -65145,6 +65145,12 @@ var Login = function (_Component) {
                             ' to Register!'
                         ),
                         _react2.default.createElement(
+                            'a',
+                            { href: '/auth/facebook', className: 'btn btn-primary' },
+                            _react2.default.createElement('span', { 'class': 'fa fa-facebook' }),
+                            ' Facebook'
+                        ),
+                        _react2.default.createElement(
                             _reactRouterDom.Link,
                             { to: '/dashboard' },
                             _react2.default.createElement(

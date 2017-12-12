@@ -2,9 +2,10 @@ const path = require('path');
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-const passport = require('passport')
+const passport = require('passport');
 const config = require('./config');
-const User = require('./')
+const User = require('./');
+var flash = require('connect-flash');
 const router = express.Router();
 const cookieSession = require('cookie-session');
 const cookieParser = require('cookie-parser');
@@ -30,18 +31,19 @@ app.route('/register').get(function(req, res) {
 });
 app.route('/dashboard').get(function(req,res) {
   return res.sendFile(path.join(__dirname, './backend/static/index.html'));
-})
+});
 app.route('/home').get(function(req,res) {
     return res.sendFile(path.join(__dirname, './backend/static/index.html'));
-})
+});
 app.route('/sublease').get(function(req,res) {
     return res.sendFile(path.join(__dirname, './backend/static/index.html'));
-})
+});
 app.route('/watchlist').get(function(req,res) {
     return res.sendFile(path.join(__dirname, './backend/static/index.html'));
-})
+});
 app.route('/list').get(function(req,res) {
     return res.sendFile(path.join(__dirname, './backend/static/index.html'));
+
 })
 app.route('/account').get(function (req, res) {
     return res.sendFile(path.join(__dirname, './backend/static/index.html'));
@@ -61,6 +63,7 @@ app.use(cookieParser());
 app.use(cookieSession({
   keys: ['asdf', 'asdf']
 }));
+app.use(flash());
 
 // Initialize Passport
 app.use(passport.initialize()); // Create an instance of Passport
