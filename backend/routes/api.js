@@ -14,7 +14,6 @@ module.exports = function(router, passport) {
     router.post('/register',
         passport.authenticate('local-signup',
             {
-
                 successRedirect: '/',
                 failureRedirect: '/register',
                 failureFlash: true
@@ -25,7 +24,9 @@ module.exports = function(router, passport) {
     });
 
     router.post('/login',
-        passport.authenticate('local-login',
+        passport.authenticate('local-login',{
+                successRedirect: '/'
+            },
         function(req, res) {
             console.log(req.isAuthenticated());
             res.status(200).json({ user: req.user.email

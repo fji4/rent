@@ -9,13 +9,62 @@ class Home extends Component {
         super(props);
         this.state = {
             log_in: false,
-            register: false
-        }
-
+            register: false,
+            user: {
+                password: '',
+                email: ''
+            },
+            message: ''
+        };
+        this.onSubmit = this.onSubmit.bind(this);
         this.showlog = this.showlog.bind(this);
         this.closelog = this.closelog.bind(this);
         this.showregister = this.showregister.bind(this);
         this.closeregister = this.closeregister.bind(this);
+        this.onChangeEmail = this.onChangeEmail.bind(this);
+        this.onChangePassword = this.onChangePassword.bind(this);
+    }
+
+    onChangeEmail(e) {
+        const user = this.state.user;
+        user.email = e.target.value;
+        this.setState({
+            user
+        })
+    }
+
+    onChangePassword(e) {
+        const user = this.state.user;
+        user.password = e.target.value;
+        this.setState({
+            user
+        })
+    }
+
+    onSubmit(e) {
+        e.preventDefault();
+
+        const email = encodeURIComponent(this.state.user.email);
+        const password = encodeURIComponent(this.state.user.password);
+        const formData = `email=${email}&password=${password}`;
+
+        // create an AJAX request (This should probably done with Axios instead)
+        const xhr = new XMLHttpRequest();
+        xhr.open('post', '/api/login');
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.responseType = 'json';
+        xhr.addEventListener('load', () => {
+            if (xhr.status === 200) {
+                this.setState({
+                    message: 'Successfully logged in!'
+                })
+            } else {
+                this.setState({
+                    message: 'Unable to log in'
+                })
+            }
+        });
+        xhr.send(formData);
     }
 
     showlog(e) {
@@ -77,17 +126,18 @@ class Home extends Component {
                     <Modal.Header>Log In</Modal.Header>
                     <i className="close icon" onClick={this.closelog}></i>
                     <Modal.Content>
-                        <form className="ui form">
+                        <form className="ui form" onSubmit = {this.onSubmit}>
                             <div className="field">
-                                <label>Username</label>
-                                <input type="text" name="username" placeholder="username">
+                                <label>Email</label>
+                                <input type="text" name="email" placeholder="email" onChange={this.onChangeEmail}>
                                 </input>
                             </div>
                             <div className="field">
                                 <label>Password</label>
-                                <input type="text" name="password" placeholder="password">
+                                <input type="text" name="password" placeholder="password" onChange={this.onChangePassword}>
                                 </input>
                             </div>
+                            <p>{this.state.message}</p>
                             <div>
                                 <button className="ui button" type="submit">Submit</button>
                             </div>
