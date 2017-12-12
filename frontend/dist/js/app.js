@@ -66806,12 +66806,20 @@ var SearchList = function (_Component) {
                         _react2.default.createElement(
                             _reactRouterDom.Link,
                             { to: '/account' },
-                            _react2.default.createElement(_semanticUiReact.Icon, { id: 'usericon', name: 'user', size: 'big' })
+                            _react2.default.createElement(
+                                _semanticUiReact.Button,
+                                null,
+                                _react2.default.createElement(_semanticUiReact.Icon, { id: 'usericon', name: 'user', size: 'big' })
+                            )
                         ),
                         _react2.default.createElement(
                             _reactRouterDom.Link,
-                            { to: '/home' },
-                            _react2.default.createElement(_semanticUiReact.Icon, { id: 'homeicon', name: 'home', size: 'big' })
+                            { to: '/' },
+                            _react2.default.createElement(
+                                _semanticUiReact.Button,
+                                null,
+                                _react2.default.createElement(_semanticUiReact.Icon, { id: 'homeicon', name: 'home', size: 'big' })
+                            )
                         )
                     )
                 ),
@@ -66911,15 +66919,6 @@ var SearchList = function (_Component) {
                                     )
                                 )
                             )
-                        )
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'column large' },
-                        _react2.default.createElement(
-                            'div',
-                            { className: 'List' },
-                            this.state.term ? _react2.default.createElement(VideoList, { videos: this.state.videos }) : null
                         )
                     )
                 )
@@ -73123,6 +73122,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _semanticUiReact = __webpack_require__(62);
 
+var _reactRouterDom = __webpack_require__(61);
+
 var _Account = __webpack_require__(843);
 
 var _Account2 = _interopRequireDefault(_Account);
@@ -73134,7 +73135,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-//import { Link } from 'react-router-dom'
 
 var Account = function (_Component) {
     _inherits(Account, _Component);
@@ -73163,7 +73163,7 @@ var Account = function (_Component) {
                         'span',
                         null,
                         _react2.default.createElement(
-                            Link,
+                            _reactRouterDom.Link,
                             { to: '/login' },
                             _react2.default.createElement(
                                 _semanticUiReact.Button,
@@ -73172,7 +73172,7 @@ var Account = function (_Component) {
                             )
                         ),
                         _react2.default.createElement(
-                            Link,
+                            _reactRouterDom.Link,
                             { to: '/register' },
                             _react2.default.createElement(
                                 _semanticUiReact.Button,
