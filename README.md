@@ -16,3 +16,44 @@ Make sure you put your own database URI into `config/index.json`.
 `sudo npm install cookie-parser -g`
 ## how to setup branch
 https://stackoverflow.com/questions/1519006/how-do-you-create-a-remote-git-branch
+
+
+backend schemas:
+users schema{
+	location: {type:String,required: true},
+    city: {type:String, required: true},
+    price: {type:String,required: true},
+    assignedOwner: String,
+    gender: String,
+    contactPhone: {type:String, default:""},
+    contactEmail: {type: String, default:""},
+    description: String,
+    datePosted: {type: Date, default: Date.now()},
+    dateStarted: {type: Date, required: true},
+    dateEnd: {type: Date, required: true},
+    completed:{type:Boolean, default: false},
+    img : {type:[String], default: []}
+}
+
+apartment schema{
+	email		: String,
+    password	: String,
+    name        : String,
+    description : String,
+    ownedApt   : {type:[String],default: []},
+    wishList    : {type:[String],default: []},
+    userPic     : String
+}
+
+query ÓÐcount  where sort select
+
+get example:
+if (!(this.state.logged_in)) {
+    axios.get(`http://localhost:3000/api/users?where={"_id": "5a2dc92d7ad47271b6b7c307"}`)
+        .then(function (resp) {
+            this.setState({ cur_user: resp.data.data[0], logged_in: true })
+        }.bind(this)
+        )
+}
+if (this.state.cur_user)
+    console.log(this.state.cur_user.name)

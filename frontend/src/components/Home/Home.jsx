@@ -20,8 +20,11 @@ class Home extends Component {
 
     showlog(e) {
         console.log("show log modal")
+        this.props.history.push('/notifications')
+        console.log("history pushed")
         e.preventDefault()
         this.setState({ log_in: true, register: false })
+
     }
 
     closelog(e) {
