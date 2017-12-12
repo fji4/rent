@@ -44067,13 +44067,25 @@ var Home = function (_Component) {
 
         _this.state = {
             log_in: false,
+            logged_in: false,
+            registered: false,
             register: false,
-            user: {
+            login_user: {
+                password: '',
+                email: ''
+            },
+            register_user: {
+                name: '',
                 password: '',
                 email: ''
             },
             message: ''
         };
+        _this.checklogin = _this.checklogin.bind(_this);
+        _this.onSignupSubmit = _this.onSignupSubmit.bind(_this);
+        _this.onChangeEmailSignUp = _this.onChangeEmailSignUp.bind(_this);
+        _this.onChangePasswordSignUp = _this.onChangePasswordSignUp.bind(_this);
+        _this.onChangeNameSignUp = _this.onChangeNameSignUp.bind(_this);
         _this.onSubmit = _this.onSubmit.bind(_this);
         _this.showlog = _this.showlog.bind(_this);
         _this.closelog = _this.closelog.bind(_this);
@@ -44085,21 +44097,33 @@ var Home = function (_Component) {
     }
 
     _createClass(Home, [{
+        key: 'onChangeNameSignUp',
+        value: function onChangeNameSignUp(e) {
+            console.log("target is ", e);
+            var user = this.state.register_user;
+            console.log(e.target);
+            user.name = e.target.value;
+            this.setState({
+                register_user: user
+            });
+        }
+    }, {
         key: 'onChangeEmail',
         value: function onChangeEmail(e) {
-            var user = this.state.user;
+            console.log(e);
+            var user = this.state.login_user;
             user.email = e.target.value;
             this.setState({
-                user: user
+                login_user: user
             });
         }
     }, {
         key: 'onChangePassword',
         value: function onChangePassword(e) {
-            var user = this.state.user;
+            var user = this.state.login_user;
             user.password = e.target.value;
             this.setState({
-                user: user
+                login_user: user
             });
         }
     }, {
@@ -44107,10 +44131,11 @@ var Home = function (_Component) {
         value: function onSubmit(e) {
             var _this2 = this;
 
+            console.log("enter onSubmit");
             e.preventDefault();
 
-            var email = encodeURIComponent(this.state.user.email);
-            var password = encodeURIComponent(this.state.user.password);
+            var email = encodeURIComponent(this.state.login_user.email);
+            var password = encodeURIComponent(this.state.login_user.password);
             var formData = 'email=' + email + '&password=' + password;
 
             // create an AJAX request (This should probably done with Axios instead)
@@ -44121,8 +44146,10 @@ var Home = function (_Component) {
             xhr.addEventListener('load', function () {
                 if (xhr.status === 200) {
                     _this2.setState({
-                        message: 'Successfully logged in!'
+                        message: 'Successfully logged in!',
+                        logged_in: true
                     });
+                    console.log("set the state logged in to true");
                 } else {
                     _this2.setState({
                         message: 'Unable to log in'
@@ -44132,10 +44159,80 @@ var Home = function (_Component) {
             xhr.send(formData);
         }
     }, {
+        key: 'onSignupSubmit',
+        value: function onSignupSubmit(e) {
+            var _this3 = this;
+
+            console.log("onsignupsubmit");
+            e.preventDefault();
+
+            // create a string for an HTTP body message
+            var name = encodeURIComponent(this.state.register_user.name);
+            var email = encodeURIComponent(this.state.register_user.email);
+            var password = encodeURIComponent(this.state.register_user.password);
+            var formData = 'name=' + name + '&email=' + email + '&password=' + password;
+
+            // create an AJAX POST request (This should probably done with Axios instead)
+            var xhr = new XMLHttpRequest();
+            xhr.open('post', '/api/register');
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xhr.responseType = 'json';
+            xhr.addEventListener('load', function () {
+                if (xhr.status === 200) {
+                    console.log('The form is valid');
+                    _this3.setState({
+                        message: 'Registered!',
+                        logged_in: true
+                    });
+                } else {
+                    console.log('The form is invalid');
+                    _this3.setState({
+                        message: 'Unable to register'
+                    });
+                }
+            });
+            xhr.send(formData);
+        }
+    }, {
+        key: 'onChangeEmailSignUp',
+        value: function onChangeEmailSignUp(e) {
+            console.log("target is ", e);
+            var user = this.state.register_user;
+            console.log(e.target);
+            user.email = e.target.value;
+            this.setState({
+                register_user: user
+            });
+        }
+    }, {
+        key: 'onChangePasswordSignUp',
+        value: function onChangePasswordSignUp(e) {
+            var user = this.state.register_user;
+            user.password = e.target.value;
+            this.setState({
+                register_user: user
+            });
+        }
+    }, {
+        key: 'checklogin',
+        value: function checklogin(e) {
+            console.log("!!!!!!!!!!!!checklogin!!!!!!!!!!", this.state.logged_in);
+            e.preventDefault();
+            if (this.state.logged_in) {
+                console.log("looged in here");
+                this.props.history.push('/sublease');
+            } else {
+                console.log("show log modal");
+                e.preventDefault();
+                this.setState({ log_in: true, register: false });
+            }
+        }
+    }, {
         key: 'showlog',
         value: function showlog(e) {
             console.log("show log modal");
             e.preventDefault();
+
             this.setState({ log_in: true, register: false });
         }
     }, {
@@ -44198,7 +44295,7 @@ var Home = function (_Component) {
                         _react2.default.createElement(
                             'li',
                             null,
-                            _react2.default.createElement(SubButton, { showlog: this.showlog })
+                            _react2.default.createElement(SubButton, { showlog: this.showlog, checklogin: this.checklogin })
                         ),
                         _react2.default.createElement(
                             'li',
@@ -44233,7 +44330,7 @@ var Home = function (_Component) {
                                     null,
                                     'Email'
                                 ),
-                                _react2.default.createElement('input', { type: 'text', name: 'email', placeholder: 'email', onChange: this.onChangeEmail })
+                                _react2.default.createElement(_semanticUiReact.Input, { type: 'text', name: 'email', placeholder: 'email', onChange: this.onChangeEmail })
                             ),
                             _react2.default.createElement(
                                 'div',
@@ -44243,7 +44340,7 @@ var Home = function (_Component) {
                                     null,
                                     'Password'
                                 ),
-                                _react2.default.createElement('input', { type: 'text', name: 'password', placeholder: 'password', onChange: this.onChangePassword })
+                                _react2.default.createElement(_semanticUiReact.Input, { type: 'password', name: 'password', placeholder: 'password', onChange: this.onChangePassword })
                             ),
                             _react2.default.createElement(
                                 'p',
@@ -44297,7 +44394,7 @@ var Home = function (_Component) {
                         null,
                         _react2.default.createElement(
                             'form',
-                            { className: 'ui form' },
+                            { className: 'ui form', onSubmit: this.onSignupSubmit },
                             _react2.default.createElement(
                                 'div',
                                 { className: 'field' },
@@ -44306,7 +44403,7 @@ var Home = function (_Component) {
                                     null,
                                     'Username'
                                 ),
-                                _react2.default.createElement('input', { type: 'text', name: 'username', placeholder: 'username' })
+                                _react2.default.createElement(_semanticUiReact.Input, { type: 'text', name: 'username', placeholder: 'username', onChange: this.onChangeNameSignUp })
                             ),
                             _react2.default.createElement(
                                 'div',
@@ -44316,7 +44413,7 @@ var Home = function (_Component) {
                                     null,
                                     'Email'
                                 ),
-                                _react2.default.createElement('input', { type: 'text', name: 'email', placeholder: 'abc@mail.com' })
+                                _react2.default.createElement(_semanticUiReact.Input, { type: 'text', name: 'email', placeholder: 'abc@mail.com', onChange: this.onChangeEmailSignUp })
                             ),
                             _react2.default.createElement(
                                 'div',
@@ -44326,7 +44423,7 @@ var Home = function (_Component) {
                                     null,
                                     'Password'
                                 ),
-                                _react2.default.createElement('input', { type: 'text', name: 'password', placeholder: 'password' })
+                                _react2.default.createElement(_semanticUiReact.Input, { type: 'password', name: 'password', placeholder: 'password', onChange: this.onChangePasswordSignUp })
                             ),
                             _react2.default.createElement(
                                 'div',
@@ -44336,7 +44433,7 @@ var Home = function (_Component) {
                                     null,
                                     'Re-enter Password'
                                 ),
-                                _react2.default.createElement('input', { type: 'text', name: 're-password', placeholder: 'confirm password' })
+                                _react2.default.createElement(_semanticUiReact.Input, { type: 'password', name: 're-password', placeholder: 'confirm password' })
                             ),
                             _react2.default.createElement(
                                 'div',
@@ -44347,6 +44444,11 @@ var Home = function (_Component) {
                                     'Submit'
                                 )
                             )
+                        ),
+                        _react2.default.createElement(
+                            'p',
+                            null,
+                            this.state.message
                         ),
                         _react2.default.createElement(
                             'div',
@@ -44392,7 +44494,7 @@ var SubButton = function (_Component2) {
                 null,
                 _react2.default.createElement(
                     _semanticUiReact.Button,
-                    { className: 'theButtons', id: 'subb', onClick: this.props.showlog },
+                    { className: 'theButtons', id: 'subb', onClick: this.props.checklogin },
                     'Want to sublease'
                 )
             );

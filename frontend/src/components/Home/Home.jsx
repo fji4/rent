@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Card, Modal, Header } from 'semantic-ui-react'
+import { Button, Card, Modal, Header,Input } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
 import styles from './styles.scss'
@@ -9,13 +9,25 @@ class Home extends Component {
         super(props);
         this.state = {
             log_in: false,
+            logged_in: false,
+            registered: false,
             register: false,
-            user: {
+            login_user: {
+                password: '',
+                email: ''
+            },
+            register_user:{
+                name:'',
                 password: '',
                 email: ''
             },
             message: ''
         };
+        this.checklogin = this.checklogin.bind(this);
+        this.onSignupSubmit = this.onSignupSubmit.bind(this);
+        this.onChangeEmailSignUp = this.onChangeEmailSignUp.bind(this);
+        this.onChangePasswordSignUp = this.onChangePasswordSignUp.bind(this);
+        this.onChangeNameSignUp = this.onChangeNameSignUp.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
         this.showlog = this.showlog.bind(this);
         this.closelog = this.closelog.bind(this);
@@ -25,27 +37,43 @@ class Home extends Component {
         this.onChangePassword = this.onChangePassword.bind(this);
     }
 
-    onChangeEmail(e) {
-        const user = this.state.user;
-        user.email = e.target.value;
+
+
+
+    onChangeNameSignUp(e){
+        console.log("target is ",e);
+        const user = this.state.register_user;
+        console.log(e.target);
+        user.name = e.target.value;
         this.setState({
-            user
+            register_user: user
         })
     }
 
+
+    onChangeEmail(e) {
+        console.log(e);
+        const user = this.state.login_user;
+        user.email = e.target.value;
+        this.setState({
+            login_user:user
+        });
+    }
+
     onChangePassword(e) {
-        const user = this.state.user;
+        const user = this.state.login_user;
         user.password = e.target.value;
         this.setState({
-            user
+            login_user:user
         })
     }
 
     onSubmit(e) {
+        console.log("enter onSubmit");
         e.preventDefault();
 
-        const email = encodeURIComponent(this.state.user.email);
-        const password = encodeURIComponent(this.state.user.password);
+        const email = encodeURIComponent(this.state.login_user.email);
+        const password = encodeURIComponent(this.state.login_user.password);
         const formData = `email=${email}&password=${password}`;
 
         // create an AJAX request (This should probably done with Axios instead)
@@ -56,8 +84,10 @@ class Home extends Component {
         xhr.addEventListener('load', () => {
             if (xhr.status === 200) {
                 this.setState({
-                    message: 'Successfully logged in!'
+                    message: 'Successfully logged in!',
+                    logged_in: true
                 })
+                console.log("set the state logged in to true");
             } else {
                 this.setState({
                     message: 'Unable to log in'
@@ -67,9 +97,76 @@ class Home extends Component {
         xhr.send(formData);
     }
 
+
+
+    onSignupSubmit(e){
+        console.log("onsignupsubmit");
+        e.preventDefault();
+
+        // create a string for an HTTP body message
+        const name = encodeURIComponent(this.state.register_user.name);
+        const email = encodeURIComponent(this.state.register_user.email);
+        const password = encodeURIComponent(this.state.register_user.password);
+        const formData = `name=${name}&email=${email}&password=${password}`;
+
+        // create an AJAX POST request (This should probably done with Axios instead)
+        const xhr = new XMLHttpRequest();
+        xhr.open('post', '/api/register');
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.responseType = 'json';
+        xhr.addEventListener('load', () => {
+            if (xhr.status === 200) {
+                console.log('The form is valid');
+                this.setState({
+                    message: 'Registered!',
+                    logged_in: true
+                })
+            } else {
+                console.log('The form is invalid');
+                this.setState({
+                    message: 'Unable to register'
+                })
+            }
+        });
+        xhr.send(formData);
+    }
+
+    onChangeEmailSignUp(e){
+            console.log("target is ",e);
+            const user = this.state.register_user;
+            console.log(e.target);
+            user.email = e.target.value;
+            this.setState({
+                register_user: user
+            })
+    }
+
+    onChangePasswordSignUp(e) {
+        const user = this.state.register_user;
+        user.password = e.target.value;
+        this.setState({
+            register_user: user
+        })
+    }
+
+    checklogin(e){
+        console.log("!!!!!!!!!!!!checklogin!!!!!!!!!!",this.state.logged_in);
+        e.preventDefault();
+        if(this.state.logged_in){
+            console.log("looged in here");
+            this.props.history.push('/sublease');
+        }else{
+            console.log("show log modal");
+            e.preventDefault();
+            this.setState({ log_in: true, register: false });
+        }
+    }
+
+
     showlog(e) {
         console.log("show log modal")
         e.preventDefault()
+
         this.setState({ log_in: true, register: false })
     }
 
@@ -114,7 +211,7 @@ class Home extends Component {
                 </div>
                 <div className="content">
                     <ul>
-                        <li><SubButton showlog={this.showlog} /></li>
+                        <li><SubButton showlog={this.showlog} checklogin = {this.checklogin} /></li>
                         <li><RentButton /></li>
                     </ul>
                 </div>
@@ -129,13 +226,13 @@ class Home extends Component {
                         <form className="ui form" onSubmit = {this.onSubmit}>
                             <div className="field">
                                 <label>Email</label>
-                                <input type="text" name="email" placeholder="email" onChange={this.onChangeEmail}>
-                                </input>
+                                <Input type="text" name="email" placeholder="email" onChange={this.onChangeEmail}>
+                                </Input>
                             </div>
                             <div className="field">
                                 <label>Password</label>
-                                <input type="text" name="password" placeholder="password" onChange={this.onChangePassword}>
-                                </input>
+                                <Input type="password" name="password" placeholder="password" onChange={this.onChangePassword}>
+                                </Input>
                             </div>
                             <p>{this.state.message}</p>
                             <div>
@@ -157,31 +254,32 @@ class Home extends Component {
                     <Modal.Header>Register</Modal.Header>
                     <i className="close icon" onClick={this.closeregister}></i>
                     <Modal.Content>
-                        <form className="ui form">
+                        <form className="ui form" onSubmit={this.onSignupSubmit}>
                             <div className="field">
                                 <label>Username</label>
-                                <input type="text" name="username" placeholder="username">
-                                </input>
+                                <Input type="text" name="username" placeholder="username" onChange={this.onChangeNameSignUp}>
+                                </Input>
                             </div>
                             <div className="field">
                                 <label>Email</label>
-                                <input type="text" name="email" placeholder="abc@mail.com">
-                                </input>
+                                <Input type="text" name="email" placeholder="abc@mail.com" onChange={this.onChangeEmailSignUp}>
+                                </Input>
                             </div>
                             <div className="field">
                                 <label>Password</label>
-                                <input type="text" name="password" placeholder="password">
-                                </input>
+                                <Input type="password" name="password" placeholder="password" onChange={this.onChangePasswordSignUp}>
+                                </Input>
                             </div>
                             <div className="field">
                                 <label>Re-enter Password</label>
-                                <input type="text" name="re-password" placeholder="confirm password">
-                                </input>
+                                <Input type="password" name="re-password" placeholder="confirm password">
+                                </Input>
                             </div>
                             <div>
                                 <button className="ui button" type="submit">Submit</button>
                             </div>
                         </form>
+                        <p>{this.state.message}</p>
                         <div className="reg">
                             <div> Already have an account? </div>
                             <div><Button onClick={this.showlog}>log in</Button></div>
@@ -246,7 +344,7 @@ class Home extends Component {
 class SubButton extends Component {
     render() {
         return (
-            <div><Button className="theButtons" id="subb" onClick={this.props.showlog}>Want to sublease</Button></div>
+            <div><Button className="theButtons" id="subb" onClick={this.props.checklogin}>Want to sublease</Button></div>
         )
     }
 }

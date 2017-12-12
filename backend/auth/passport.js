@@ -39,16 +39,16 @@ module.exports = function(passport) {
 
                     newUser.local.email = email;
                     newUser.local.password = newUser.generateHash(password);
-                    newUser.local.userPic = req.param.userPic;
-                    newUser.local.name = req.param.name;
-                    newUser.local.description = req.param.description;
-                    newUser.local.ownedApt = req.param.ownedApt;
-                    newUser.local.userPic = req.param.userPic;
-                    //     name        : String,
-                    //     description : String,
-                    //     ownedApt   : {type:[String],default: []},
-                    // wishList    : {type:[String],default: []},
-                    // userPic     : String
+                    // newUser.local.userPic = req.param.userPic;
+                    // newUser.local.name = req.param.name;
+                    // newUser.local.description = req.param.description;
+                    // newUser.local.ownedApt = req.param.ownedApt;
+                    // newUser.local.userPic = req.param.userPic;
+                    // //     name        : String,
+                    // //     description : String,
+                    // //     ownedApt   : {type:[String],default: []},
+                    // // wishList    : {type:[String],default: []},
+                    // // userPic     : String
                     newUser.save(function (err) {
                         if(err)
                             throw err;
@@ -73,7 +73,6 @@ module.exports = function(passport) {
             } else if ( !user || !user.validPassword(password) ) {
                 return done(null, false);
             }
-
             return done(null, user);
         });
     }));
