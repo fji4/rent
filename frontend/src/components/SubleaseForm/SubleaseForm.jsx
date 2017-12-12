@@ -4,7 +4,7 @@ import { Input,Form,TextArea,Dropdown } from 'semantic-ui-react'
 // import {Navbar, Nav, NavItem, Button, Glyphicon} from 'react-bootstrap'
 // import Sidebar from 'react-bootstrap-sidebar'
 
-
+import axios,{ post } from 'axios';
 require('./SubleaseForm.scss');
 
 class SubleaseForm extends Component {
@@ -169,6 +169,75 @@ class LeftBar extends Component {
     }
 }
 
+class ImageForm extends Component {
+    constructor(props) {
+        super(props);
+        this.state ={
+            file:null
+        }
+        this.onFormSubmit = this.onFormSubmit.bind(this)
+        this.onChange = this.onChange.bind(this)
+        this.fileUpload = this.fileUpload.bind(this)
+    }
+    onFormSubmit(e){
+        e.preventDefault() // Stop form submit
+        this.fileUpload(this.state.file).then((response)=>{
+            console.log(response.data);
+        })
+    }
+    onChange(e) {
+        this.setState({file:e.target.files[0]})
+    }
+    fileUpload(file){
+        const url = '/image';
+        const formData = new FormData();
+        formData.append('file',file)
+        const config = {
+            headers: {
+                'content-type': 'multipart/form-data'
+            }
+        }
+        return  post(url, formData,config)
+    }
+    // handleFileUpload({ file }) {
+    //     // const file = files[0];
+    //     // this.uploadRequest({
+    //     //     file,
+    //     //
+    //     // })
+    //     console.log(file, "input is ----");
+    //     let formData = new FormData();    //formdata object
+    //
+    //     formData.append('file', file);   //append the values with key, value pair
+    //     //formData.append('name', name);
+    //
+    //     const config = {
+    //         headers: { 'content-type': 'multipart/form-data' }
+    //     }
+    //
+    //     axios.post('/image', formData, config)
+    //         .then(response => {
+    //             console.log(response);
+    //         })
+    //         .catch(error => {
+    //             console.log(error);
+    //         });
+    // }
+
+    render() {
+        return (
+
+        <form onSubmit={this.onFormSubmit}>
+            <h1>File Upload</h1>
+            <input type="file" onChange={this.onChange} />
+            <button type="submit">Upload</button>
+        </form>
+
+        )
+
+    }
+}
+
 class Sublease extends Component {
     render(){
         const options = [
@@ -199,10 +268,11 @@ class Sublease extends Component {
                     <Form.Input label = "price" placeholder = "price" />
                     {/*<Form.Input label = "description" placeholder = "description"/>*/}
                     <Form.Field control={TextArea} label='description' placeholder='Tell us more about the apartment...' />
-                    <Form.Input type="file" name="img" multiple />
-                    <form className="uploader" encType="multipart/form-data">
-                        <input type="file" id="file" />
-                    </form>
+                    {/*<Form.Input type="file" name="img" multiple />*/}
+                    {/*<form className="uploader" encType="multipart/form-data">*/}
+                        {/*<input type="file" id="file" />*/}
+                    {/*</form>*/}
+                    <ImageForm />
 
                     <br/>
                     <Form.Checkbox label='I agree to the Terms and Conditions'  />
@@ -216,5 +286,7 @@ class Sublease extends Component {
         )
     }
 }
+//
+
 
 export default SubleaseForm
