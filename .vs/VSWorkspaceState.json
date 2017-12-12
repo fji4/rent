@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\backend",
+    "\\backend\\auth",
+    "\\backend\\models",
+    "\\backend\\routes",
+    "\\backend\\static",
+    "\\frontend",
+    "\\frontend\\src",
+    "\\frontend\\src\\components",
+    "\\frontend\\src\\components\\Account"
+  ],
+  "SelectedNode": "\\index.js",
+  "PreviewInSolutionExplorer": false
+}
