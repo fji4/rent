@@ -1,11 +1,13 @@
 import React, { Component } from 'react'
 import { Item } from 'semantic-ui-react'
-import { Input,Menu,Form,TextArea,Dropdown } from 'semantic-ui-react'
+import { Input, Menu, Form, TextArea, Dropdown } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
+
 require('./WatchList.scss')
 
 
-class WatchList extends Component{
-    constructor(props){
+class WatchList extends Component {
+    constructor(props) {
         super(props);
         this.state = {
             activeItem: 'home'
@@ -15,22 +17,67 @@ class WatchList extends Component{
     }
 
     handleItemClick(e, { name }) {
-        this.setState({activeItem: name})
+        this.setState({ activeItem: name })
     }
-    render(){
-        return(
-          <div className = 'list'>
-              <Nav activeItem = {this.state.activeItem}
-                   handleItemClick = {this.handleItemClick}/>
-              <h1>Watching List</h1>
-             <List />
-          </div>
+    render() {
+        return (
+            <div className='everything_watchlist'>
+                {
+                    //<Nav activeItem={this.state.activeItem}
+                    //    handleItemClick={this.handleItemClick} />
+                    //<h1>Watching List</h1>
+                    //<List />
+                }
+                <div id="everything">
+                    <div id="navBar">
+                        <h1> Subleasing </h1>
+                        <div> <img src={'http://tc.sinaimg.cn/maxwidth.800/tc.service.weibo.com/static_jinrongbaguanv_com/5886a925e3bd5fc2a3adf8f9a36324c8.png'}
+                            alt="fairy" /> </div>
+                        <div> Welcome back! wuzaiyunshang</div>
+                        <div> Search </div>
+                        <div>
+                            <Link to={{ pathname: "/" }} >
+                                Home
+                        </Link>
+                        </div>
+
+                    </div>
+
+                    <div id="sideBar">
+                        <div className="touXiang">
+                            <img src={'http://tc.sinaimg.cn/maxwidth.800/tc.service.weibo.com/static_jinrongbaguanv_com/5886a925e3bd5fc2a3adf8f9a36324c8.png'}
+                                alt="fairy" />
+                            <ul>
+                                <li>welcome back! wuzaiyunshang</li>
+                                <li>email: jjj@shi.com</li>
+                                <li>tel: 88888888</li>
+                            </ul>
+                        </div>
+                        <ul>
+                            <li><div><Link to="/Account">History</Link></div></li>
+                            <li><div><Link to="/watchlist">Watchlist</Link></div></li>
+                            <li><div><Link to="/personalInfo">Personal Info</Link></div></li>
+                            <li><div><Link to="/Notifications">Notification</Link></div></li>
+                        </ul>
+                    </div>
+                    <div className="acc_content">
+                        <h1 id="contentTitle">
+                            Watchlist:
+                        </h1>
+                        <div id="housesWatching">
+                            <Houselist />
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
         );
     }
 }
 
 
-class Nav extends Component{
+class Nav extends Component {
     render() {
         const { activeItem } = this.props.activeItem;
 
@@ -45,7 +92,7 @@ class Nav extends Component{
                     </Menu.Item>
                     {/*<Menu.Item  onClick={this.props.handleItemClick}>*/}
 
-                    <Dropdown icon='user' pointing = 'right' className='link item'>
+                    <Dropdown icon='user' pointing='right' className='link item'>
 
                         <Dropdown.Menu>
                             <Dropdown.Item>Username</Dropdown.Item>
@@ -70,9 +117,9 @@ class Nav extends Component{
 
 
 
-class List extends Component{
-    render(){
-        return(
+class Houselist extends Component {
+    render() {
+        return (
 
             <Item.Group divided>
                 <Item>
