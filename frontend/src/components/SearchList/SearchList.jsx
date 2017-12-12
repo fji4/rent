@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import { Button, Card, Input,Icon,Checkbox, Menu, Dropdown } from 'semantic-ui-react'
+import { Button, Card, Input,Icon,Checkbox, Menu, Dropdown, Form, Select } from 'semantic-ui-react'
 import { Link, withRouter } from 'react-router-dom';
 import {Redirect, browserHistory} from 'react-router';
 import * as axios from 'axios';
-
-import 'semantic-ui-css/semantic.min.css'
+import InputRange from 'react-input-range';
+import 'react-input-range/lib/css/index.css';
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
 const { MarkerClusterer } = require("react-google-maps/lib/components/addons/MarkerClusterer");
 import styles from './SearchList.scss'
@@ -81,7 +81,8 @@ class SearchList extends Component {
             term: "",
             rate: "1",
             asc:"1",
-            position:[]
+            position:[],
+            value: {min: 0, max: 2000}
 
         };
         this.sortVideosAsc = this.sortVideosAsc.bind(this);
@@ -270,21 +271,21 @@ class SearchList extends Component {
         )
     }
 
-    render() {
 
+    render() {
         return(
 
              <body>
                 <header>
-                    <Menu fluid size="massive" className="detailnav">
+                    <Menu fluid borderless size="massive" className="detailnav">
                         <Menu.Item>
                             <Link to="/">
-                                <Icon size="large" name='home'/>
+                                <Icon name='home'/>
                             </Link>
                         </Menu.Item>
 
-                        <Menu.Menu id="filternav" position="left">
-                            <div className="period">
+                        <Menu.Menu className="periodnav">
+                            <Menu.Item className="period">
                             <Input
                                 value={this.state.term}
                                 onChange={event => this.onInputChange(event.target.value)}
@@ -296,9 +297,9 @@ class SearchList extends Component {
                                 <option value='Spring 2019' />
                                 <option value='Fall 2019' />
                             </datalist>
-                            </div>
+                            </Menu.Item>
 
-                            <div className="period">
+                            <Menu.Item  className="period">
                             <Input  label= 'End Semester' list='dates' placeholder='End Date' />
                             <datalist id='semesters'>
                                 <option value='Spring 2018' />
@@ -307,9 +308,9 @@ class SearchList extends Component {
                                 <option value='Spring 2019' />
                                 <option value='Fall 2019' />
                             </datalist>
-                            </div>
+                            </Menu.Item>
 
-                            <div className="period">
+                            <Menu.Item  className="period">
                             <Input label= 'Area'  list='areas'placeholder='Area' />
                             <datalist id='areas'>
                                 <option value='North Campus' />
@@ -318,16 +319,16 @@ class SearchList extends Component {
                                 <option value='off Campus' />
 
                             </datalist>
-                            </div>
+                            </Menu.Item>
 
-                            <div className="period">
+                            <Menu.Item className="period">
                                 <Button>Submit</Button>
-                            </div>
+                            </Menu.Item>
                         </Menu.Menu>
 
                         <Menu.Item position="right">
                             <Link to="/account">
-                                <Icon size="large" name='user'/>
+                                <Icon  name='user'/>
                             </Link>
                         </Menu.Item>
                     </Menu>
@@ -344,26 +345,25 @@ class SearchList extends Component {
                             <div className='grouped fields'>
                             <div className='field'>
                                 <div className='filters'>
-                                  <Checkbox label='Prices Low to High' size='big' />
 
+                                  {/*<Checkbox label='Prices Low to High' size='big' />*/}
+                                    <div>Price Range</div>
+                                    <br/>
+                                    <InputRange
+                                        formatLabel={value => `${value}$`}
+                                        step={100}
+                                        maxValue={2000}
+                                        minValue={0}
+                                        value={this.state.value}
+                                        onChange={value => this.setState({ value })} />
                                 </div>
                             </div>
-                             <div className ='field'>
-                                <div className='female'>
-                                   <Checkbox label=' female only' size='big'/>
+                                <br/>
 
+                                <div className ='field' id="genderdrop">
+                                    <Form.Field control={Select} label='Gender' options={options} placeholder='Gender' />
                                 </div>
-                             </div>
-                                <div className ='field'>
-                                    <div className='male'>
-                                        <Checkbox label='male only' size='big'/>
-                                    </div>
-                                </div>
-                                <div className ='field'>
-                                    <div className='gender not specified'>
-                                        <Checkbox label='gender not specified' size='big'/>
-                                    </div>
-                                </div>
+
                             </div>
 
                         </div>
@@ -381,5 +381,10 @@ class SearchList extends Component {
     }
 }
 
+const options = [
+    { key: 'm', text: 'Male Only', value: 'male' },
+    { key: 'f', text: 'Female Only', value: 'female' },
+    { key: 'n', text: 'Gender not Specified', value: 'neither' },
+]
 
 export default SearchList

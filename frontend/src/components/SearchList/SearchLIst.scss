@@ -65,7 +65,9 @@ body {
 
 /* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
 @media (max-width: 600px) {
-  .column.small, .column.large{
+  //.column.small, .column.large{
+  //  width: 100%;
+  body {
     width: 100%;
   }
 }
@@ -82,13 +84,16 @@ body {
   margin-left: 50%;
 }
 
-#filternav {
-  height: 50%;
-  margin: auto;
-  font-size: 15px;
+.periodnav {
+  text-align: center;
+
 }
 
 .period {
-  display: block;
-  padding-left: 2%;
+  display: inline-block;
+  font-size: 12px;
+}
+
+#genderdrop {
+  height: 200px;
 }

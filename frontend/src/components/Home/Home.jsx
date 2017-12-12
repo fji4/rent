@@ -240,7 +240,7 @@ class Home extends Component {
 
             </div>
         )
-    } 
+    }
 }
 
 class SubButton extends Component {
