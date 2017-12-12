@@ -43,9 +43,15 @@ app.route('/watchlist').get(function(req,res) {
 });
 app.route('/list').get(function(req,res) {
     return res.sendFile(path.join(__dirname, './backend/static/index.html'));
-});
 
-
+})
+app.route('/account').get(function (req, res) {
+    return res.sendFile(path.join(__dirname, './backend/static/index.html'));
+})
+app.route('/notifications').get(function (req, res) {
+    return res.sendFile(path.join(__dirname, './backend/static/index.html'));
+})
+ 
 
 /* New things ================================================================ */
 
