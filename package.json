@@ -14,19 +14,30 @@
     "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
     "cookie-parser": "^1.4.3",
+    "connect-flash" : "~0.1.1",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
     "jsonwebtoken": "^8.1.0",
     "mongoose": "^4.13.2",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
-    "react": "^16.1.0",
-    "react-dom": "^16.1.0",
+    "passport-facebook" : "~2.1.1",
+    "passport-google-oauth20" : "~1.0.0",
+    "react": "^16.2.0",
+    "react-bootstrap": "^0.31.5",
+    "react-datepicker": "^0.61.0",
+    "react-dom": "^16.2.0",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "react-tap-event-plugin": "^3.0.2",
     "semantic-ui-react": "^0.76.0",
     "validator": "^9.1.1"
+  },
+  "babel": {
+    "presets": [
+      "es2015",
+      "react"
+    ]
   },
   "devDependencies": {
     "autoprefixer": "^7.1.6",
