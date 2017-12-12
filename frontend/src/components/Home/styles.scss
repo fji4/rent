@@ -12,7 +12,7 @@
     opacity: 0.95;
 }
 
-.Home h1{
+.Home h1 {
     margin: 0 auto;
     font-size: 40px;
     font-weight: bold;
@@ -32,7 +32,6 @@
     float: right;
     text-align: center;
     margin-top: 10px;
-
 }
 
 .home_acc div {
@@ -46,14 +45,14 @@
     padding-top: 4px;
     font-size: small;
     background-color: rgba(255, 255, 255, 0.15);
-    font-weight:900;
+    font-weight: 900;
 }
 
 
 //.content {
-  //  min-height: 150px;
-    /*background-image: url('http://blog.apartmenthunterz.com/wp-content/uploads/2014/02/bigstock-Los-Angeles-At-Night-40568431.jpg');*/
-    /*background-image: url('http://eskipaper.com/images/bokeh-lights-night-city-1.jpg');
+//  min-height: 150px;
+/*background-image: url('http://blog.apartmenthunterz.com/wp-content/uploads/2014/02/bigstock-Los-Angeles-At-Night-40568431.jpg');*/
+/*background-image: url('http://eskipaper.com/images/bokeh-lights-night-city-1.jpg');
     background-size: auto;
     background-clip: content-box;
     background-size: 130% auto;
@@ -66,7 +65,8 @@
 .content ul {
     margin-left: 5%;
     padding-top: 100px;
-    padding-bottom: 130px;
+    padding-bottom: 40%;
+    background-color: rgba(0, 0, 0, 0.00);
 }
 
 .content li {
@@ -82,7 +82,7 @@
     background: rgba(227, 253, 253, 0.11);
 }
 
-.but{
+.but {
     padding-left: 25%;
 }
 
@@ -99,26 +99,28 @@
     display: none;
 }
 
-.Model form div{
+.Model form div {
     padding-top: 5px;
     text-align: center;
     margin: auto;
 }
 
-.Model form div label{
+.Model form div label {
     margin-top: 5px;
-} 
+}
 
-.reg div{
+.reg {
+    padding-top: 10px;
+}
+
+.reg div {
     font-size: inherit;
     display: inline;
     padding-right: 7px;
 }
 
-.register{
-}
 
-.margin{
+.margin {
     width: 10%;
     max-width: 60px;
     min-width: 20px;
@@ -129,7 +131,7 @@
     color: #1f91a9;
 }
 
-.content img{
+.content img {
     width: 100%;
 }
 

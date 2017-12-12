@@ -1,61 +1,15 @@
-import React, { Component } from 'react'
+﻿import React, { Component } from 'react'
 import { Item, Tab, List } from 'semantic-ui-react'
 import { Input, Menu, Form, TextArea, Dropdown } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
-require('./Account.scss');
+require('./Notifications.scss');
 
 
-class Account extends Component {
+class Notifications extends Component {
 
     render() {
-        const panes = [
-            {
-                menuItem: 'Subleasing', render: () => <Tab.Pane attached={false}>Tab 1 Content
-                <div className="content1">
-                        <Item.Group divided>
-                            <Item>
-                                <Item.Image size='tiny' src='https://www.americanflex.com.br/skin/adminhtml/default/default/lib/jlukic_semanticui/examples/assets/images/wireframe/image.png' />
-                                <Item.Content verticalAlign='middle'>Content A</Item.Content>
-                            </Item>
-
-                            <Item>
-                                <Item.Image size='tiny' src='https://www.americanflex.com.br/skin/adminhtml/default/default/lib/jlukic_semanticui/examples/assets/images/wireframe/image.png' />
-                                <Item.Content verticalAlign='middle'>Content B</Item.Content>
-                            </Item>
-
-                            <Item>
-                                <Item.Image size='tiny' src='https://www.americanflex.com.br/skin/adminhtml/default/default/lib/jlukic_semanticui/examples/assets/images/wireframe/image.png' />
-                                <Item.Content content='Content C' verticalAlign='middle' />
-                            </Item>
-                        </Item.Group>
-                    </div>
-                </Tab.Pane>
-            },
-            {
-                menuItem: 'Completed', render: () => <Tab.Pane attached={false}>Tab 2 Content
-                <div className="content2">
-                        <Item.Group divided>
-                            <Item>
-                                <Item.Image size='tiny' src='https://www.americanflex.com.br/skin/adminhtml/default/default/lib/jlukic_semanticui/examples/assets/images/wireframe/image.png' />
-                                <Item.Content verticalAlign='middle'>Content A</Item.Content>
-                            </Item>
-
-                            <Item>
-                                <Item.Image size='tiny' src='https://www.americanflex.com.br/skin/adminhtml/default/default/lib/jlukic_semanticui/examples/assets/images/wireframe/image.png' />
-                                <Item.Content verticalAlign='middle'>Content B</Item.Content>
-                            </Item>
-
-                            <Item>
-                                <Item.Image size='tiny' src='https://www.americanflex.com.br/skin/adminhtml/default/default/lib/jlukic_semanticui/examples/assets/images/wireframe/image.png' />
-                                <Item.Content content='Content C' verticalAlign='middle' />
-                            </Item>
-                        </Item.Group>
-                    </div>
-                </Tab.Pane>
-            },
-            { menuItem: 'Tab 3', render: () => <Tab.Pane attached={false}>Tab 3 Content</Tab.Pane> },
-        ]
+        
         return (
             <div id="everything">
                 <div id="navBar">
@@ -66,7 +20,7 @@ class Account extends Component {
                     <div> Search </div>
                     <div>
                         <Link to={{ pathname: "/" }} >
-                            Home
+                        Home
                         </Link>
                     </div>
 
@@ -89,7 +43,7 @@ class Account extends Component {
                         <li><div><Link to="/Notifications">Notification</Link></div></li>
                     </ul>
                 </div>
-
+                 
                 <div className="acc_content">
                     {
                         //<h1 id="contentTitle">
@@ -99,7 +53,14 @@ class Account extends Component {
                         //    <Houselist />
                         //</div>
                     }
-                    <Tab menu={{ secondary: true, pointing: true }} panes={panes} />
+                    <div> Notifications</div>
+                    <div>
+                        <ul>
+                            <li>good</li>
+                            <li>message</li>
+                        </ul>
+                    </div>
+
                 </div>
             </div>
         )
@@ -130,4 +91,4 @@ class Houselist extends Component {
     }
 }
 
-export default Account
+export default Notifications

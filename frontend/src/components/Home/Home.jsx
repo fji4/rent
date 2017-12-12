@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Button, Card, Modal, Header} from 'semantic-ui-react'
+import { Button, Card, Modal, Header } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
 import styles from './styles.scss'
@@ -21,7 +21,7 @@ class Home extends Component {
     showlog(e) {
         console.log("show log modal")
         e.preventDefault()
-        this.setState({ log_in: true , register: false })
+        this.setState({ log_in: true, register: false })
     }
 
     closelog(e) {
@@ -33,7 +33,7 @@ class Home extends Component {
     showregister(e) {
         console.log("show register modal")
         e.preventDefault()
-        this.setState({ register: true , log_in: false })
+        this.setState({ register: true, log_in: false })
     }
 
     closeregister(e) {
@@ -176,16 +176,16 @@ class Home extends Component {
                 }
 
                 {
-    //                <form>
-    //                    <label>
-    //                        Name:
-    //<input type="text" name="name" />
-    //                    </label>
-    //                    <input type="submit" value="Submit" />
-    //                </form>
-                //    <div className="Model" id="register">
-                //    register
-                //</div>
+                    //                <form>
+                    //                    <label>
+                    //                        Name:
+                    //<input type="text" name="name" />
+                    //                    </label>
+                    //                    <input type="submit" value="Submit" />
+                    //                </form>
+                    //    <div className="Model" id="register">
+                    //    register
+                    //</div>
                 }
 
             </div>
@@ -232,3 +232,6 @@ export default Home
 
 //    <br />
 //</Card>}
+
+
+//if want to do full page: https://github.com/subtirelumihail/react-fullpage
