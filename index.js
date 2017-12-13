@@ -18,7 +18,20 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(bodyParser.json());
+////////
 
+var allowCrossDomain = function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept");
+    res.header("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS");
+    next();
+};
+app.use(allowCrossDomain);
+
+
+
+
+//////////
 // Static routes
 app.route('/').get(function(req, res) {
   return res.sendFile(path.join(__dirname, './backend/static/index.html'));
@@ -52,17 +65,13 @@ app.route('/notifications').get(function (req, res) {
     return res.sendFile(path.join(__dirname, './backend/static/index.html'));
 })
 
+app.route('/searchlist').get(function (req, res) {
+    return res.sendFile(path.join(__dirname, './backend/static/index.html'));
+})
+app.route('/detail').get(function (req, res) {
+    return res.sendFile(path.join(__dirname, './backend/static/index.html'));
+})
 
-app.route('/account').get(function(req,res) {
-    return res.sendFile(path.join(__dirname, './backend/static/index.html'));
-})
-app.route('/searchlist').get(function(req,res) {
-    return res.sendFile(path.join(__dirname, './backend/static/index.html'));
-})
-
-app.route('/detail').get(function(req,res) {
-    return res.sendFile(path.join(__dirname, './backend/static/index.html'));
-})
 
 /* New things ================================================================ */
 
@@ -82,6 +91,38 @@ app.use(passport.session());
 
 // Get our routes
 app.use('/api', require('./backend/routes/api')(router, passport));
+
+///// test image route
+app.use('/image', require('./backend/routes/imageroute'));
+
+var imgroutes= require('./backend/routes/imageroute');
+//URL : http://localhost:3000/images/
+// To get all the images/files stored in MongoDB
+app.get('/images', function(req, res) {
+//calling the function from index.js class using routes object..
+    imgroutes.getImages(function(err, genres) {
+        if (err) {
+            throw err;
+
+        }
+        res.json(genres);
+
+    });
+});
+
+// URL : http://localhost:3000/images/(give you collectionID)
+// To get the single image/File using id from the MongoDB
+app.get('/images/:id', function(req, res) {
+
+//calling the function from index.js class using routes object..
+    imgroutes.getImageById(req.params.id, function(err, genres) {
+        if (err) {
+            throw err;
+        }
+//res.download(genres.path);
+        res.send(genres.path)
+    });
+});
 
 /* =========================================================================== */
 

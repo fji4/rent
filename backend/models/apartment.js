@@ -17,4 +17,9 @@ var apartmentSchema = mongoose.Schema({
 
 });
 
+<<<<<<< HEAD
 module.exports= mongoose.model('Apartment',apartmentSchema);
+=======
+module.exports= mongoose.model('Apartment',apartmentSchema);
+
+>>>>>>> notShaking

@@ -12,19 +12,29 @@ module.exports = function(router, passport) {
     });
 
     router.post('/register',
+<<<<<<< HEAD
         passport.authenticate('local-signup'),
             // {
         //     successRedirect : '/sublease', // redirect to the secure profile section
         //     failureRedirect : '/', // redirect back to the signup page if there is an error
         //     failureFlash : true // allow flash messages
         // }),
+=======
+        passport.authenticate('local-signup',
+            {
+
+                successRedirect: '/',
+                failureRedirect: '/register',
+                failureFlash: true
+            }),
+>>>>>>> notShaking
         function(req, res) {
             res.status(200).json({ user: req.user.email
             });
         });
 
     router.post('/login',
-        passport.authenticate('local-login'),
+        passport.authenticate('local-login',
         function(req, res) {
             console.log(req.isAuthenticated());
             res.status(200).json({ user: req.user
@@ -32,6 +42,11 @@ module.exports = function(router, passport) {
 
         });
 
+<<<<<<< HEAD
+=======
+    }));
+
+>>>>>>> notShaking
 
 
     router.get('/profile',
@@ -346,20 +361,32 @@ module.exports = function(router, passport) {
 
 
     idRoute.put(function(req,res) {
+<<<<<<< HEAD
         if (!req.body.local.name) {
+=======
+        if (!req.body.name) {
+>>>>>>> notShaking
             return res.status(500).send({
                 message: "Name is required",
                 data: []
             });
         }
+<<<<<<< HEAD
         if (!req.body.local.email) {
+=======
+        if (!req.body.email) {
+>>>>>>> notShaking
             return res.status(500).send({
                 message: "email is required",
                 data: []
             });
         }
 
+<<<<<<< HEAD
         User.findOne({email: req.body.local.email}, function (err, user) {
+=======
+        User.findOne({email: req.body.email}, function (err, user) {
+>>>>>>> notShaking
             if (err) {
                 return res.status(500).send({
                     message: err,
@@ -389,6 +416,7 @@ module.exports = function(router, passport) {
 
 
                         if (req.body.name) {
+<<<<<<< HEAD
                             user.name = req.body.local.name;
                         }
                         if (req.body.description) {
@@ -402,6 +430,21 @@ module.exports = function(router, passport) {
                         }
                         if (req.body.userPic) {
                             user.userPic = req.body.local.userPic;
+=======
+                            user.name = req.body.name;
+                        }
+                        if (req.body.description) {
+                            user.description = req.body.description;
+                        }
+                        if (req.body.wishList) {
+                            user.wishList = req.body.wishList;
+                        }
+                        if (req.body.ownedApt) {
+                            user.ownedApt = req.body.ownedApt;
+                        }
+                        if (req.body.userPic) {
+                            user.userPic = req.body.userPic;
+>>>>>>> notShaking
                         }
 
                         user.save(function (err) {

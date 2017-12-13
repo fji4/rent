@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 var bcrypt = require('bcrypt');
 
 var userSchema = mongoose.Schema({
+<<<<<<< HEAD
     local : {   email		: String,
                 password	: String,
                 name        : String,
@@ -22,6 +23,16 @@ var userSchema = mongoose.Schema({
         // token        : String,
         name         : String,
         email        : String
+=======
+    local: {
+        email: String,
+        password	: String,
+        name        : String,
+        ownedApt   : {type:[String],default: []},
+        wishList    : {type:[String],default: []},
+        userPic     : String
+
+>>>>>>> notShaking
     }
 });
 
