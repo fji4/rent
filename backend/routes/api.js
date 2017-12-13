@@ -12,29 +12,19 @@ module.exports = function(router, passport) {
     });
 
     router.post('/register',
-<<<<<<< HEAD
         passport.authenticate('local-signup'),
-            // {
+        // {
         //     successRedirect : '/sublease', // redirect to the secure profile section
         //     failureRedirect : '/', // redirect back to the signup page if there is an error
         //     failureFlash : true // allow flash messages
         // }),
-=======
-        passport.authenticate('local-signup',
-            {
-
-                successRedirect: '/',
-                failureRedirect: '/register',
-                failureFlash: true
-            }),
->>>>>>> notShaking
         function(req, res) {
             res.status(200).json({ user: req.user.email
             });
         });
 
     router.post('/login',
-        passport.authenticate('local-login',
+        passport.authenticate('local-login'),
         function(req, res) {
             console.log(req.isAuthenticated());
             res.status(200).json({ user: req.user
@@ -42,11 +32,6 @@ module.exports = function(router, passport) {
 
         });
 
-<<<<<<< HEAD
-=======
-    }));
-
->>>>>>> notShaking
 
 
     router.get('/profile',
@@ -54,8 +39,8 @@ module.exports = function(router, passport) {
         function(req, res) {
             console.log(req.isAuthenticated());
             res.status(200).json({ user: req.user, message: "Welcome!"
+            });
         });
-    });
 
     router.get('/logout', function(req, res) {
         req.logOut();
@@ -88,64 +73,64 @@ module.exports = function(router, passport) {
 
     var aptRoute = router.route('/apartment');
     aptRoute.get(function(req,res){
-           if(req.query.count){
-               Apartment.count(eval("("+req.query.where+")"))
-                   .sort(eval("("+req.query.sort+")"))
-                   .select(eval("("+req.query.select+")"))
-                   .skip(eval("("+req.query.skip+")"))
-                   .limit(eval("("+req.query.limit+")"))
-                   .exec(function(err, apartments){
-                       if(err){
-                           res.status(500).send({
-                               message: err,
-                               data: []
-                           });
-                       }else{
-                           res.status(200).send({
-                               message: 'OK',
-                               data: apartments
-                           });
-                       }
-                   });
-           }else{
-               Apartment.find(eval("("+req.query.where+")"))
-                   .sort(eval("("+req.query.sort+")"))
-                   .select(eval("("+req.query.select+")"))
-                   .skip(eval("("+req.query.skip+")"))
-                   .limit(eval("("+req.query.limit+")"))
-                   .exec(function (err, apartments){
-                       if (err) {
-                           res.status(500).send({
-                               message: err,
-                               data: []
-                           });
-                       } else {
-                           res.status(200).send({
-                               message: "OK",
-                               data: apartments
-                           });
-                       }
-                    });
+        if(req.query.count){
+            Apartment.count(eval("("+req.query.where+")"))
+                .sort(eval("("+req.query.sort+")"))
+                .select(eval("("+req.query.select+")"))
+                .skip(eval("("+req.query.skip+")"))
+                .limit(eval("("+req.query.limit+")"))
+                .exec(function(err, apartments){
+                    if(err){
+                        res.status(500).send({
+                            message: err,
+                            data: []
+                        });
+                    }else{
+                        res.status(200).send({
+                            message: 'OK',
+                            data: apartments
+                        });
+                    }
+                });
+        }else{
+            Apartment.find(eval("("+req.query.where+")"))
+                .sort(eval("("+req.query.sort+")"))
+                .select(eval("("+req.query.select+")"))
+                .skip(eval("("+req.query.skip+")"))
+                .limit(eval("("+req.query.limit+")"))
+                .exec(function (err, apartments){
+                    if (err) {
+                        res.status(500).send({
+                            message: err,
+                            data: []
+                        });
+                    } else {
+                        res.status(200).send({
+                            message: "OK",
+                            data: apartments
+                        });
+                    }
+                });
 
-       }
+        }
     });
 
     aptRoute.post(function(req,res){
-       var aptAdd = {
-           location: req.body.location,
-           city: req.body.city,
-           price: req.body.price,
-           assignedOwner: req.body.assignedOwner,
-           gender: req.body.gender,
-           contactPhone: req.body.contactPhone,
-           contactEmail: req.body.contactEmail,
-           description: req.body.description,
-           datePosted: req.body.datePosted,
-           dateStarted: req.body.dateStarted,
-           dateEnd: req.body.dateEnd,
-           completed:req.body.completed
-       };
-       Apartment.create(aptAdd,function (err, apt) {
+        var aptAdd = {
+            location: req.body.location,
+            city: req.body.city,
+            price: req.body.price,
+            assignedOwner: req.body.assignedOwner,
+            gender: req.body.gender,
+            contactPhone: req.body.contactPhone,
+            contactEmail: req.body.contactEmail,
+            description: req.body.description,
+            datePosted: req.body.datePosted,
+            dateStarted: req.body.dateStarted,
+            dateEnd: req.body.dateEnd,
+            completed:req.body.completed
+        };
+        Apartment.create(aptAdd,function (err, apt) {
                 if(err){
                     res.status(500).send({
                         message: err,
@@ -157,8 +142,8 @@ module.exports = function(router, passport) {
                         data: apt
                     });
                 }
-           }
-       )
+            }
+        )
 
     });
 
@@ -361,32 +346,20 @@ module.exports = function(router, passport) {
 
 
     idRoute.put(function(req,res) {
-<<<<<<< HEAD
         if (!req.body.local.name) {
-=======
-        if (!req.body.name) {
->>>>>>> notShaking
             return res.status(500).send({
                 message: "Name is required",
                 data: []
             });
         }
-<<<<<<< HEAD
         if (!req.body.local.email) {
-=======
-        if (!req.body.email) {
->>>>>>> notShaking
             return res.status(500).send({
                 message: "email is required",
                 data: []
             });
         }
 
-<<<<<<< HEAD
         User.findOne({email: req.body.local.email}, function (err, user) {
-=======
-        User.findOne({email: req.body.email}, function (err, user) {
->>>>>>> notShaking
             if (err) {
                 return res.status(500).send({
                     message: err,
@@ -416,7 +389,6 @@ module.exports = function(router, passport) {
 
 
                         if (req.body.name) {
-<<<<<<< HEAD
                             user.name = req.body.local.name;
                         }
                         if (req.body.description) {
@@ -430,21 +402,6 @@ module.exports = function(router, passport) {
                         }
                         if (req.body.userPic) {
                             user.userPic = req.body.local.userPic;
-=======
-                            user.name = req.body.name;
-                        }
-                        if (req.body.description) {
-                            user.description = req.body.description;
-                        }
-                        if (req.body.wishList) {
-                            user.wishList = req.body.wishList;
-                        }
-                        if (req.body.ownedApt) {
-                            user.ownedApt = req.body.ownedApt;
-                        }
-                        if (req.body.userPic) {
-                            user.userPic = req.body.userPic;
->>>>>>> notShaking
                         }
 
                         user.save(function (err) {
@@ -493,7 +450,7 @@ module.exports = function(router, passport) {
     });
 
 
-        return router;
+    return router;
 }
 
 function isLoggedIn(req, res, next) {

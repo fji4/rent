@@ -14,9 +14,6 @@ import Notifications from './components/Notifications/Notifications.jsx';
 import Detail from './components/Detail/Detail.jsx';
 import SearchList from './components/SearchList/SearchList.jsx';
 
-import Detail from './components/Detail/Detail.jsx';
-import SearchList from './components/SearchList/SearchList.jsx';
-
 
 import styles from './styles/main.scss';
  
