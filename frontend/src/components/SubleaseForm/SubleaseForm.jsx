@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import { Sidebar, Segment, Button, Menu, Image, Icon, Header } from 'semantic-ui-react'
 import { Input,Form,TextArea,Dropdown } from 'semantic-ui-react'
+<<<<<<< HEAD
 import { Link } from 'react-router-dom'
+=======
+>>>>>>> 925b4f15f125f524084c84f4954d6833044e444a
 
 // import {Navbar, Nav, NavItem, Button, Glyphicon} from 'react-bootstrap'
 // import Sidebar from 'react-bootstrap-sidebar'
@@ -53,11 +56,19 @@ class SubleaseForm extends Component {
         console.log("dddddd",cur_user);
         // const cur_user = this.state.cur_user;
         // console.log(cur_user);
+<<<<<<< HEAD
+=======
+
+>>>>>>> 925b4f15f125f524084c84f4954d6833044e444a
         axios.post('/api/apartment',{
             location:this.state.address,
             city:this.state.city,
             price:this.state.price,
+<<<<<<< HEAD
             assignedOwner:cur_user,
+=======
+            assignedOwner:cur_user._id,
+>>>>>>> 925b4f15f125f524084c84f4954d6833044e444a
             gender:this.state.gender,
             contactEmail :cur_user.local.email,
             description:this.state.description,
@@ -69,8 +80,11 @@ class SubleaseForm extends Component {
 
         }).then(function (response) {
             console.log(response);
+<<<<<<< HEAD
             console.log("response.data.data:" , response.data.data)
             this.setState({ cur_user: response.data.data })
+=======
+>>>>>>> 925b4f15f125f524084c84f4954d6833044e444a
         }).catch(error => {
             console.log(error.response)
         });
@@ -114,7 +128,8 @@ class SubleaseForm extends Component {
         e.preventDefault(); // Stop form submit
         this.fileUpload(this.state.file).then((response)=>{
             console.log(response);
-            console.log(response.data);
+
+            console.log('data is ',response.data);
             var img_path = response.data[0].path;
             var array = this.state.img;
 
@@ -362,6 +377,8 @@ class Sublease extends Component {
                 <h2>Sublease Form</h2>
                 {/*<Input placeholder='address...' />*/}
                 <Form onSubmit={this.props.onSubmit}>
+
+                    <Form.Input label='Username' placeholder='Username' onChange = {this.props.handleUsername}/>
                     <Form.Select label = "preference of gender to sublease" options={preference} value = {preference.value} placeholder='Gender' onChange = {this.props.handleGender} />
                     <Form.Input label = "address" placeholder = 'address' onChange = {this.props.handleAddress}/>
                     <Form.Input label = "city" placeholder = 'city' onChange = {this.props.handleCity}/>

@@ -203,6 +203,7 @@ class Account extends Component {
                         <li>
                             <div>
                                 <Link to={{ pathname: "/account", cur_user: this.state.cur_user, state: this.state.logged_in }}>History</Link>
+
                             </div>
                         </li>
                         <li>
@@ -210,6 +211,8 @@ class Account extends Component {
                                 <Link to={{ pathname: "/personalinfo", cur_user: this.state.cur_user, state: this.state.logged_in }}>PersonalInfo</Link>
                             </div>
                         </li>
+
+                        <li><div><Link to="/Notifications" >Notification</Link></div></li>
                     </ul>
                 </div>
 

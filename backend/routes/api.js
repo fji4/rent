@@ -347,34 +347,8 @@ module.exports = function(router, passport) {
 
 
     idRoute.put(function(req,res) {
-        if (!req.body.local.name) {
-            return res.status(500).send({
-                message: "Name is required",
-                data: []
-            });
-        }
-        if (!req.body.local.email) {
-            return res.status(500).send({
-                message: "email is required",
-                data: []
-            });
-        }
 
-        User.findOne({email: req.body.local.email}, function (err, user) {
-            if (err) {
-                return res.status(500).send({
-                    message: err,
-                    data: []
-                });
-            } else if (user && (user._id != req.params.id)) {
-                // console.log(user._id, req.params.id);
-                return res.status(500).send({
-                    message: "multiple user with same email",
-                    data: []
-                });
-
-            } else {
-                console.log(req.params)
+                console.log(req.params);
                 User.findById(req.params.id, function (err, user) {
                     if (err) {
                         // console.log('user');
@@ -389,20 +363,21 @@ module.exports = function(router, passport) {
                         });
                     } else {
 
-                        if (req.body.local.name) {
-                            user.local.name = req.body.local.name;
+                        console.log(req.body);
+                        if (req.body.name) {
+                            user.local.name = req.body.name;
                         }
-                        if (req.body.local.description) {
-                            user.local.description = req.body.local.description;
+                        if (req.body.description) {
+                            user.local.description = req.body.description;
                         }
-                        if (req.body.local.wishList) {
-                            user.local.wishList = req.body.local.wishList;
+                        if (req.body.wishList) {
+                            user.local.wishList = req.body.wishList;
                         }
-                        if (req.body.local.ownedApt) {
-                            user.local.ownedApt = req.body.local.ownedApt;
+                        if (req.body.ownedApt) {
+                            user.local.ownedApt = req.body.ownedApt;
                         }
-                        if (req.body.local.userPic) {
-                            user.local.userPic = req.body.local.userPic;
+                        if (req.body.userPic) {
+                            user.local.userPic = req.body.userPic;
                         }
 
                         user.save(function (err) {
@@ -424,8 +399,8 @@ module.exports = function(router, passport) {
                 });
 
 
-            }
-        });
+
+
     });
 
 

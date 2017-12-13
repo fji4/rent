@@ -23,7 +23,8 @@ class Home extends Component {
             },
             message: '',
             users: [],
-            cur_user: undefined,
+
+            cur_user: "",
             src: ""
         };
         this.checklogin = this.checklogin.bind(this);
@@ -290,19 +291,9 @@ class Home extends Component {
                 </div>
                 <div className="content">
                     <ul>
-                        <li><RentButton user={this.state.cur_user} login={this.state.logged_in} /></li>
 
-                        <li>
-                            <div>
-                                <Button className="theButtons" id="subb">
-                                    <Link to={{ pathname: "/sublease", cur_user: this.state.cur_user, state: this.state.logged_in  }} onClick={this.checklogin}>
-                                        Want to sublease
-                                    </Link>
-                                </Button>
-                            </div>
-                        </li>
-
-
+                        <li><SubButton showlog={this.showlog} checklogin={this.checklogin} user={this.state.cur_user} login={this.state.logged_in} source="but"/></li>
+                        <li><RentButton user = {this.state.cur_user} login = {this.state.logged_in}/></li>
                     </ul>
                 </div>
 
@@ -361,11 +352,7 @@ class Home extends Component {
                                 <Input type="password" name="password" placeholder="password" onChange={this.onChangePasswordSignUp}>
                                 </Input>
                             </div>
-                            <div className="field">
-                                <label>Re-enter Password</label>
-                                <Input type="password" name="re-password" placeholder="confirm password">
-                                </Input>
-                            </div>
+
                             <div>
                                 <button className="ui button" type="submit">Submit</button>
                             </div>
@@ -378,33 +365,7 @@ class Home extends Component {
                     </Modal.Content>
                 </Modal>
 
-                {
-                    //<div className="Model"
-                    //    id="log"
-                    //    style={{ display: this.log_in }}
-                    //>
-                    //    <i className="close icon"></i>
-                    //    <form className="ui form">
-                    //        <div class="field">
-                    //            <label>Username</label>
-                    //            <input type="text" name="username" placeholder="username">
-                    //            </input>
-                    //        </div>
-                    //        <div className="field">
-                    //            <label>Password</label>
-                    //            <input type="text" name="password" placeholder="password">
-                    //            </input>
-                    //        </div>
-                    //        <div className="but">
-                    //            <button className="ui button" type="submit">Submit</button>
-                    //        </div>
-                    //    </form>
-                    //    <div className="reg">
-                    //        <div> You don't have an account?</div>
-                    //        <div><Button>register</Button></div>
-                    //    </div >
-                    //</div>
-                }
+
 
 
                 {
@@ -437,6 +398,7 @@ class SubButton extends Component {
         return (
             <div>
                 <Link to={{ pathname: "/sublease", cur_user: this.props.user , state:  this.props.login  }} onClick={this.props.checklogin}>
+
                     <Button className="theButtons" id="subb">Want to sublease</Button>
                 </Link>
             </div>
