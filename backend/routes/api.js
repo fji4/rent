@@ -374,6 +374,7 @@ module.exports = function(router, passport) {
                 });
 
             } else {
+                console.log(req.params)
                 User.findById(req.params.id, function (err, user) {
                     if (err) {
                         // console.log('user');
@@ -387,7 +388,6 @@ module.exports = function(router, passport) {
                             data: []
                         });
                     } else {
-
 
                         if (req.body.local.name) {
                             user.local.name = req.body.local.name;
