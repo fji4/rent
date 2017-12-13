@@ -15,11 +15,11 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
 
     <GoogleMap
         defaultZoom={14}
-        defaultCenter={{ lat: props.markers[0].lat, lng: props.markers[0].lng }}
+        defaultCenter={props.marker ? { lat: props.markers[0].lat, lng: props.markers[0].lng } : {lat: 40.112423, lng:  -88.226855}}
     >
         {/*{props.isMarkerShown && <Marker position={{ lat: props.markers[0].lat, lng: props.markers[0].lng }} />}*/}
 
-            {props.markers.map(marker => (
+            {props.markers ? props.markers.map(marker => (
                 <Marker
                     clickable
                     key={marker.lat}
@@ -29,7 +29,7 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
                         props.history.push('/detail');
             }}
                 />
-            ))}
+            )) : null}
 
     </GoogleMap>
 ));
@@ -58,20 +58,20 @@ const ApartmentListItem = ({apartment}) => {
     const start = new Date(apartment.dateStarted);
     const end = new Date(apartment.dateEnd);
     return (
+
         <Card>
-            <Image src='http://advantageproperties.com/wp-content/uploads/2015/01/1010WMA-2F-04-Kit-305-DSC_0136-small-Large.jpg' />
+            <Image fluid src='http://advantageproperties.com/wp-content/uploads/2015/01/1010WMA-2F-04-Kit-305-DSC_0136-small-Large.jpg' />
+            {/*<Image fluid src='uploads/Cosmos02.jpg' />*/}
             <Card.Content>
                 <Card.Header>
+                    <Link to="/detail">
                     {apartment.location}
+                    </Link>
                 </Card.Header>
-                <Card.Meta>
-        <span className='date'>
-          From {start.toDateString()} to {end.toDateString()}
-        </span>
-                </Card.Meta>
-                <Card.Description>
-                    Matthew is a musician living in Nashville.
-                </Card.Description>
+                <Card.Meta className="gender">{`Restrict to ${apartment.gender}`}</Card.Meta>
+                <Card.Meta className="date">
+                    Subleasing Time: <p>{start.toDateString()} -- {end.toDateString()}</p>
+                    </Card.Meta>
             </Card.Content>
             <Card.Content extra>
                 <a>
@@ -80,6 +80,7 @@ const ApartmentListItem = ({apartment}) => {
                 </a>
             </Card.Content>
         </Card>
+
     );
 };
 
@@ -89,34 +90,428 @@ class SearchList extends Component {
         super(props);
 
         this.state = {
-            apartments: null,
-
+            apartments: [],
+            originapartments: [],
             position:[],
-            value: {min: 0, max: 2000}
+            value: {min: 0, max: 2000},
+            priceRanking: "",
+            gender: "",
+            complete: ""
 
         };
 
         this.markAlladdress = this.markAlladdress.bind(this);
         this.markAddress = this.markAddress.bind(this);
-
+        this.wholeOnChange = this.wholeOnChange.bind(this);
+        this.priceRangeChange = this.priceRangeChange.bind(this);
+        this.priceRankingChange = this.priceRankingChange.bind(this);
 
     }
 
 
 
+    priceRangeChange(value) {
+        console.log(value);
+        this.setState({value: value, position: []});
+        if(this.state.originapartments) {
+            var newapartment=[];
+            for(var i = 0; i < this.state.originapartments.length; i++) {
+                var current = this.state.originapartments[i];
+                if (current.price >= value.min && current.price <= value.max) {
+                    newapartment.push(current);
+                }
+            }
 
-    onInputChange(term) {
-        this.setState({ term });
-        if (term===null)
-        {
-            this.state.videos= null;
-            this.state.poster_path=0;
+            this.setState({apartments: newapartment}, function () {
+                this.markAlladdress(newapartment);
+            });
+
+
         }
-        // else this.videoSearch(term);
+    }
+
+    wholeOnChange() {
+        this.setState({position:[]});
+        if (this.state.gender == "male") {
+            if (this.state.priceRanking == "lowtohigh") {
+                if (this.state.complete == "complete") {
+                    axios.get('http://localhost:3000/api/apartment?sort={"price": 1}&where={"gender":"male","completed":true}')
+                        .then(function (resp) {
+                            this.markAlladdress(resp.data.data);
+                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            console.log(resp.data.data);
+                        }.bind(this));
+                }
+
+                else if (this.state.complete == "notcomplete") {
+                    axios.get('http://localhost:3000/api/apartment?sort={"price": 1}&where={"gender":"male","completed":false}')
+                        .then(function (resp) {
+                            this.markAlladdress(resp.data.data);
+                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            console.log(resp.data.data);
+                        }.bind(this));
+                }
+
+                else {
+                    axios.get('http://localhost:3000/api/apartment?sort={"price": 1}&where={"gender":"male"}')
+                        .then(function (resp) {
+                            this.markAlladdress(resp.data.data);
+                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            console.log(resp.data.data);
+                        }.bind(this));
+                }
+            }
+
+            else if (this.state.priceRanking == "hightolow") {
+                if (this.state.complete == "complete") {
+                    axios.get('http://localhost:3000/api/apartment?sort={"price": -1}&where={"gender":"male","completed":true}')
+                        .then(function (resp) {
+                            this.markAlladdress(resp.data.data);
+                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            console.log(resp.data.data);
+                        }.bind(this));
+                }
+
+                else if (this.state.complete == "notcomplete") {
+                    axios.get('http://localhost:3000/api/apartment?sort={"price": -1}&where={"gender":"male","completed":false}')
+                        .then(function (resp) {
+                            this.markAlladdress(resp.data.data);
+                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            console.log(resp.data.data);
+                        }.bind(this));
+                }
+
+                else {
+                    axios.get('http://localhost:3000/api/apartment?sort={"price": -1}&where={"gender":"male"}')
+                        .then(function (resp) {
+                            this.markAlladdress(resp.data.data);
+                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            console.log(resp.data.data);
+                        }.bind(this));
+                }
+            }
+
+            else {
+                if (this.state.complete == "complete") {
+                    axios.get('http://localhost:3000/api/apartment?where={"gender":"male","completed":true}')
+                        .then(function (resp) {
+                            this.markAlladdress(resp.data.data);
+                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            console.log(resp.data.data);
+                        }.bind(this));
+                }
+
+                else if (this.state.complete == "notcomplete") {
+                    axios.get('http://localhost:3000/api/apartment?where={"gender":"male","completed":false}')
+                        .then(function (resp) {
+                            this.markAlladdress(resp.data.data);
+                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            console.log(resp.data.data);
+                        }.bind(this));
+                }
+
+                else {
+                    axios.get('http://localhost:3000/api/apartment?where={"gender":"male"}')
+                        .then(function (resp) {
+                            this.markAlladdress(resp.data.data);
+                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            console.log(resp.data.data);
+                        }.bind(this));
+                }
+            }
+        }
+
+        else if (this.state.gender == "female") {
+            if (this.state.priceRanking == "lowtohigh") {
+                if (this.state.complete == "complete") {
+                    axios.get('http://localhost:3000/api/apartment?sort={"price": 1}&where={"gender":"female","completed":true}')
+                        .then(function (resp) {
+                            this.markAlladdress(resp.data.data);
+                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            console.log(resp.data.data);
+                        }.bind(this));
+                }
+
+                else if (this.state.complete == "notcomplete") {
+                    axios.get('http://localhost:3000/api/apartment?sort={"price": 1}&where={"gender":"female","completed":false}')
+                        .then(function (resp) {
+                            this.markAlladdress(resp.data.data);
+                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            console.log(resp.data.data);
+                        }.bind(this));
+                }
+
+                else {
+                    axios.get('http://localhost:3000/api/apartment?sort={"price": 1}&where={"gender":"female"}')
+                        .then(function (resp) {
+                            this.markAlladdress(resp.data.data);
+                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            console.log(resp.data.data);
+                        }.bind(this));
+                }
+            }
+
+            else if (this.state.priceRanking == "hightolow") {
+                if (this.state.complete == "complete") {
+                    axios.get('http://localhost:3000/api/apartment?sort={"price": -1}&where={"gender":"female","completed":true}')
+                        .then(function (resp) {
+                            this.markAlladdress(resp.data.data);
+                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            console.log(resp.data.data);
+                        }.bind(this));
+                }
+
+                else if (this.state.complete == "notcomplete") {
+                    axios.get('http://localhost:3000/api/apartment?sort={"price": -1}&where={"gender":"female","completed":false}')
+                        .then(function (resp) {
+                            this.markAlladdress(resp.data.data);
+                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            console.log(resp.data.data);
+                        }.bind(this));
+                }
+
+                else {
+                    axios.get('http://localhost:3000/api/apartment?sort={"price": -1}&where={"gender":"female"}')
+                        .then(function (resp) {
+                            this.markAlladdress(resp.data.data);
+                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            console.log(resp.data.data);
+                        }.bind(this));
+                }
+            }
+
+            else {
+                if (this.state.complete == "complete") {
+                    axios.get('http://localhost:3000/api/apartment?where={"gender":"female","completed":true}')
+                        .then(function (resp) {
+                            this.markAlladdress(resp.data.data);
+                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            console.log(resp.data.data);
+                        }.bind(this));
+                }
+
+                else if (this.state.complete == "notcomplete") {
+                    axios.get('http://localhost:3000/api/apartment?where={"gender":"female","completed":false}')
+                        .then(function (resp) {
+                            this.markAlladdress(resp.data.data);
+                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            console.log(resp.data.data);
+                        }.bind(this));
+                }
+
+                else {
+                    axios.get('http://localhost:3000/api/apartment?where={"gender":"female"}')
+                        .then(function (resp) {
+                            this.markAlladdress(resp.data.data);
+                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            console.log(resp.data.data);
+                        }.bind(this));
+                }
+            }
+        }
+
+        else if (this.state.gender == "neither"){
+            if (this.state.priceRanking == "lowtohigh") {
+                if (this.state.complete == "complete") {
+                    axios.get('http://localhost:3000/api/apartment?sort={"price": 1}&where={"gender":"neither","completed":true}')
+                        .then(function (resp) {
+                            this.markAlladdress(resp.data.data);
+                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            console.log(resp.data.data);
+                        }.bind(this));
+                }
+
+                else if (this.state.complete == "notcomplete") {
+                    axios.get('http://localhost:3000/api/apartment?sort={"price": 1}&where={"gender":"neither","completed":false}')
+                        .then(function (resp) {
+                            this.markAlladdress(resp.data.data);
+                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            console.log(resp.data.data);
+                        }.bind(this));
+                }
+
+                else {
+                    axios.get('http://localhost:3000/api/apartment?sort={"price": 1}&where={"gender":"neither"}')
+                        .then(function (resp) {
+                            this.markAlladdress(resp.data.data);
+                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            console.log(resp.data.data);
+                        }.bind(this));
+                }
+            }
+
+            else if (this.state.priceRanking == "hightolow") {
+                if (this.state.complete == "complete") {
+                    axios.get('http://localhost:3000/api/apartment?sort={"price": -1}&where={"gender":"neither","completed":true}')
+                        .then(function (resp) {
+                            this.markAlladdress(resp.data.data);
+                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            console.log(resp.data.data);
+                        }.bind(this));
+                }
+
+                else if (this.state.complete == "notcomplete") {
+                    axios.get('http://localhost:3000/api/apartment?sort={"price": -1}&where={"gender":"neither","completed":false}')
+                        .then(function (resp) {
+                            this.markAlladdress(resp.data.data);
+                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            console.log(resp.data.data);
+                        }.bind(this));
+                }
+
+                else {
+                    axios.get('http://localhost:3000/api/apartment?sort={"price": -1}&where={"gender":"neither"}')
+                        .then(function (resp) {
+                            this.markAlladdress(resp.data.data);
+                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            console.log(resp.data.data);
+                        }.bind(this));
+                }
+            }
+
+            else {
+                if (this.state.complete == "complete") {
+                    axios.get('http://localhost:3000/api/apartment?where={"gender":"neither","completed":true}')
+                        .then(function (resp) {
+                            this.markAlladdress(resp.data.data);
+                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            console.log(resp.data.data);
+                        }.bind(this));
+                }
+
+                else if (this.state.complete == "notcomplete") {
+                    axios.get('http://localhost:3000/api/apartment?where={"gender":"neither","completed":false}')
+                        .then(function (resp) {
+                            this.markAlladdress(resp.data.data);
+                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            console.log(resp.data.data);
+                        }.bind(this));
+                }
+
+                else {
+                    axios.get('http://localhost:3000/api/apartment?where={"gender":"neither"}')
+                        .then(function (resp) {
+                            this.markAlladdress(resp.data.data);
+                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            console.log(resp.data.data);
+                        }.bind(this));
+                }
+            }
+        }
+
+        else {
+            if (this.state.priceRanking == "lowtohigh") {
+                if (this.state.complete == "complete") {
+                    axios.get('http://localhost:3000/api/apartment?sort={"price": 1}&where={"completed":true}')
+                        .then(function (resp) {
+                            this.markAlladdress(resp.data.data);
+                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            console.log(resp.data.data);
+                        }.bind(this));
+                }
+
+                else if (this.state.complete == "notcomplete") {
+                    axios.get('http://localhost:3000/api/apartment?sort={"price": 1}&where={"completed":false}')
+                        .then(function (resp) {
+                            this.markAlladdress(resp.data.data);
+                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            console.log(resp.data.data);
+                        }.bind(this));
+                }
+
+                else {
+                    axios.get('http://localhost:3000/api/apartment?sort={"price": 1}')
+                        .then(function (resp) {
+                            this.markAlladdress(resp.data.data);
+                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            console.log(resp.data.data);
+                        }.bind(this));
+                }
+            }
+
+            else if (this.state.priceRanking == "hightolow") {
+                if (this.state.complete == "complete") {
+                    axios.get('http://localhost:3000/api/apartment?sort={"price": -1}&where={"completed":true}')
+                        .then(function (resp) {
+                            this.markAlladdress(resp.data.data);
+                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            console.log(resp.data.data);
+                        }.bind(this));
+                }
+
+                else if (this.state.complete == "notcomplete") {
+                    axios.get('http://localhost:3000/api/apartment?sort={"price": -1}&where={"completed":false}')
+                        .then(function (resp) {
+                            this.markAlladdress(resp.data.data);
+                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            console.log(resp.data.data);
+                        }.bind(this));
+                }
+
+                else {
+                    axios.get('http://localhost:3000/api/apartment?sort={"price": -1}')
+                        .then(function (resp) {
+                            this.markAlladdress(resp.data.data);
+                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            console.log(resp.data.data);
+                        }.bind(this));
+                }
+            }
+
+            else {
+                if (this.state.complete == "complete") {
+                    axios.get('http://localhost:3000/api/apartment?where={"completed":true}')
+                        .then(function (resp) {
+                            this.markAlladdress(resp.data.data);
+                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            console.log(resp.data.data);
+                        }.bind(this));
+                }
+
+                else if (this.state.complete == "notcomplete") {
+                    axios.get('http://localhost:3000/api/apartment?where={"completed":false}')
+                        .then(function (resp) {
+                            this.markAlladdress(resp.data.data);
+                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            console.log(resp.data.data);
+                        }.bind(this));
+                }
+
+                else {
+                    axios.get('http://localhost:3000/api/apartment')
+                        .then(function (resp) {
+                            this.markAlladdress(resp.data.data);
+                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            console.log(resp.data.data);
+                        }.bind(this));
+                }
+            }
+            console.log("what is the value");
+            console.log(this.state.value);
+        }
+
+    }
+
+    priceRankingChange(event, data) {
+        this.setState({priceRanking: data.value}, () => {
+            this.wholeOnChange();
+        })
+    }
+
+    genderChange(event, data) {
+        this.setState({gender: data.value}, () => {
+            this.wholeOnChange();
+        })
+    }
+
+    completeChange(event, data) {
+        this.setState({complete: data.value}, () => {
+            this.wholeOnChange();
+        })
     }
 
     componentWillMount() {
-       this.getApt();
+       this.wholeOnChange();
         console.log("before render");
     }
 
@@ -124,7 +519,7 @@ class SearchList extends Component {
         axios.get('http://localhost:3000/api/apartment')
             .then(function (resp) {
                 this.markAlladdress(resp.data.data);
-                this.setState({apartments:resp.data.data});
+                this.setState({apartments:resp.data.data, originapartments: resp.data.data});
                 console.log(resp.data.data);
             }.bind(this));
 
@@ -150,18 +545,11 @@ class SearchList extends Component {
             this.markAddress(temp);
         }
 
-        // apt.forEach(function (element) {
-        //     var temp = "";
-        //     temp += element.location;
-        //     temp += '+';
-        //     temp += element.city;
-        //     console.log(temp);
-        //     this.markAddress(temp);
-        // })
     }
 
     renderMap() {
         console.log(this.state.position);
+
         return(
             <div>
                 <MyMapComponent
@@ -262,14 +650,33 @@ class SearchList extends Component {
                                         maxValue={2000}
                                         minValue={0}
                                         value={this.state.value}
-                                        onChange={value => this.setState({ value })} />
+                                        onChange={value => this.priceRangeChange(value)} />
                                 </div>
                             </div>
                                 <br/>
 
-                                <div className ='field' id="genderdrop">
-                                    <Form.Field control={Select} label='Gender' options={options} placeholder='Gender' />
+                                <div className ='field'>
+                                    <Form.Field control={Select} lable='Price Ranking'
+                                                options={[{ key: 'as', text: 'Low to High', value: 'lowtohigh' },
+                                                    { key: 'de', text: 'High to Low', value: 'hightolow' },]}
+                                              value={this.state.priceRanking}
+                                                placeholder='Price Ranking' onChange={this.priceRankingChange.bind(this)}/>
                                 </div>
+
+                                <div className ='field' id="genderdrop">
+                                    <Form.Field control={Select} label='Gender' options={options}
+                                                placeholder='Gender' onChange={this.genderChange.bind(this)}/>
+                                </div>
+
+                                <div className ='field'>
+                                    <Form.Field control={Select} label='Is the subleasing completed?'
+                                                options={[{ key: 'y', text: 'Completed', value: 'complete' },
+                                                    { key: 'n', text: 'Not Completed', value: 'notcomplete' },]}
+                                                placeholder='Is the subleasing completed?'
+                                    onChange={this.completeChange.bind(this)}/>
+                                </div>
+
+
 
                             </div>
 
@@ -291,7 +698,7 @@ class SearchList extends Component {
 const options = [
     { key: 'm', text: 'Male Only', value: 'male' },
     { key: 'f', text: 'Female Only', value: 'female' },
-    { key: 'n', text: 'Gender not Specified', value: 'neither' },
+    { key: 'nei', text: 'Gender not Specified', value: 'neither' },
 ]
 
 export default SearchList
