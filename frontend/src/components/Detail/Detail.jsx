@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { Menu, Icon, Image, Button, Label } from 'semantic-ui-react'
 // import {Carousel} from 'react-bootstrap'
-import {Carousel, Table} from 'react-bootstrap';
-// import Table from 'react-bootstrap/lib/Table';
+// import {Carousel, Table} from 'react-bootstrap';
+import Table from 'react-bootstrap/lib/Table';
+import Carousel from 'react-bootstrap/lib/Carousel';
 import { Link } from 'react-router-dom'
 
 import styles from './styles.scss'
@@ -105,6 +106,9 @@ class Detail extends Component {
     render() {
         return(
             <div className="outdiv">
+                <head>
+                    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css"></link>
+                </head>
                 <Menu className="detailnav">
                     <Menu.Item>
                         <Link to="/">
