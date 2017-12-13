@@ -13,7 +13,7 @@ class SubleaseForm extends Component {
         this.state = {
                     visible: false,
                     activeItem: 'home'
-                }
+                };
         this.toggleVisibility = this.toggleVisibility.bind(this);
         this.handleItemClick = this.handleItemClick.bind(this);
     };
@@ -25,6 +25,8 @@ class SubleaseForm extends Component {
         this.setState({activeItem: name})
     }
     render(){
+        const cur_user = this.props.location.state;
+        console.log("cur_user is ",cur_user,this.props);
         return(
             <div className = "form">
                 <Nav activeItem = {this.state.activeItem}
@@ -86,34 +88,7 @@ class User extends Component {
             isVisible: false,
         };
     }
-    //
-    // updateModal(isVisible) {
-    //     this.state.isVisible = isVisible;
-    //     this.forceUpdate();
-    // }
-    //
-    // render() {
-    //     return (
-    //         <div>
-    //             <Button bsStyle="primary" onClick={ () => this.updateModal(true) }><Glyphicon glyph="menu-hamburger"/></Button>
-    //             <Sidebar side='left' isVisible={ this.state.isVisible } onHide={ () => this.updateModal(false) }>
-    //                 <Nav>
-    //                     <NavItem href="#">Link 1</NavItem>
-    //                     <NavItem href="#">Link 2</NavItem>
-    //                     <NavItem href="#">Link 3</NavItem>
-    //                     <NavItem href="#">Link 4</NavItem>
-    //                 </Nav>
-    //             </Sidebar>
-    //         </div>
-    //     );
-    // }
-    // constructor(props){
-    //     super(props);
-    //     this.state = {
-    //         visible: false
-    //     }
-    //
-    // }
+
 
 
     render(){
@@ -276,10 +251,9 @@ class Sublease extends Component {
                 <h2>Sublease Form</h2>
                 {/*<Input placeholder='address...' />*/}
                 <Form>
-                    <Form.Group widths='equal'>
-                        <Form.Input label='First name' placeholder='First name'  />
-                        <Form.Input label='Last name' placeholder='Last name' />
-                    </Form.Group>
+
+                    <Form.Input label='Username' placeholder='Username' />
+
                     <Form.Select label = "Gender" options={options} placeholder='Gender' />
                     <Form.Select label = "preference of gender to sublease" options={preference} placeholder='Gender' />
                     <Form.Input label = "address1" placeholder = 'address1'/>
@@ -290,11 +264,11 @@ class Sublease extends Component {
                     <Form.Input label = "price" placeholder = "price" />
                     {/*<Form.Input label = "description" placeholder = "description"/>*/}
                     <Form.Field control={TextArea} label='description' placeholder='Tell us more about the apartment...' />
-                    {/*<Form.Input type="file" name="img" multiple />*/}
-                    {/*<form className="uploader" encType="multipart/form-data">*/}
-                        {/*<input type="file" id="file" />*/}
-                    {/*</form>*/}
-                    <ImageForm />
+
+                    <Form.Input type="file" name="img" multiple />
+                    <form className="uploader" encType="multipart/form-data">
+                        <input type="file" id="file" />
+                    </form>
 
                     <br/>
                     <Form.Checkbox label='I agree to the Terms and Conditions'  />

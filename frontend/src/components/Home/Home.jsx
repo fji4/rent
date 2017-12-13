@@ -2,7 +2,11 @@ import React, { Component } from 'react'
 import { Button, Card, Modal, Header,Input, Icon } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
+<<<<<<< HEAD
+import styles from './Home.scss'
+=======
 import styles from './styles.scss'
+>>>>>>> notShaking
 
 class Home extends Component {
     constructor(props) {
@@ -21,7 +25,13 @@ class Home extends Component {
                 password: '',
                 email: ''
             },
+<<<<<<< HEAD
+            message: '',
+            users: [],
+            cur_user: ""
+=======
             message: ''
+>>>>>>> notShaking
         };
         this.checklogin = this.checklogin.bind(this);
         this.onSignupSubmit = this.onSignupSubmit.bind(this);
@@ -35,6 +45,10 @@ class Home extends Component {
         this.closeregister = this.closeregister.bind(this);
         this.onChangeEmail = this.onChangeEmail.bind(this);
         this.onChangePassword = this.onChangePassword.bind(this);
+<<<<<<< HEAD
+        this.onHandleUser = this.onHandleUser.bind(this);
+=======
+>>>>>>> notShaking
     }
 
 
@@ -58,6 +72,117 @@ class Home extends Component {
         this.setState({
             login_user:user
         });
+<<<<<<< HEAD
+    }
+
+    onChangePassword(e) {
+        const user = this.state.login_user;
+        user.password = e.target.value;
+        this.setState({
+            login_user:user
+        })
+    }
+
+    onSubmit(e) {
+        this.onHandleUser(e);
+
+        console.log("enter onSubmit");
+        e.preventDefault();
+
+        const email = encodeURIComponent(this.state.login_user.email);
+        console.log(email);
+        const password = encodeURIComponent(this.state.login_user.password);
+        console.log(password);
+        const formData = `email=${email}&password=${password}`;
+
+        // create an AJAX request (This should probably done with Axios instead)
+        const xhr = new XMLHttpRequest();
+        xhr.open('post', '/api/login');
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.responseType = 'json';
+        xhr.addEventListener('load', () => {
+            if (xhr.status === 200) {
+                this.setState({
+                    message: 'Successfully logged in!',
+                    logged_in: true
+                })
+
+                console.log("set the state logged in to true");
+            } else {
+                this.setState({
+                    message: 'Unable to log in'
+                })
+            }
+        });
+        xhr.send(formData);
+    }
+
+    //keep track of the current user.
+    onHandleUser(e){
+        console.log("enter handle current_user");
+
+        axios.get('/api/users')
+             .then(function(response){
+                 console.log('response is', response);
+                 var user = response.data.data;
+                 this.setState({
+                     users:user
+                 });
+                 const users = this.state.users;
+                 console.log("users is 111",this.state.users);
+                 const email = this.state.login_user.email;
+                 console.log("handleuser email",email);
+                 console.log(users.length,users);
+                 for(var i = 0; i < users.length; i++){
+                     console.log("enter for loop",i, users[i].local.email);
+                     if(users[i].local.email === email){
+                         console.log(users[i].local.email);
+                         this.setState({cur_user:users[i]});
+                         console.log("cur-user is ",this.state.cur_user);
+                         break;
+                     }
+                 }
+                 console.log("users is ",this.state.users);
+             }.bind(this));
+    }
+
+
+
+    onSignupSubmit(e){
+        console.log("onsignupsubmit");
+        e.preventDefault();
+
+        // create a string for an HTTP body message
+        // const name = encodeURIComponent(this.state.register_user.name);
+        const email = encodeURIComponent(this.state.register_user.email);
+        const password = encodeURIComponent(this.state.register_user.password);
+        const formData = `email=${email}&password=${password}`;
+
+        // create an AJAX POST request (This should probably done with Axios instead)
+        const xhr = new XMLHttpRequest();
+        xhr.open('post', '/api/register');
+        xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        xhr.responseType = 'json';
+        xhr.addEventListener('load', () => {
+            if (xhr.status === 200) {
+                console.log('The form is valid');
+                this.setState({
+                    message: 'Registered!',
+                    logged_in: true,
+                    log_in: false
+                });
+                this.props.history.push('/');
+            } else {
+                console.log('The form is invalid');
+                this.setState({
+                    message: 'Unable to register'
+                })
+            }
+        });
+        xhr.send(formData);
+    }
+
+=======
     }
 
     onChangePassword(e) {
@@ -139,6 +264,7 @@ class Home extends Component {
         xhr.send(formData);
     }
 
+>>>>>>> notShaking
     onChangeEmailSignUp(e){
             console.log("target is ",e);
             const user = this.state.register_user;
@@ -159,10 +285,16 @@ class Home extends Component {
 
     checklogin(e){
         console.log("!!!!!!!!!!!!checklogin!!!!!!!!!!",this.state.logged_in);
+<<<<<<< HEAD
+        if(this.state.logged_in){
+            console.log("looged in here");
+            // this.props.history.push('/sublease');
+=======
         e.preventDefault();
         if(this.state.logged_in){
             console.log("looged in here");
             this.props.history.push('/sublease');
+>>>>>>> notShaking
         }else{
             console.log("show log modal");
             e.preventDefault();
@@ -219,8 +351,13 @@ class Home extends Component {
                 </div>
                 <div className="content">
                     <ul>
+<<<<<<< HEAD
+                        <li><SubButton showlog={this.showlog} checklogin = {this.checklogin} user = {this.state.cur_user} login = {this.state.logged_in}/></li>
+                        <li><RentButton user = {this.state.cur_user} login = {this.state.logged_in}/></li>
+=======
                         <li><SubButton showlog={this.showlog} checklogin = {this.checklogin} /></li>
                         <li><RentButton /></li>
+>>>>>>> notShaking
                     </ul>
                 </div>
 
@@ -244,7 +381,7 @@ class Home extends Component {
                             </div>
                             <p>{this.state.message}</p>
                             <div>
-                                <button className="ui button" type="submit">Submit</button>
+                                <button className="ui button" type="submit" >Submit</button>
                             </div>
                         </form>
                         <div className="reg">
@@ -352,7 +489,11 @@ class Home extends Component {
 class SubButton extends Component {
     render() {
         return (
+<<<<<<< HEAD
+            <div><Link to = {{pathname:"/sublease", cur_user:this.props.user, state:this.props.login}} onClick={this.props.checklogin}><Button className="theButtons" id="subb">Want to sublease</Button></Link></div>
+=======
             <div><Button className="theButtons" id="subb" onClick={this.props.checklogin}>Want to sublease</Button></div>
+>>>>>>> notShaking
         )
     }
 }
@@ -360,7 +501,7 @@ class SubButton extends Component {
 class RentButton extends Component {
     render() {
         return (
-            <div><Link to="/SearchList"><Button id="rentb" className="theButtons">Want to rent</Button></Link></div>
+            <div><Link to = {{pathname:"/SearchList", cur_user:this.props.user, state:this.props.login}}><Button id="rentb" className="theButtons">Want to rent</Button></Link></div>
         )
     }
 }

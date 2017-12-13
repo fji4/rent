@@ -3,7 +3,11 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 var GoogleStrategy = require('passport-google-oauth20').Strategy;
 
 var User = require('../models/user');
+<<<<<<< HEAD
+var configAuth = require('./authenication');
+=======
 var configAuth = require('./auth');
+>>>>>>> notShaking
 
 
 /**
@@ -28,7 +32,11 @@ module.exports = function(passport) {
     },
 
     function(req, email, password, done) {
+<<<<<<< HEAD
+        // process.nextTick(function () {
+=======
         process.nextTick(function () {
+>>>>>>> notShaking
             User.findOne({'local.email': email}, function (err, user) {
                 if (err) {
                     return done(err);
@@ -39,7 +47,13 @@ module.exports = function(passport) {
 
                     newUser.local.email = email;
                     newUser.local.password = newUser.generateHash(password);
+<<<<<<< HEAD
+                    // newUser.local.userPic = req.param.userPic;
+
+
+=======
                     newUser.local.userPic = req.param.userPic;
+>>>>>>> notShaking
 
                     newUser.save(function (err) {
                         if(err)
@@ -48,7 +62,11 @@ module.exports = function(passport) {
                     });
                 }
             });
+<<<<<<< HEAD
+        // })
+=======
         })
+>>>>>>> notShaking
     })
     );
 
@@ -58,14 +76,19 @@ module.exports = function(passport) {
         passwordField: 'password',
         passReqToCallback : true
     },
+<<<<<<< HEAD
+    function(req,email, password, done) {
+        console.log("---------",email, password);
+=======
     function(email, password, done) {
+>>>>>>> notShaking
         User.findOne({'local.email': email}, function(err, user) {
             if ( err ) {
+                // console.log(err);
                 return done(err);
             } else if ( !user || !user.validPassword(password) ) {
                 return done(null, false);
             }
-
             return done(null, user);
         });
     }));
