@@ -348,33 +348,7 @@ class Home extends Component {
                     </Modal.Content>
                 </Modal>
 
-                {
-                    //<div className="Model"
-                    //    id="log"
-                    //    style={{ display: this.log_in }}
-                    //>
-                    //    <i className="close icon"></i>
-                    //    <form className="ui form">
-                    //        <div class="field">
-                    //            <label>Username</label>
-                    //            <input type="text" name="username" placeholder="username">
-                    //            </input>
-                    //        </div>
-                    //        <div className="field">
-                    //            <label>Password</label>
-                    //            <input type="text" name="password" placeholder="password">
-                    //            </input>
-                    //        </div>
-                    //        <div className="but">
-                    //            <button className="ui button" type="submit">Submit</button>
-                    //        </div>
-                    //    </form>
-                    //    <div className="reg">
-                    //        <div> You don't have an account?</div>
-                    //        <div><Button>register</Button></div>
-                    //    </div >
-                    //</div>
-                }
+
 
 
                 {

@@ -388,6 +388,7 @@ module.exports = function(router, passport) {
                             data: []
                         });
                     } else {
+
                         if (req.body.local.name) {
                             user.local.name = req.body.local.name;
                         }
