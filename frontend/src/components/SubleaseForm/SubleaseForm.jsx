@@ -52,6 +52,7 @@ class SubleaseForm extends Component {
         console.log("dddddd",cur_user);
         // const cur_user = this.state.cur_user;
         // console.log(cur_user);
+
         axios.post('/api/apartment',{
             location:this.state.address,
             city:this.state.city,
@@ -111,7 +112,7 @@ class SubleaseForm extends Component {
         e.preventDefault(); // Stop form submit
         this.fileUpload(this.state.file).then((response)=>{
             console.log(response);
-            console.log(response.data);
+            console.log('data is ',response.data);
             var img_path = response.data[0].path;
             var array = this.state.img;
 

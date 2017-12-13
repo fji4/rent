@@ -73912,6 +73912,7 @@ var SubleaseForm = function (_Component) {
             console.log("dddddd", cur_user);
             // const cur_user = this.state.cur_user;
             // console.log(cur_user);
+
             _axios2.default.post('/api/apartment', {
                 location: this.state.address,
                 city: this.state.city,
@@ -73989,7 +73990,7 @@ var SubleaseForm = function (_Component) {
             e.preventDefault(); // Stop form submit
             this.fileUpload(this.state.file).then(function (response) {
                 console.log(response);
-                console.log(response.data);
+                console.log('data is ', response.data);
                 var img_path = response.data[0].path;
                 var array = _this2.state.img;
 
