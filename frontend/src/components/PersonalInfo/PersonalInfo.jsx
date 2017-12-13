@@ -137,11 +137,11 @@ class PersonalInfo extends Component {
                         </div>
                         <ul>
                             <li><div><Link to="/Account" >History</Link></div></li>
-                            <li>
-                                <div>
-                                    <Link to={{ pathname: "/watchlist", cur_user: this.state.cur_user, state: this.state.logged_in }}>Watchlist</Link>
-                                </div>
-                            </li>
+                            {/*<li>*/}
+                                {/*<div>*/}
+                                    {/*<Link to={{ pathname: "/watchlist", cur_user: this.state.cur_user, state: this.state.logged_in }}>Watchlist</Link>*/}
+                                {/*</div>*/}
+                            {/*</li>*/}
                             <li>
                                 <div>
                                     <Link to={{ pathname: "/personalinfo", cur_user: this.state.cur_user, state: this.state.logged_in }}>PersonalInfo</Link>

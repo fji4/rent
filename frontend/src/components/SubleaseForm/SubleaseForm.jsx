@@ -177,14 +177,14 @@ class SubleaseForm extends Component {
             <div className = "formm" >
 
                 <div id="subFnavBar">
-                    <h1> Subleasing </h1>
+
                     <div>
                         <Link to={{ pathname: "/account", cur_user: this.state.cur_user, state: this.state.login }}>
-                            <img src={'http://tc.sinaimg.cn/maxwidth.800/tc.service.weibo.com/static_jinrongbaguanv_com/5886a925e3bd5fc2a3adf8f9a36324c8.png'}
+                            <img src={'https://cdn1.iconfinder.com/data/icons/mix-color-4/502/Untitled-1-512.png' }
                                 alt="fairy" />
                         </Link>
                     </div>
-                    <div> Welcome back! 
+                    <div> Welcome back!
                     </div>
                     <div>
                         <Link to={{ pathname: "/searchlist", cur_user: this.state.cur_user, state: this.state.login }}>Search</Link>
@@ -195,7 +195,7 @@ class SubleaseForm extends Component {
                         </Link>
                     </div>
                 </div>
-
+z
 
                 <Sublease
                     handleUsername = {this.handleUsername}
@@ -334,7 +334,11 @@ class Sublease extends Component {
                     <Form.Input label="price" placeholder="price" onChange={this.props.handlePrice} />
                     <Form.Input label='description' placeholder='Tell us more about the apartment...'
                         onChange={this.props.handleDescription} />
-                    
+                    <Form.Group>
+                        <p>Image Upload: After hitting submit, you could submit the second image</p>>
+                        <Form.Input input={{ multiple: true }} type = "file" onChange={this.props.onImgChange}/>
+                        <Form.Button content='Submit' onClick = {this.props.onFormSubmit}/>
+                    </Form.Group>
 
                     
                     <br/>

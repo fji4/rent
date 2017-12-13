@@ -120,7 +120,7 @@ class Account extends Component {
                 </Tab.Pane>
             },
             {
-                menuItem: 'Completed', render: () => <Tab.Pane attached={false}>Tab 2 Content
+                menuItem: 'Completed', render: () => <Tab.Pane attached={false}>
                 <div className="content2">
                         <Item.Group divided>
                             {
@@ -175,8 +175,8 @@ class Account extends Component {
             <div id="everything">
                 <div id="navBar">
                     <h1> Subleasing </h1>
-                    <div> <img src={'http://tc.sinaimg.cn/maxwidth.800/tc.service.weibo.com/static_jinrongbaguanv_com/5886a925e3bd5fc2a3adf8f9a36324c8.png'}
-                        alt="fairy" /> </div>
+                    <div> <img src={'https://cdn1.iconfinder.com/data/icons/mix-color-4/502/Untitled-1-512.png' }/>
+                         </div>
                     <div> Welcome back! {this.state.cur_user.local.email}
                         </div>
                     <div> Search </div>
@@ -190,7 +190,7 @@ class Account extends Component {
 
                 <div id="sideBar">
                     <div className="touXiang">
-                        <img src={'http://tc.sinaimg.cn/maxwidth.800/tc.service.weibo.com/static_jinrongbaguanv_com/5886a925e3bd5fc2a3adf8f9a36324c8.png'}
+                        <img src={'https://cdn1.iconfinder.com/data/icons/mix-color-4/502/Untitled-1-512.png' }
                             alt="fairy" />
                         <ul>
                             <li>Welcome back! {this.state.cur_user.local.email}
