@@ -122,7 +122,7 @@ module.exports = function(router, passport) {
             price: req.body.price,
             assignedOwner: req.body.assignedOwner,
             gender: req.body.gender,
-            contactPhone: req.body.contactPhone,
+            // contactPhone: req.body.contactPhone,
             contactEmail: req.body.contactEmail,
             description: req.body.description,
             datePosted: req.body.datePosted,
@@ -205,9 +205,10 @@ module.exports = function(router, passport) {
                 if(req.body.contactEmail){
                     apt.contactEmail = req.body.assignedUserName;
                 }
-                if(req.body.contactPhone){
-                    apt.contactPhone = req.body.contactPhone;
-                }
+                // if(req.body.contactPhone){
+                //     apt.contactPhone = req.body.contactPhone;
+                // }
+
                 if(req.body.description){
                     apt.description = req.body.description;
                 }
@@ -388,20 +389,20 @@ module.exports = function(router, passport) {
                     } else {
 
 
-                        if (req.body.name) {
-                            user.name = req.body.local.name;
+                        if (req.body.local.name) {
+                            user.local.name = req.body.local.name;
                         }
-                        if (req.body.description) {
-                            user.description = req.body.local.description;
+                        if (req.body.local.description) {
+                            user.local.description = req.body.local.description;
                         }
-                        if (req.body.wishList) {
-                            user.wishList = req.body.local.wishList;
+                        if (req.body.local.wishList) {
+                            user.local.wishList = req.body.local.wishList;
                         }
-                        if (req.body.ownedApt) {
-                            user.ownedApt = req.body.local.ownedApt;
+                        if (req.body.local.ownedApt) {
+                            user.local.ownedApt = req.body.local.ownedApt;
                         }
-                        if (req.body.userPic) {
-                            user.userPic = req.body.local.userPic;
+                        if (req.body.local.userPic) {
+                            user.local.userPic = req.body.local.userPic;
                         }
 
                         user.save(function (err) {
