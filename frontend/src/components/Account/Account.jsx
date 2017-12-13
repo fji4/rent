@@ -15,12 +15,12 @@ class Account extends Component {
             logged_in: false,
             register: false,
             cur_user: {
-                local: {
                     name: "Default name",
                     email: "Default email",
                     ownedApt: []
-                }
-            }
+                
+            },
+            cur_apt: {}
         }
 
     }
@@ -32,39 +32,40 @@ class Account extends Component {
 
         //get the info of current user
         if (!(this.state.logged_in)) {
-            axios.get('http://localhost:3000/api/users/' + this.state.user_id)
+            axios.get('/api/users/' + this.state.user_id)
                 .then(function (resp) {
-                    this.setState({ cur_user: resp.data.datas, logged_in: true })
+                    console.log("set new user!\n" + resp.data.data.local.ownedApt)
+                    this.setState({ cur_user: resp.data.data.local, logged_in: true })
                 }.bind(this)
                 )
         }
         if (this.state.cur_user)
-            console.log("shit" + this.state.cur_user)
+            console.log("shit" , this.state.cur_user)
 
 
         const panes = [
             {
-                menuItem: 'Subleasing', render: () => <Tab.Pane attached={false}>Tab 1 Content
+                menuItem: 'Subleasing', render: () => <Tab.Pane attached={false}>
                 <div className="content1">
                         <Item.Group divided> 
-                            {}
-                                <Item>
-                                    <Item.Image size='tiny' src='https://www.americanflex.com.br/skin/adminhtml/default/default/lib/jlukic_semanticui/examples/assets/images/wireframe/image.png' />
-                                    <Item.Content verticalAlign='middle'>Content A</Item.Content>
-                                </Item>
+                            {
+                                //<Item>
+                                //    <Item.Image size='tiny' src='https://www.americanflex.com.br/skin/adminhtml/default/default/lib/jlukic_semanticui/examples/assets/images/wireframe/image.png' />
+                                //    <Item.Content verticalAlign='middle'>Content A</Item.Content>
+                                //</Item>
 
-                                <Item>
-                                    <Item.Image size='tiny' src='https://www.americanflex.com.br/skin/adminhtml/default/default/lib/jlukic_semanticui/examples/assets/images/wireframe/image.png' />
-                                    <Item.Content verticalAlign='middle'>Content B</Item.Content>
-                                </Item>
+                                //<Item>
+                                //    <Item.Image size='tiny' src='https://www.americanflex.com.br/skin/adminhtml/default/default/lib/jlukic_semanticui/examples/assets/images/wireframe/image.png' />
+                                //    <Item.Content verticalAlign='middle'>Content B</Item.Content>
+                                //</Item>
 
-                                <Item>
-                                    <Item.Image size='tiny' src='https://www.americanflex.com.br/skin/adminhtml/default/default/lib/jlukic_semanticui/examples/assets/images/wireframe/image.png' />
-                                    <Item.Content content='Content C' verticalAlign='middle' />
-                                </Item>
+                                //<Item>
+                                //    <Item.Image size='tiny' src='https://www.americanflex.com.br/skin/adminhtml/default/default/lib/jlukic_semanticui/examples/assets/images/wireframe/image.png' />
+                                //    <Item.Content content='Content C' verticalAlign='middle' />
+                                //</Item>
 
 
-
+                            }
 
                             {
                                 //<Image.Group size='medium'>
@@ -79,24 +80,33 @@ class Account extends Component {
                             }
 
                             {
-                                //this.state.cur_user.local.ownedApt.map((apt_id) => {
-                                //    var cur_apt;
-                                //    axios.get('http://localhost:3000/api/apartment/'+ apt_id)
-                                //        .then(function (resp) {
-                                //            cur_apt = resp.data.data
-                                //            console.log("sdf" + cur_apt)
-                                //        }.bind(this)
-                                //    );
-                                //    if (!cur_apt)
-                                //        return (
-                                //            <Item.Content verticalAlign='middle' key="1">Saonima</Item.Content>
+                                console.log("cur_user: " , this.state.cur_user)
+                            }
+                            {
+                                    this.state.cur_user.ownedApt.map((apt_id) => {
+                                        axios.get('/api/apartment/' + apt_id)
+                                            .then(function (resp) {
+                                                this.setState({cur_apt: resp.data.data})
+                                                console.log("sdf", this.state.cur_apt)
+                                            }.bind(this)
+                                        );
+                                        console.log("cur_apt: ", this.state.cur_apt);
+                                        if (!this.state.cur_apt)
+                                            return (
+                                                <Item.Content verticalAlign='middle' key="1">error this house no longer available</Item.Content>
 
-                                //                )
-                                //    return (
-                                //        <Item.Content verticalAlign='middle'>{cur_apt.location}</Item.Content>
-                                //    );
-                                //}
-                                //)
+                                            )
+                                        else
+                                        return (
+                                            <Item.Content verticalAlign='middle' key="this.state.cur_apt.">
+                                                <Item.Image size='tiny' src='https://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=0ahUKEwjojbv6hIbYAhXLNSYKHSxcAAsQjRwIBw&url=http%3A%2F%2Fwww.ntc.edu.ph%2Fprogram%2Fcollege-arts-and-sciences&psig=AOvVaw1c9DTgWOpTkC4DpTthxllb&ust=1513221703399248' />
+
+
+                                                {this.state.cur_apt.location}
+                                            </Item.Content>
+                                        );
+                                    }
+                                    )
                             }
                             
                             

@@ -85269,12 +85269,12 @@ var Account = function (_Component) {
             logged_in: false,
             register: false,
             cur_user: {
-                local: {
-                    name: "Default name",
-                    email: "Default email",
-                    ownedApt: []
-                }
-            }
+                name: "Default name",
+                email: "Default email",
+                ownedApt: []
+
+            },
+            cur_apt: {}
         };
 
         return _this;
@@ -85283,53 +85283,46 @@ var Account = function (_Component) {
     _createClass(Account, [{
         key: 'render',
         value: function render() {
+            var _this2 = this;
 
             //get the info of current user
             if (!this.state.logged_in) {
-                _axios2.default.get('http://localhost:3000/api/users/' + this.state.user_id).then(function (resp) {
-                    this.setState({ cur_user: resp.data.datas, logged_in: true });
+                _axios2.default.get('/api/users/' + this.state.user_id).then(function (resp) {
+                    console.log("set new user!\n" + resp.data.data.local.ownedApt);
+                    this.setState({ cur_user: resp.data.data.local, logged_in: true });
                 }.bind(this));
             }
-            if (this.state.cur_user) console.log("shit" + this.state.cur_user);
+            if (this.state.cur_user) console.log("shit", this.state.cur_user);
 
             var panes = [{
                 menuItem: 'Subleasing', render: function render() {
                     return _react2.default.createElement(
                         _semanticUiReact.Tab.Pane,
                         { attached: false },
-                        'Tab 1 Content',
                         _react2.default.createElement(
                             'div',
                             { className: 'content1' },
                             _react2.default.createElement(
                                 _semanticUiReact.Item.Group,
                                 { divided: true },
-                                _react2.default.createElement(
-                                    _semanticUiReact.Item,
-                                    null,
-                                    _react2.default.createElement(_semanticUiReact.Item.Image, { size: 'tiny', src: 'https://www.americanflex.com.br/skin/adminhtml/default/default/lib/jlukic_semanticui/examples/assets/images/wireframe/image.png' }),
-                                    _react2.default.createElement(
+                                console.log("cur_user: ", _this2.state.cur_user),
+                                _this2.state.cur_user.ownedApt.map(function (apt_id) {
+                                    _axios2.default.get('/api/apartment/' + apt_id).then(function (resp) {
+                                        this.setState({ cur_apt: resp.data.data });
+                                        console.log("sdf", this.state.cur_apt);
+                                    }.bind(_this2));
+                                    console.log("cur_apt: ", _this2.state.cur_apt);
+                                    if (!_this2.state.cur_apt) return _react2.default.createElement(
                                         _semanticUiReact.Item.Content,
-                                        { verticalAlign: 'middle' },
-                                        'Content A'
-                                    )
-                                ),
-                                _react2.default.createElement(
-                                    _semanticUiReact.Item,
-                                    null,
-                                    _react2.default.createElement(_semanticUiReact.Item.Image, { size: 'tiny', src: 'https://www.americanflex.com.br/skin/adminhtml/default/default/lib/jlukic_semanticui/examples/assets/images/wireframe/image.png' }),
-                                    _react2.default.createElement(
+                                        { verticalAlign: 'middle', key: '1' },
+                                        'error this house no longer available'
+                                    );else return _react2.default.createElement(
                                         _semanticUiReact.Item.Content,
-                                        { verticalAlign: 'middle' },
-                                        'Content B'
-                                    )
-                                ),
-                                _react2.default.createElement(
-                                    _semanticUiReact.Item,
-                                    null,
-                                    _react2.default.createElement(_semanticUiReact.Item.Image, { size: 'tiny', src: 'https://www.americanflex.com.br/skin/adminhtml/default/default/lib/jlukic_semanticui/examples/assets/images/wireframe/image.png' }),
-                                    _react2.default.createElement(_semanticUiReact.Item.Content, { content: 'Content C', verticalAlign: 'middle' })
-                                )
+                                        { verticalAlign: 'middle', key: 'this.state.cur_apt.' },
+                                        _react2.default.createElement(_semanticUiReact.Item.Image, { size: 'tiny', src: 'https://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=0ahUKEwjojbv6hIbYAhXLNSYKHSxcAAsQjRwIBw&url=http%3A%2F%2Fwww.ntc.edu.ph%2Fprogram%2Fcollege-arts-and-sciences&psig=AOvVaw1c9DTgWOpTkC4DpTthxllb&ust=1513221703399248' }),
+                                        _this2.state.cur_apt.location
+                                    );
+                                })
                             )
                         )
                     );
