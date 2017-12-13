@@ -7,6 +7,10 @@ import InputRange from 'react-input-range';
 import 'react-input-range/lib/css/index.css';
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
 const { MarkerClusterer } = require("react-google-maps/lib/components/addons/MarkerClusterer");
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
+
+import 'react-datepicker/dist/react-datepicker.css';
 import styles from './SearchList.scss'
 
 const apiURL = "https://api.themoviedb.org/3/search/movie?api_key=e7b459ccb253cab36bb660a78b72dd18&query=";
@@ -64,11 +68,11 @@ const ApartmentListItem = ({apartment}) => {
             {/*<Image fluid src='uploads/Cosmos02.jpg' />*/}
             <Card.Content>
                 <Card.Header>
-                    <Link to="/detail">
+                    <Link to={{ pathname: '/detail', state: { apt: apartment} }}>
                     {apartment.location}
                     </Link>
                 </Card.Header>
-                <Card.Meta className="gender">{`Restrict to ${apartment.gender}`}</Card.Meta>
+                <Card.Meta><span className="gender">{`Restrict to ${apartment.gender}`}</span></Card.Meta>
                 <Card.Meta className="date">
                     Subleasing Time: <p>{start.toDateString()} -- {end.toDateString()}</p>
                     </Card.Meta>
@@ -96,7 +100,9 @@ class SearchList extends Component {
             value: {min: 0, max: 2000},
             priceRanking: "",
             gender: "",
-            complete: ""
+            complete: "",
+            startDate: null,
+            endDate: null
 
         };
 
@@ -128,6 +134,32 @@ class SearchList extends Component {
 
 
         }
+    }
+
+    dateRangeChange() {
+        console.log("clicked");
+        this.setState({position: []});
+        if(this.state.originapartments) {
+            var newapartment=[];
+            var currentStart = new Date(this.state.startDate._d).getTime();
+            var currentEnd = new Date(this.state.endDate._d).getTime();
+            for(var i = 0; i < this.state.originapartments.length; i++) {
+                var current = this.state.originapartments[i];
+                var start = new Date(this.state.originapartments[i].dateStarted).getTime();
+                var end = new Date(this.state.originapartments[i].dateEnd).getTime();
+                if (start >= currentStart && end <= currentEnd) {
+                    newapartment.push(current);
+                }
+            }
+
+            this.setState({apartments: newapartment}, function () {
+                this.markAlladdress(newapartment);
+            });
+
+
+        }
+
+
     }
 
     wholeOnChange() {
@@ -565,14 +597,25 @@ class SearchList extends Component {
     }
 
 
+    handleStartChange(date) {
+        this.setState({
+            startDate: date
+        });
+    }
 
+    handleEndtChange(date) {
+        console.log(date);
+        this.setState({
+            endDate: date
+        });
+    }
 
     render() {
         return(
 
              <body>
                 <header>
-                    <Menu fluid borderless size="massive" className="detailnav">
+                    <Menu fluid borderless stackable size="large" className="detailnav">
                         <Menu.Item>
                             <Link to="/">
                                 <Icon name='home'/>
@@ -580,44 +623,26 @@ class SearchList extends Component {
                         </Menu.Item>
 
                         <Menu.Menu className="periodnav">
-                            <Menu.Item className="period">
-                            <Input
-                                value={this.state.term}
-                                onChange={event => this.onInputChange(event.target.value)}
-                                label = 'Start Semester' list='dates' placeholder='Start Date' />
-                            <datalist id='dates'>
-                                <option value='Spring 2018' />
-                                <option value='Summer 2018' />
-                                <option value='Fall 2018' />
-                                <option value='Spring 2019' />
-                                <option value='Fall 2019' />
-                            </datalist>
+                            <Menu.Item>Start Date</Menu.Item>
+                            <Menu.Item>
+                                <DatePicker
+                                    selected={this.state.startDate}
+                                    onChange={this.handleStartChange.bind(this)}
+                                />
+                            </Menu.Item>
+                            <Menu.Item>End Date</Menu.Item>
+
+
+                            <Menu.Item>
+                                <DatePicker
+                                    selected={this.state.endDate}
+                                    onChange={this.handleEndtChange.bind(this)}
+                                />
                             </Menu.Item>
 
-                            <Menu.Item  className="period">
-                            <Input  label= 'End Semester' list='dates' placeholder='End Date' />
-                            <datalist id='semesters'>
-                                <option value='Spring 2018' />
-                                <option value='Summer 2018' />
-                                <option value='Fall 2018' />
-                                <option value='Spring 2019' />
-                                <option value='Fall 2019' />
-                            </datalist>
-                            </Menu.Item>
 
-                            <Menu.Item  className="period">
-                            <Input label= 'Area'  list='areas'placeholder='Area' />
-                            <datalist id='areas'>
-                                <option value='North Campus' />
-                                <option value='Mid campus' />
-                                <option value='South Campus' />
-                                <option value='off Campus' />
-
-                            </datalist>
-                            </Menu.Item>
-
-                            <Menu.Item className="period">
-                                <Button>Submit</Button>
+                            <Menu.Item>
+                                <Button onClick={() => this.dateRangeChange()}>Submit</Button>
                             </Menu.Item>
                         </Menu.Menu>
 
