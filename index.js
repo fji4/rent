@@ -12,7 +12,7 @@ const cookieParser = require('cookie-parser');
 
 app.use(express.static('./backend/static/'));
 app.use(express.static('./frontend/dist/'));
-
+app.use(express.static(__dirname + '/'));
 app.use(bodyParser.urlencoded({
   extended: true
 }));
@@ -126,6 +126,10 @@ app.get('/images/:id', function(req, res) {
 //res.download(genres.path);
         res.send(genres.path)
     });
+});
+
+app.get('*', (req, res) =>{
+    res.sendFile(path.resolve(__dirname, 'index.html'));
 });
 
 /* =========================================================================== */
