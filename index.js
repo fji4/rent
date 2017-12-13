@@ -93,7 +93,8 @@ app.use(passport.session());
 app.use('/api', require('./backend/routes/api')(router, passport));
 
 ///// test image route
-app.use('/image', require('./backend/routes/imageroute'));
+app.use('/api/image', require('./backend/routes/imageroute'));
+
 
 var imgroutes= require('./backend/routes/imageroute');
 //URL : http://localhost:3000/images/

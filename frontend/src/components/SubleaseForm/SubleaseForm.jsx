@@ -164,7 +164,7 @@ class ImageForm extends Component {
         this.setState({file:e.target.files[0]})
     }
     fileUpload(file){
-        const url = '/image';
+        const url = '/api/image';
         const formData = new FormData();
         formData.append('file',file)
         const config = {
@@ -203,7 +203,8 @@ class ImageForm extends Component {
         return (
 
         <form onSubmit={this.onFormSubmit}>
-            <h1>File Upload</h1>
+            <h1>Image Upload</h1>
+
             <input type="file" onChange={this.onChange} />
             <button type="submit">Upload</button>
         </form>
@@ -214,6 +215,27 @@ class ImageForm extends Component {
 }
 
 class Sublease extends Component {
+    constructor(props) {
+        super(props);
+        this.state ={
+            firstname: null,
+            lastname: null,
+            gender: null,
+            preferenceGender: null,
+            address1: null,
+            address2: null,
+            city: null,
+            startdate: null,
+            enddate: null,
+            price: null,
+            description: null
+
+        }
+        // this.onFormSubmit = this.onFormSubmit.bind(this)
+        // this.onChange = this.onChange.bind(this)
+        // this.fileUpload = this.fileUpload.bind(this)
+    }
+
     render(){
         const options = [
             { key: 'm', text: 'Male', value: 'male' },
@@ -229,7 +251,9 @@ class Sublease extends Component {
                 <h2>Sublease Form</h2>
                 {/*<Input placeholder='address...' />*/}
                 <Form>
+
                     <Form.Input label='Username' placeholder='Username' />
+
                     <Form.Select label = "Gender" options={options} placeholder='Gender' />
                     <Form.Select label = "preference of gender to sublease" options={preference} placeholder='Gender' />
                     <Form.Input label = "address1" placeholder = 'address1'/>
