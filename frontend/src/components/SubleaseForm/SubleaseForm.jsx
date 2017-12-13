@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Sidebar, Segment, Button, Menu, Image, Icon, Header } from 'semantic-ui-react'
 import { Input,Form,TextArea,Dropdown } from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
 
 // import {Navbar, Nav, NavItem, Button, Glyphicon} from 'react-bootstrap'
 // import Sidebar from 'react-bootstrap-sidebar'
@@ -56,7 +57,7 @@ class SubleaseForm extends Component {
             location:this.state.address,
             city:this.state.city,
             price:this.state.price,
-            assignedOwner:cur_user._id,
+            assignedOwner:cur_user,
             gender:this.state.gender,
             contactEmail :cur_user.local.email,
             description:this.state.description,
@@ -68,6 +69,8 @@ class SubleaseForm extends Component {
 
         }).then(function (response) {
             console.log(response);
+            console.log("response.data.data:" , response.data.data)
+            this.setState({ cur_user: response.data.data })
         }).catch(error => {
             console.log(error.response)
         });
@@ -155,19 +158,34 @@ class SubleaseForm extends Component {
     }
     render(){
         const cur_user = this.props.location.cur_user;
-        // console.log(cur_user);
-        // if(this.state.once) {
-        //     this.setState({cur_user: cur_user, once:false});
-        // }
-        console.log("cur_user is ",cur_user,this.state.cur_user);
+        if (!this.state.login) {
+            this.setState({ cur_user: cur_user, login: true })
+        }
+        console.log("cur_user is what  ",cur_user,this.state.cur_user);
         return(
             <div className = "form" >
-                <Nav activeItem = {this.state.activeItem}
-                handleItemClick = {this.handleItemClick}/>
-                {/*<User toggleVisibility = {this.toggleVisibility}*/}
-                        {/*visible = {this.state.visible}/>*/}
-                {/*{console.log(this.state.visible)}*/}
-                <LeftBar />
+
+                <div id="subFnavBar">
+                    <h1> Subleasing </h1>
+                    <div>
+                        <Link to={{ pathname: "/account", cur_user: this.state.cur_user, state: this.state.login }}>
+                            <img src={'http://tc.sinaimg.cn/maxwidth.800/tc.service.weibo.com/static_jinrongbaguanv_com/5886a925e3bd5fc2a3adf8f9a36324c8.png'}
+                                alt="fairy" />
+                        </Link>
+                    </div>
+                    <div> Welcome back! 
+                    </div>
+                    <div>
+                        <Link to={{ pathname: "/searchlist", cur_user: this.state.cur_user, state: this.state.login }}>Search</Link>
+                    </div>
+                    <div>
+                        <Link to={{ pathname: "/" }} >
+                            Home
+                        </Link>
+                    </div>
+                </div>
+
+
                 <Sublease
                     handleUsername = {this.handleUsername}
                     handleGender = {this.handleGender}
@@ -344,8 +362,6 @@ class Sublease extends Component {
                 <h2>Sublease Form</h2>
                 {/*<Input placeholder='address...' />*/}
                 <Form onSubmit={this.props.onSubmit}>
-
-                    <Form.Input label='Username' placeholder='Username' onChange = {this.props.handleUsername}/>
                     <Form.Select label = "preference of gender to sublease" options={preference} value = {preference.value} placeholder='Gender' onChange = {this.props.handleGender} />
                     <Form.Input label = "address" placeholder = 'address' onChange = {this.props.handleAddress}/>
                     <Form.Input label = "city" placeholder = 'city' onChange = {this.props.handleCity}/>

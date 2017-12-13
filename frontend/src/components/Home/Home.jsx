@@ -23,7 +23,7 @@ class Home extends Component {
             },
             message: '',
             users: [],
-            cur_user: "",
+            cur_user: undefined,
             src: ""
         };
         this.checklogin = this.checklogin.bind(this);
@@ -246,6 +246,25 @@ class Home extends Component {
 
     render() {
         console.log("start")
+        if (this.props.location.cur_user)
+            this.setState({ logged_in: false })
+        if (!(this.state.logged_in)) {
+            console.log("chishichishi", this.state.logged_in)
+            if (this.props.location.cur_user != undefined) {
+                this.setState({ cur_user: this.props.location.cur_user })
+                console.log("zhendechishi", this.props.location.cur_user)
+                axios.get('/api/users/' + this.props.location.cur_user._id)
+                    .then(function (resp) {
+                        console.log("set new user!\n" + resp.data.data.local.ownedApt)
+                        this.setState({ cur_user: resp.data.data, logged_in: true })
+                    }.bind(this)
+                    )
+            }
+
+        }
+        if (this.state.cur_user)
+            console.log("shit", this.state.cur_user)
+
         return (
             <div className="Home">
                 <div className="bar">
@@ -271,8 +290,19 @@ class Home extends Component {
                 </div>
                 <div className="content">
                     <ul>
-                        <li><SubButton showlog={this.showlog} checklogin={this.checklogin} user={this.state.cur_user} login={this.state.logged_in} source="but"/></li>
-                        <li><RentButton user = {this.state.cur_user} login = {this.state.logged_in}/></li>
+                        <li><RentButton user={this.state.cur_user} login={this.state.logged_in} /></li>
+
+                        <li>
+                            <div>
+                                <Button className="theButtons" id="subb">
+                                    <Link to={{ pathname: "/sublease", cur_user: this.state.cur_user, state: this.state.logged_in  }} onClick={this.checklogin}>
+                                        Want to sublease
+                                    </Link>
+                                </Button>
+                            </div>
+                        </li>
+
+
                     </ul>
                 </div>
 
@@ -348,7 +378,33 @@ class Home extends Component {
                     </Modal.Content>
                 </Modal>
 
-
+                {
+                    //<div className="Model"
+                    //    id="log"
+                    //    style={{ display: this.log_in }}
+                    //>
+                    //    <i className="close icon"></i>
+                    //    <form className="ui form">
+                    //        <div class="field">
+                    //            <label>Username</label>
+                    //            <input type="text" name="username" placeholder="username">
+                    //            </input>
+                    //        </div>
+                    //        <div className="field">
+                    //            <label>Password</label>
+                    //            <input type="text" name="password" placeholder="password">
+                    //            </input>
+                    //        </div>
+                    //        <div className="but">
+                    //            <button className="ui button" type="submit">Submit</button>
+                    //        </div>
+                    //    </form>
+                    //    <div className="reg">
+                    //        <div> You don't have an account?</div>
+                    //        <div><Button>register</Button></div>
+                    //    </div >
+                    //</div>
+                }
 
 
                 {
@@ -380,7 +436,7 @@ class SubButton extends Component {
     render() {
         return (
             <div>
-                <Link to={{ pathname: "/sublease", cur_user: this.props.user, state: this.props.login }} onClick={this.props.checklogin}>
+                <Link to={{ pathname: "/sublease", cur_user: this.props.user , state:  this.props.login  }} onClick={this.props.checklogin}>
                     <Button className="theButtons" id="subb">Want to sublease</Button>
                 </Link>
             </div>

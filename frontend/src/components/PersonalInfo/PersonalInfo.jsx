@@ -38,7 +38,7 @@ class PersonalInfo extends Component {
         console.log("enter onSubmit");
         e.preventDefault();
         console.log(this.state.change_user)
-        axios.put('/api/users/5a30c336bb1e555a6865369c', 
+        axios.put('/api/users/' + this.state.user_id, 
             this.state.change_user
         )
             .then((response) => {
