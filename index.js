@@ -67,7 +67,6 @@ app.route('/notifications').get(function (req, res) {
 app.route('/searchlist').get(function (req, res) {
     return res.sendFile(path.join(__dirname, './backend/static/index.html'));
 })
-
 app.route('/detail').get(function (req, res) {
     return res.sendFile(path.join(__dirname, './backend/static/index.html'));
 })
