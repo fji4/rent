@@ -23,7 +23,8 @@ class Home extends Component {
             },
             message: '',
             users: [],
-            cur_user: ""
+            cur_user: "",
+            src: ""
         };
         this.checklogin = this.checklogin.bind(this);
         this.onSignupSubmit = this.onSignupSubmit.bind(this);
@@ -103,6 +104,7 @@ class Home extends Component {
             }
         });
         xhr.send(formData);
+        this.setState({ log_in: false })
     }
 
     //keep track of the current user.
@@ -192,14 +194,30 @@ class Home extends Component {
         console.log("!!!!!!!!!!!!checklogin!!!!!!!!!!",this.state.logged_in);
         if(this.state.logged_in){
             console.log("looged in here");
-            // this.props.history.push('/sublease');
+            //this.props.history.push('/sublease');
         }else{
+            console.log("show log modal");
+            e.preventDefault();
+            this.setState({ log_in: true, register: false });
+            if (e.target.source = "acc") {
+                this.setState({ src: "acc" })
+            }
+            else {
+                this.setState({ src: "but" })
+            }
+        }
+    }
+    checkloginAcc(e) {
+        console.log("!!!!!!!!!!!!checklogin acc!!!!!!!!!!", this.state.logged_in);
+        if (this.state.logged_in) {
+            console.log("looged in here");
+            //this.props.history.push('/account');
+        } else {
             console.log("show log modal");
             e.preventDefault();
             this.setState({ log_in: true, register: false });
         }
     }
-
 
     showlog(e) {
         console.log("show log modal")
@@ -242,14 +260,18 @@ class Home extends Component {
                     }
                     <div className="home_acc">
                         <div>Home</div>
-                        <div onClick={this.showlog}>Account</div>
+                        <div>
+                            <Link to={{ pathname: "/account", cur_user: this.state.cur_user, state: this.state.logged_in }} onClick={this.checklogin} source="acc">
+                                Account
+                            </Link>
+                        </div>
                     </div>
 
                     <h1>Subleasing</h1>
                 </div>
                 <div className="content">
                     <ul>
-                        <li><SubButton showlog={this.showlog} checklogin = {this.checklogin} user = {this.state.cur_user} login = {this.state.logged_in}/></li>
+                        <li><SubButton showlog={this.showlog} checklogin={this.checklogin} user={this.state.cur_user} login={this.state.logged_in} source="but"/></li>
                         <li><RentButton user = {this.state.cur_user} login = {this.state.logged_in}/></li>
                     </ul>
                 </div>
@@ -261,7 +283,7 @@ class Home extends Component {
                     <Modal.Header>Log In</Modal.Header>
                     <Icon name="close" onClick={this.closelog} />
                     <Modal.Content>
-                        <form className="ui form" onSubmit = {this.onSubmit} >
+                        <form className="ui form" onSubmit = {this.onSubmit}>
                             <div className="field">
                                 <label>Email</label>
                                 <Input type="text" name="email" placeholder="email" onChange={this.onChangeEmail}>
@@ -277,6 +299,7 @@ class Home extends Component {
                                 <button className="ui button" type="submit" >Submit</button>
                             </div>
                         </form>
+
                         <div className="reg">
                             <div> You don't have an account?</div>
                             <div><Button onClick={this.showregister}>register</Button></div>
@@ -382,7 +405,11 @@ class Home extends Component {
 class SubButton extends Component {
     render() {
         return (
-            <div><Link to = {{pathname:"/sublease", cur_user:this.props.user, state:this.props.login}} onClick={this.props.checklogin}><Button className="theButtons" id="subb">Want to sublease</Button></Link></div>
+            <div>
+                <Link to={{ pathname: "/sublease", cur_user: this.props.user, state: this.props.login }} onClick={this.props.checklogin}>
+                    <Button className="theButtons" id="subb">Want to sublease</Button>
+                </Link>
+            </div>
         )
     }
 }

@@ -13,6 +13,7 @@ import Account from './components/Account/Account.jsx';
 import Notifications from './components/Notifications/Notifications.jsx';
 import Detail from './components/Detail/Detail.jsx';
 import SearchList from './components/SearchList/SearchList.jsx';
+import PersonalInfo from './components/PersonalInfo/PersonalInfo.jsx';
 
 
 import styles from './styles/main.scss';
@@ -32,7 +33,7 @@ ReactDom.render(
             <Route exact path='/history' component={History} />
             <Route exact path='/notifications' component={Notifications} />
             <Route exact path="/searchlist" component={SearchList}/>
-
+            <Route exact path="/personalinfo" component={PersonalInfo} />
 
         </Switch>
     </Router>,

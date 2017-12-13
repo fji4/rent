@@ -6,7 +6,7 @@ var apartmentSchema = mongoose.Schema({
     price: {type:String,required: true},
     assignedOwner: String,
     gender: String,
-    contactPhone: {type:String, default:""},
+    // contactPhone: {type:String, default:""},
     contactEmail: {type: String, default:""},
     description: String,
     datePosted: {type: Date, default: Date.now()},

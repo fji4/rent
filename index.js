@@ -71,6 +71,9 @@ app.route('/searchlist').get(function (req, res) {
 app.route('/detail').get(function (req, res) {
     return res.sendFile(path.join(__dirname, './backend/static/index.html'));
 })
+app.route('/personalinfo').get(function (req, res) {
+    return res.sendFile(path.join(__dirname, './backend/static/index.html'));
+})
 
 
 /* New things ================================================================ */
