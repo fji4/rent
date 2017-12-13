@@ -64,12 +64,16 @@ app.route('/account').get(function (req, res) {
 app.route('/notifications').get(function (req, res) {
     return res.sendFile(path.join(__dirname, './backend/static/index.html'));
 })
+<<<<<<< HEAD
 app.route('/searchlist').get(function (req, res) {
     return res.sendFile(path.join(__dirname, './backend/static/index.html'));
 })
 app.route('/detail').get(function (req, res) {
     return res.sendFile(path.join(__dirname, './backend/static/index.html'));
 })
+=======
+
+>>>>>>> 0d01b36dd0e401e180bb7c9b071fdb40229fbfc3
 
 
 /* New things ================================================================ */
