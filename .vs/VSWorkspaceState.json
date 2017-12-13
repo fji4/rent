@@ -6,11 +6,12 @@
     "\\backend\\models",
     "\\backend\\routes",
     "\\backend\\static",
+    "\\config",
     "\\frontend",
     "\\frontend\\src",
     "\\frontend\\src\\components",
-    "\\frontend\\src\\components\\Account"
+    "\\frontend\\src\\components\\Home"
   ],
-  "SelectedNode": "\\index.js",
+  "SelectedNode": "\\backend\\routes\\api.js",
   "PreviewInSolutionExplorer": false
 }

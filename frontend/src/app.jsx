@@ -11,6 +11,8 @@ import WatchList from './components/WatchList/watchList.jsx';
 import History from './components/SearchList/SearchList.jsx';
 import Account from './components/Account/Account.jsx';
 import Notifications from './components/Notifications/Notifications.jsx';
+import Detail from './components/Detail/Detail.jsx';
+import SearchList from './components/SearchList/SearchList.jsx';
 
 import styles from './styles/main.scss';
  
@@ -27,6 +29,8 @@ ReactDom.render(
             <Route exact path='/list' component={History} />
             <Route exact path='/account' component={Account} />
             <Route exact path='/notifications' component={Notifications} />
+            <Route exact path="/detail" component={Detail} />
+            <Route exact path="/searchlist" component={SearchList} />
         </Switch>
     </Router>,
     document.getElementById('react-app')
