@@ -189,7 +189,7 @@ class ImageForm extends Component {
         this.setState({file:e.target.files[0]})
     }
     fileUpload(file){
-        const url = '/image';
+        const url = '/api/image';
         const formData = new FormData();
         formData.append('file',file)
         const config = {
@@ -228,7 +228,7 @@ class ImageForm extends Component {
         return (
 
         <form onSubmit={this.onFormSubmit}>
-            <h1>File Upload</h1>
+            <h1>Image Upload</h1>
             <input type="file" onChange={this.onChange} />
             <button type="submit">Upload</button>
         </form>
@@ -239,6 +239,27 @@ class ImageForm extends Component {
 }
 
 class Sublease extends Component {
+    constructor(props) {
+        super(props);
+        this.state ={
+            firstname: null,
+            lastname: null,
+            gender: null,
+            preferenceGender: null,
+            address1: null,
+            address2: null,
+            city: null,
+            startdate: null,
+            enddate: null,
+            price: null,
+            description: null
+
+        }
+        // this.onFormSubmit = this.onFormSubmit.bind(this)
+        // this.onChange = this.onChange.bind(this)
+        // this.fileUpload = this.fileUpload.bind(this)
+    }
+
     render(){
         const options = [
             { key: 'm', text: 'Male', value: 'male' },
@@ -255,7 +276,7 @@ class Sublease extends Component {
                 {/*<Input placeholder='address...' />*/}
                 <Form>
                     <Form.Group widths='equal'>
-                        <Form.Input label='First name' placeholder='First name' />
+                        <Form.Input label='First name' placeholder='First name'  />
                         <Form.Input label='Last name' placeholder='Last name' />
                     </Form.Group>
                     <Form.Select label = "Gender" options={options} placeholder='Gender' />

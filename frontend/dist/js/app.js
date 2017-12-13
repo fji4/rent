@@ -65753,7 +65753,7 @@ var ImageForm = function (_Component5) {
     }, {
         key: 'fileUpload',
         value: function fileUpload(file) {
-            var url = '/image';
+            var url = '/api/image';
             var formData = new FormData();
             formData.append('file', file);
             var config = {
@@ -65797,7 +65797,7 @@ var ImageForm = function (_Component5) {
                 _react2.default.createElement(
                     'h1',
                     null,
-                    'File Upload'
+                    'Image Upload'
                 ),
                 _react2.default.createElement('input', { type: 'file', onChange: this.onChange }),
                 _react2.default.createElement(
@@ -65815,10 +65815,27 @@ var ImageForm = function (_Component5) {
 var Sublease = function (_Component6) {
     _inherits(Sublease, _Component6);
 
-    function Sublease() {
+    function Sublease(props) {
         _classCallCheck(this, Sublease);
 
-        return _possibleConstructorReturn(this, (Sublease.__proto__ || Object.getPrototypeOf(Sublease)).apply(this, arguments));
+        var _this6 = _possibleConstructorReturn(this, (Sublease.__proto__ || Object.getPrototypeOf(Sublease)).call(this, props));
+
+        _this6.state = {
+            firstname: null,
+            lastname: null,
+            gender: null,
+            preferenceGender: null,
+            address1: null,
+            address2: null,
+            city: null,
+            startdate: null,
+            enddate: null,
+            price: null,
+            description: null
+            // this.onFormSubmit = this.onFormSubmit.bind(this)
+            // this.onChange = this.onChange.bind(this)
+            // this.fileUpload = this.fileUpload.bind(this)
+        };return _this6;
     }
 
     _createClass(Sublease, [{

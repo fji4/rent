@@ -47,9 +47,9 @@ var upload = multer({
     storage: storage
 });
 
-router.get('/', function(req, res, next) {
-    res.render('index.ejs');
-});
+// router.get('/', function(req, res, next) {
+//     res.render('index.ejs');
+// });
 
 router.post('/', upload.any(), function(req, res, next) {
 
