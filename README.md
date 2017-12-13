@@ -1,28 +1,35 @@
-# passport_demo
+# SubleasingUIUC
+This is a subleasing platform that aims to help uiuc students with subleasing information. 
 
-This basic implementation of adding Passport to an existing project was used as a demonstration for CS498 RK1. This code is provided as-is for learning purposes, and is NOT meant to be a 'starter code' for students' final projects. You are free to use it as such if you would like, but you are responsible for installing whatever packages you may want, making sure there are no bugs, and modifying the code as necessary to fit into your projects. 
+You could either choose to rent or sublease a house.
+
+And for find a house, you don't need an account. However, for subleasing, you have to login or register an account to complete the sublease form. 
+
+We used [passport_demo](https://github.com/bluedrops/passport_demo.git) as starter code.
+
 
 ## Getting started
 
 First, `npm install`. Then make sure you have two terminals open; in one, type `npm start` to run the backend, and in the other, type `npm run dev` to run the frontend. 
 
-Make sure you put your own database URI into `config/index.json`.
-
 ## Start code
+If the app crashed, please run the following code:
+
 `sudo npm install cookie-session`
 
 `sudo npm install cookie-parser`
 
 `sudo npm install cookie-parser -g`
-## how to setup branch
+## How to setup branch
 https://stackoverflow.com/questions/1519006/how-do-you-create-a-remote-git-branch
 
-## google map api key
+## Google map api key
 AIzaSyDeS_Giswu2KngF138sF4-5uX2Y8euZDKs
 
 
 
-backend schemas:
+## Backend schemas
+```
 users schema{
 	location: {type:String,required: true},
     city: {type:String, required: true},
@@ -38,7 +45,8 @@ users schema{
     completed:{type:Boolean, default: false},
     img : {type:[String], default: []}
 }
-
+```
+```
 apartment schema{
 	email		: String,
     password	: String,
@@ -48,10 +56,16 @@ apartment schema{
     wishList    : {type:[String],default: []},
     userPic     : String
 }
+```
 
-query ��count  where sort select
+### query 
+* count  
+* where 
+* sort 
+* select
 
-get example:
+### get example
+```
 if (!(this.state.logged_in)) {
     axios.get(`http://localhost:3000/api/users?where={"_id": "5a2dc92d7ad47271b6b7c307"}`)
         .then(function (resp) {
@@ -61,4 +75,5 @@ if (!(this.state.logged_in)) {
 }
 if (this.state.cur_user)
     console.log(this.state.cur_user.name)
+```
 
