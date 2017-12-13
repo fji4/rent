@@ -7,5 +7,6 @@ public/
 public/*
 frontend/dist
 frontend/dist/*
-auth.js
-
+.vs/
+.vs/*
+./frontend/dist/js/app.js
