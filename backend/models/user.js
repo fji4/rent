@@ -10,8 +10,6 @@ var userSchema = mongoose.Schema({
             wishList    : {type:[String],default: []},
             userPic     : String}
 
-
-
 });
 
 userSchema.methods.generateHash = function(password) {

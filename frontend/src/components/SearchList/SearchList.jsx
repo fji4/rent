@@ -1,60 +1,260 @@
 import React, { Component } from 'react'
-import { Item,Tab } from 'semantic-ui-react'
-import { Input,Menu,Form,TextArea,Dropdown } from 'semantic-ui-react'
+import { Button, Card, Input,Icon,Checkbox, Menu, Dropdown, Form, Select, Image } from 'semantic-ui-react'
+import { Link, withRouter } from 'react-router-dom';
+import {Redirect, browserHistory} from 'react-router';
+import * as axios from 'axios';
+import InputRange from 'react-input-range';
+import 'react-input-range/lib/css/index.css';
+import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
+const { MarkerClusterer } = require("react-google-maps/lib/components/addons/MarkerClusterer");
+import styles from './SearchList.scss'
+
+const apiURL = "https://api.themoviedb.org/3/search/movie?api_key=e7b459ccb253cab36bb660a78b72dd18&query=";
+
+const MyMapComponent = withScriptjs(withGoogleMap((props) =>
+
+    <GoogleMap
+        defaultZoom={16}
+        defaultCenter={{ lat: props.markers[0].lat, lng: props.markers[0].lng }}
+    >
+        {/*{props.isMarkerShown && <Marker position={{ lat: props.markers[0].lat, lng: props.markers[0].lng }} />}*/}
+
+            {props.markers.map(marker => (
+                <Marker
+                    clickable
+                    key={marker.lat}
+                    position={{ lat: marker.lat, lng: marker.lng }}
+                    onClick={() => {
+                        console.log("click");
+                        props.history.push('/detail');
+            }}
+                />
+            ))}
+
+    </GoogleMap>
+));
+
+const ApartmentList = props => {
+    const apartmentItems = props.apartemnts.map(apartment => {
+            return (
+                <ApartmentListItem
+                    key={apartment.id}
+                    apartment={apartment}
+                />
+            );
+
+    });
+
+    return (
+        <Card.Group stackable doubling>
+            {apartmentItems}
+        </Card.Group>
+    );
+};
 
 
-class History extends Component{
-    render(){
-        const panes = [
-            { menuItem: 'Subleasing', render: () => <Tab.Pane attached={false}>Tab 1 Content
-                <div className = "content1">
-                <Item.Group divided>
-                    <Item>
-                        <Item.Image size='tiny' src='https://www.americanflex.com.br/skin/adminhtml/default/default/lib/jlukic_semanticui/examples/assets/images/wireframe/image.png' />
-                        <Item.Content verticalAlign='middle'>Content A</Item.Content>
-                    </Item>
+const ApartmentListItem = ({apartment}) => {
+    const imageUrl = "http://image.tmdb.org/t/p/w150/"+ props.video.poster_path;
 
-                    <Item>
-                        <Item.Image size='tiny' src='https://www.americanflex.com.br/skin/adminhtml/default/default/lib/jlukic_semanticui/examples/assets/images/wireframe/image.png' />
-                        <Item.Content verticalAlign='middle'>Content B</Item.Content>
-                    </Item>
+    return (
+        <Card>
+            <Image src='http://advantageproperties.com/wp-content/uploads/2015/01/1010WMA-2F-04-Kit-305-DSC_0136-small-Large.jpg' />
+            <Card.Content>
+                <Card.Header>
+                    {apartment.location}
+                </Card.Header>
+                <Card.Meta>
+        <span className='date'>
+          Joined in 2015
+        </span>
+                </Card.Meta>
+                <Card.Description>
+                    Matthew is a musician living in Nashville.
+                </Card.Description>
+            </Card.Content>
+            <Card.Content extra>
+                <a>
+                    <Icon name='user' />
+                    22 Friends
+                </a>
+            </Card.Content>
+        </Card>
+    );
+};
 
-                    <Item>
-                        <Item.Image size='tiny' src='https://www.americanflex.com.br/skin/adminhtml/default/default/lib/jlukic_semanticui/examples/assets/images/wireframe/image.png' />
-                        <Item.Content content='Content C' verticalAlign='middle' />
-                    </Item>
-                </Item.Group>
-                </div>
-            </Tab.Pane> },
-            { menuItem: 'Completed', render: () => <Tab.Pane attached={false}>Tab 2 Content
-                <div className="content2">
-                <Item.Group divided>
-                    <Item>
-                        <Item.Image size='tiny' src='https://www.americanflex.com.br/skin/adminhtml/default/default/lib/jlukic_semanticui/examples/assets/images/wireframe/image.png' />
-                        <Item.Content verticalAlign='middle'>Content A</Item.Content>
-                    </Item>
+class SearchList extends Component {
 
-                    <Item>
-                        <Item.Image size='tiny' src='https://www.americanflex.com.br/skin/adminhtml/default/default/lib/jlukic_semanticui/examples/assets/images/wireframe/image.png' />
-                        <Item.Content verticalAlign='middle'>Content B</Item.Content>
-                    </Item>
+    constructor(props) {
+        super(props);
 
-                    <Item>
-                        <Item.Image size='tiny' src='https://www.americanflex.com.br/skin/adminhtml/default/default/lib/jlukic_semanticui/examples/assets/images/wireframe/image.png' />
-                        <Item.Content content='Content C' verticalAlign='middle' />
-                    </Item>
-                </Item.Group>
-                </div>
-            </Tab.Pane> },
-            { menuItem: 'Tab 3', render: () => <Tab.Pane attached={false}>Tab 3 Content</Tab.Pane> },
-        ]
+        this.state = {
+            apartments: [],
+
+            position:[],
+            value: {min: 0, max: 2000}
+
+        };
+
+    }
+
+
+    onInputChange(term) {
+        this.setState({ term });
+        if (term===null)
+        {
+            this.state.videos= null;
+            this.state.poster_path=0;
+        }
+        // else this.videoSearch(term);
+    }
+
+    componentWillMount() {
+        this.markAddress("1010 West Main St. Urbana");
+        this.markAddress("1007 West Clark St. Urbana");
+        console.log("before render");
+    }
+
+    markAddress(addresses) {
+        var address = addresses.replace(/ /g, '+');
+        var axios = require('axios');
+        axios.get("https://maps.googleapis.com/maps/api/geocode/json?address="+address+"&key=AIzaSyDeS_Giswu2KngF138sF4-5uX2Y8euZDKs")
+            .then(function(response){
+                // console.log(response);
+                console.log(response.data.results[0].geometry.location);
+                this.setState({position: this.state.position.concat([response.data.results[0].geometry.location])})
+            }.bind(this));
+    }
+
+    renderMap() {
+        console.log(this.state.position);
         return(
-
-            <Tab menu={{ secondary: true, pointing: true }} panes={panes} />
+            <div>
+                <MyMapComponent
+                    isMarkerShown
+                    markers={this.state.position}
+                    googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLNLZK0eVgZMOPh5-3u5qe3IDvJhNSNcA&v=3.exp&libraries=geometry,drawing,places"
+                    loadingElement={<div style={{ height: `100%` }} />}
+                    containerElement={<div style={{ height: `200px` }} />}
+                    mapElement={<div style={{ height: `100%` ,width:`100%`}} />}
+                />
+            </div>
         )
     }
 
 
+    render() {
+        return(
+
+             <body>
+                <header>
+                    <Menu fluid borderless size="massive" className="detailnav">
+                        <Menu.Item>
+                            <Link to="/">
+                                <Icon name='home'/>
+                            </Link>
+                        </Menu.Item>
+
+                        <Menu.Menu className="periodnav">
+                            <Menu.Item className="period">
+                            <Input
+                                value={this.state.term}
+                                onChange={event => this.onInputChange(event.target.value)}
+                                label = 'Start Semester' list='dates' placeholder='Start Date' />
+                            <datalist id='dates'>
+                                <option value='Spring 2018' />
+                                <option value='Summer 2018' />
+                                <option value='Fall 2018' />
+                                <option value='Spring 2019' />
+                                <option value='Fall 2019' />
+                            </datalist>
+                            </Menu.Item>
+
+                            <Menu.Item  className="period">
+                            <Input  label= 'End Semester' list='dates' placeholder='End Date' />
+                            <datalist id='semesters'>
+                                <option value='Spring 2018' />
+                                <option value='Summer 2018' />
+                                <option value='Fall 2018' />
+                                <option value='Spring 2019' />
+                                <option value='Fall 2019' />
+                            </datalist>
+                            </Menu.Item>
+
+                            <Menu.Item  className="period">
+                            <Input label= 'Area'  list='areas'placeholder='Area' />
+                            <datalist id='areas'>
+                                <option value='North Campus' />
+                                <option value='Mid campus' />
+                                <option value='South Campus' />
+                                <option value='off Campus' />
+
+                            </datalist>
+                            </Menu.Item>
+
+                            <Menu.Item className="period">
+                                <Button>Submit</Button>
+                            </Menu.Item>
+                        </Menu.Menu>
+
+                        <Menu.Item position="right">
+                            <Link to="/account">
+                                <Icon  name='user'/>
+                            </Link>
+                        </Menu.Item>
+                    </Menu>
+                </header>
+
+
+
+                <div className='row'>
+                    <div className='column small'>
+                        {this.renderMap()}
+
+
+                        <div className='ui form'>
+                            <div className='grouped fields'>
+                            <div className='field'>
+                                <div className='filters'>
+
+                                  {/*<Checkbox label='Prices Low to High' size='big' />*/}
+                                    <div>Price Range</div>
+                                    <br/>
+                                    <InputRange
+                                        formatLabel={value => `${value}$`}
+                                        step={100}
+                                        maxValue={2000}
+                                        minValue={0}
+                                        value={this.state.value}
+                                        onChange={value => this.setState({ value })} />
+                                </div>
+                            </div>
+                                <br/>
+
+                                <div className ='field' id="genderdrop">
+                                    <Form.Field control={Select} label='Gender' options={options} placeholder='Gender' />
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <div className='column large'>
+                        <div className="List">
+
+                        </div>
+                    </div>
+
+                </div>
+
+             </body>
+        )
+    }
 }
 
-export default History
+const options = [
+    { key: 'm', text: 'Male Only', value: 'male' },
+    { key: 'f', text: 'Female Only', value: 'female' },
+    { key: 'n', text: 'Gender not Specified', value: 'neither' },
+]
+
+export default SearchList

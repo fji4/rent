@@ -229,6 +229,7 @@ class ImageForm extends Component {
 
         <form onSubmit={this.onFormSubmit}>
             <h1>Image Upload</h1>
+
             <input type="file" onChange={this.onChange} />
             <button type="submit">Upload</button>
         </form>

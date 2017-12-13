@@ -65,6 +65,13 @@ app.route('/notifications').get(function (req, res) {
     return res.sendFile(path.join(__dirname, './backend/static/index.html'));
 })
 
+app.route('/searchlist').get(function (req, res) {
+    return res.sendFile(path.join(__dirname, './backend/static/index.html'));
+})
+
+app.route('/detail').get(function (req, res) {
+    return res.sendFile(path.join(__dirname, './backend/static/index.html'));
+})
 
 
 /* New things ================================================================ */
@@ -88,6 +95,7 @@ app.use('/api', require('./backend/routes/api')(router, passport));
 
 ///// test image route
 app.use('/api/image', require('./backend/routes/imageroute'));
+
 
 var imgroutes= require('./backend/routes/imageroute');
 //URL : http://localhost:3000/images/

@@ -51,6 +51,7 @@ var upload = multer({
 //     res.render('index.ejs');
 // });
 
+
 router.post('/', upload.any(), function(req, res, next) {
 
     res.send(req.files);

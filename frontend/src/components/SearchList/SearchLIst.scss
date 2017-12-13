@@ -1,0 +1,94 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding-left:10px;
+  padding-right: 10px;
+  padding-top: 5px;
+}
+/* Style the header */
+.header {
+  background-color: #f1f1f1;
+  padding: 20px;
+  text-align: center;
+}
+
+#usericon{
+
+  float:right;
+}
+#homeicon{
+  float:left;
+}
+.SearchList {
+  color: skyblue;
+  text-align: center;
+  position: relative;
+  top: 10%;
+  //left: 10%;
+  //margin : auto;
+  //margin-top: 40px;
+  // margin-left: 50px;
+
+  //transform: translate(-20%, -20%);
+  -webkit-animation-name: fade;
+  -webkit-animation-duration: 1.5s;
+  animation-name: fade;
+  animation-duration: 1.5s;
+}
+
+.column {
+  float: left;
+  padding: 10px;
+}
+
+/* Left and right column */
+.column.small {
+  width: 30%;
+  //float: left;
+}
+
+/* Middle column */
+.column.large {
+  width: 70%;
+  //float: right;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
+@media (max-width: 600px) {
+  .column.small, .column.large{
+    width: 100%;
+  }
+}
+
+
+#googlemap{
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+}
+
+.usericon {
+  display: inline-block;
+  margin-left: 50%;
+}
+
+#filternav {
+  height: 50%;
+  margin: auto;
+  font-size: 15px;
+}
+
+.period {
+  display: block;
+  padding-left: 2%;
+}
