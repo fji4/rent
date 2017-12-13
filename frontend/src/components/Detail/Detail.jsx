@@ -117,7 +117,7 @@ class Detail extends Component {
                 <head>
                     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css"></link>
                 </head>
-                <Menu className="detailnav">
+                <Menu fluid borderless stackable size="large" className="detailnav">
                     <Menu.Item>
                         <Link to="/">
                             <Icon name='home'/>
@@ -175,10 +175,6 @@ class Detail extends Component {
                     </Table>
                 </div>
 
-                <div className="bottombutton">
-                    <Button size="massive" className="contact">Contact</Button>
-                    <Button size="massive" className="wishlist" floated="right">Add to Wishlist</Button>
-                </div>
 
 
             </div>

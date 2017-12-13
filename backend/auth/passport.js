@@ -27,7 +27,7 @@ module.exports = function(passport) {
             passReqToCallback : true // allows us to pass back the entire request to the callback
         },
 
-        function(req, name, email, password, done) {
+        function(req, email, password, done) {
             // process.nextTick(function () {
             User.findOne({'local.email': email}, function (err, user) {
                 if (err) {
@@ -39,7 +39,7 @@ module.exports = function(passport) {
 
                     newUser.local.email = email;
                     newUser.local.password = newUser.generateHash(password);
-                    newUser.local.name = name;
+                    newUser.local.name = "";
                     newUser.local.description = "";
                     console.log('req',req.params);
 

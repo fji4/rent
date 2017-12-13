@@ -29,7 +29,6 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
                     key={marker.lat}
                     position={{ lat: marker.lat, lng: marker.lng }}
                     onClick={() => {
-                        console.log("click");
                         props.history.push('/detail');
                     }}
                 />
@@ -117,7 +116,6 @@ class SearchList extends Component {
 
 
     priceRangeChange(value) {
-        console.log(value);
         this.setState({value: value, position: []});
         if(this.state.originapartments) {
             var newapartment=[];
@@ -137,7 +135,6 @@ class SearchList extends Component {
     }
 
     dateRangeChange() {
-        console.log("clicked");
         this.setState({position: []});
         if(this.state.originapartments) {
             var newapartment=[];
@@ -171,7 +168,6 @@ class SearchList extends Component {
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
                             this.setState({apartments:resp.data.data, originapartments: resp.data.data});
-                            console.log(resp.data.data);
                         }.bind(this));
                 }
 
@@ -180,7 +176,6 @@ class SearchList extends Component {
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
                             this.setState({apartments:resp.data.data, originapartments: resp.data.data});
-                            console.log(resp.data.data);
                         }.bind(this));
                 }
 
@@ -189,7 +184,6 @@ class SearchList extends Component {
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
                             this.setState({apartments:resp.data.data, originapartments: resp.data.data});
-                            console.log(resp.data.data);
                         }.bind(this));
                 }
             }
@@ -200,7 +194,6 @@ class SearchList extends Component {
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
                             this.setState({apartments:resp.data.data, originapartments: resp.data.data});
-                            console.log(resp.data.data);
                         }.bind(this));
                 }
 
@@ -209,7 +202,6 @@ class SearchList extends Component {
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
                             this.setState({apartments:resp.data.data, originapartments: resp.data.data});
-                            console.log(resp.data.data);
                         }.bind(this));
                 }
 
@@ -218,7 +210,6 @@ class SearchList extends Component {
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
                             this.setState({apartments:resp.data.data, originapartments: resp.data.data});
-                            console.log(resp.data.data);
                         }.bind(this));
                 }
             }
@@ -229,7 +220,6 @@ class SearchList extends Component {
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
                             this.setState({apartments:resp.data.data, originapartments: resp.data.data});
-                            console.log(resp.data.data);
                         }.bind(this));
                 }
 
@@ -238,7 +228,6 @@ class SearchList extends Component {
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
                             this.setState({apartments:resp.data.data, originapartments: resp.data.data});
-                            console.log(resp.data.data);
                         }.bind(this));
                 }
 
@@ -247,7 +236,6 @@ class SearchList extends Component {
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
                             this.setState({apartments:resp.data.data, originapartments: resp.data.data});
-                            console.log(resp.data.data);
                         }.bind(this));
                 }
             }
@@ -260,7 +248,6 @@ class SearchList extends Component {
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
                             this.setState({apartments:resp.data.data, originapartments: resp.data.data});
-                            console.log(resp.data.data);
                         }.bind(this));
                 }
 
@@ -269,7 +256,6 @@ class SearchList extends Component {
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
                             this.setState({apartments:resp.data.data, originapartments: resp.data.data});
-                            console.log(resp.data.data);
                         }.bind(this));
                 }
 
@@ -278,7 +264,6 @@ class SearchList extends Component {
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
                             this.setState({apartments:resp.data.data, originapartments: resp.data.data});
-                            console.log(resp.data.data);
                         }.bind(this));
                 }
             }
@@ -289,7 +274,6 @@ class SearchList extends Component {
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
                             this.setState({apartments:resp.data.data, originapartments: resp.data.data});
-                            console.log(resp.data.data);
                         }.bind(this));
                 }
 
@@ -298,7 +282,6 @@ class SearchList extends Component {
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
                             this.setState({apartments:resp.data.data, originapartments: resp.data.data});
-                            console.log(resp.data.data);
                         }.bind(this));
                 }
 
@@ -307,7 +290,6 @@ class SearchList extends Component {
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
                             this.setState({apartments:resp.data.data, originapartments: resp.data.data});
-                            console.log(resp.data.data);
                         }.bind(this));
                 }
             }
@@ -318,7 +300,6 @@ class SearchList extends Component {
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
                             this.setState({apartments:resp.data.data, originapartments: resp.data.data});
-                            console.log(resp.data.data);
                         }.bind(this));
                 }
 
@@ -327,7 +308,6 @@ class SearchList extends Component {
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
                             this.setState({apartments:resp.data.data, originapartments: resp.data.data});
-                            console.log(resp.data.data);
                         }.bind(this));
                 }
 
@@ -336,7 +316,6 @@ class SearchList extends Component {
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
                             this.setState({apartments:resp.data.data, originapartments: resp.data.data});
-                            console.log(resp.data.data);
                         }.bind(this));
                 }
             }
@@ -349,7 +328,6 @@ class SearchList extends Component {
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
                             this.setState({apartments:resp.data.data, originapartments: resp.data.data});
-                            console.log(resp.data.data);
                         }.bind(this));
                 }
 
@@ -358,7 +336,6 @@ class SearchList extends Component {
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
                             this.setState({apartments:resp.data.data, originapartments: resp.data.data});
-                            console.log(resp.data.data);
                         }.bind(this));
                 }
 
@@ -367,7 +344,6 @@ class SearchList extends Component {
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
                             this.setState({apartments:resp.data.data, originapartments: resp.data.data});
-                            console.log(resp.data.data);
                         }.bind(this));
                 }
             }
@@ -378,7 +354,6 @@ class SearchList extends Component {
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
                             this.setState({apartments:resp.data.data, originapartments: resp.data.data});
-                            console.log(resp.data.data);
                         }.bind(this));
                 }
 
@@ -387,7 +362,6 @@ class SearchList extends Component {
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
                             this.setState({apartments:resp.data.data, originapartments: resp.data.data});
-                            console.log(resp.data.data);
                         }.bind(this));
                 }
 
@@ -396,7 +370,6 @@ class SearchList extends Component {
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
                             this.setState({apartments:resp.data.data, originapartments: resp.data.data});
-                            console.log(resp.data.data);
                         }.bind(this));
                 }
             }
@@ -407,7 +380,6 @@ class SearchList extends Component {
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
                             this.setState({apartments:resp.data.data, originapartments: resp.data.data});
-                            console.log(resp.data.data);
                         }.bind(this));
                 }
 
@@ -416,7 +388,6 @@ class SearchList extends Component {
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
                             this.setState({apartments:resp.data.data, originapartments: resp.data.data});
-                            console.log(resp.data.data);
                         }.bind(this));
                 }
 
@@ -425,7 +396,6 @@ class SearchList extends Component {
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
                             this.setState({apartments:resp.data.data, originapartments: resp.data.data});
-                            console.log(resp.data.data);
                         }.bind(this));
                 }
             }
@@ -438,7 +408,6 @@ class SearchList extends Component {
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
                             this.setState({apartments:resp.data.data, originapartments: resp.data.data});
-                            console.log(resp.data.data);
                         }.bind(this));
                 }
 
@@ -447,7 +416,6 @@ class SearchList extends Component {
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
                             this.setState({apartments:resp.data.data, originapartments: resp.data.data});
-                            console.log(resp.data.data);
                         }.bind(this));
                 }
 
@@ -456,7 +424,6 @@ class SearchList extends Component {
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
                             this.setState({apartments:resp.data.data, originapartments: resp.data.data});
-                            console.log(resp.data.data);
                         }.bind(this));
                 }
             }
@@ -467,7 +434,6 @@ class SearchList extends Component {
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
                             this.setState({apartments:resp.data.data, originapartments: resp.data.data});
-                            console.log(resp.data.data);
                         }.bind(this));
                 }
 
@@ -476,7 +442,6 @@ class SearchList extends Component {
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
                             this.setState({apartments:resp.data.data, originapartments: resp.data.data});
-                            console.log(resp.data.data);
                         }.bind(this));
                 }
 
@@ -485,7 +450,6 @@ class SearchList extends Component {
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
                             this.setState({apartments:resp.data.data, originapartments: resp.data.data});
-                            console.log(resp.data.data);
                         }.bind(this));
                 }
             }
@@ -496,7 +460,6 @@ class SearchList extends Component {
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
                             this.setState({apartments:resp.data.data, originapartments: resp.data.data});
-                            console.log(resp.data.data);
                         }.bind(this));
                 }
 
@@ -505,7 +468,6 @@ class SearchList extends Component {
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
                             this.setState({apartments:resp.data.data, originapartments: resp.data.data});
-                            console.log(resp.data.data);
                         }.bind(this));
                 }
 
@@ -514,12 +476,10 @@ class SearchList extends Component {
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
                             this.setState({apartments:resp.data.data, originapartments: resp.data.data});
-                            console.log(resp.data.data);
                         }.bind(this));
                 }
             }
-            console.log("what is the value");
-            console.log(this.state.value);
+
         }
 
     }
@@ -544,7 +504,6 @@ class SearchList extends Component {
 
     componentWillMount() {
         this.wholeOnChange();
-        console.log("before render");
     }
 
     getApt() {
@@ -552,7 +511,6 @@ class SearchList extends Component {
             .then(function (resp) {
                 this.markAlladdress(resp.data.data);
                 this.setState({apartments:resp.data.data, originapartments: resp.data.data});
-                console.log(resp.data.data);
             }.bind(this));
 
     }
@@ -562,7 +520,6 @@ class SearchList extends Component {
         axios.get("https://maps.googleapis.com/maps/api/geocode/json?address="+address+"&key=AIzaSyDeS_Giswu2KngF138sF4-5uX2Y8euZDKs")
             .then(function(response){
                 // console.log(response);
-                console.log(response.data.results[0].geometry.location);
                 this.setState({position: this.state.position.concat([response.data.results[0].geometry.location])})
             }.bind(this));
     }
@@ -573,14 +530,12 @@ class SearchList extends Component {
             temp += apt[i].location;
             temp += '+';
             temp += apt[i].city;
-            console.log(temp);
             this.markAddress(temp);
         }
 
     }
 
     renderMap() {
-        console.log(this.state.position);
 
         return(
             <div>
@@ -604,7 +559,6 @@ class SearchList extends Component {
     }
 
     handleEndtChange(date) {
-        console.log(date);
         this.setState({
             endDate: date
         });
