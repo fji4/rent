@@ -10,10 +10,10 @@ import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-map
 
 const MyMapComponent = withScriptjs(withGoogleMap((props) =>
     <GoogleMap
-        defaultZoom={18}
-        defaultCenter={{ lat: props.pos.lat, lng: props.pos.lng }}
+        defaultZoom={14}
+        defaultCenter={{lat: 40.112423, lng:  -88.226855}}
     >
-        {props.isMarkerShown && <Marker position={{ lat: props.pos.lat, lng: props.pos.lng }} />}
+        {props.isMarkerShown && <Marker clickable position={{ lat: props.pos.lat, lng: props.pos.lng }} />}
     </GoogleMap>
 ));
 
@@ -25,7 +25,8 @@ class Detail extends Component {
             address: "",
             photo: [],
             description: "",
-            position:{}
+            position:{},
+            apt: {}
         };
 
     }
@@ -47,24 +48,28 @@ class Detail extends Component {
     renderMap(marker) {
         return(
             <div className="mappos">
-            <MyMapComponent
+                <MyMapComponent
 
-                isMarkerShown
-                pos={marker}
-                googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLNLZK0eVgZMOPh5-3u5qe3IDvJhNSNcA&v=3.exp&libraries=geometry,drawing,places"
-                loadingElement={<div style={{ height: `100%` }} />}
-                containerElement={<div style={{ height: `300px` }} />}
-                mapElement={<div style={{ height: `100%` ,width:`100%`}} />}
-            />
+                    isMarkerShown
+                    pos={this.state.position}
+                    googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyDLNLZK0eVgZMOPh5-3u5qe3IDvJhNSNcA&v=3.exp&libraries=geometry,drawing,places"
+                    loadingElement={<div style={{ height: `100%` }} />}
+                    containerElement={<div style={{ height: `300px` }} />}
+                    mapElement={<div style={{ height: `100%` ,width:`100%`}} />}
+                />
             </div>
         )
     }
 
     componentDidMount() {
         if (this.refs.myRef) {
-
+            var temp = this.props.location.state.apt.location;
+            temp += ' ';
+            temp += this.props.location.state.apt.city;
+            console.log(temp);
             this.setState({
-                address: "1010 West Main St. Urbana",
+                address: temp,
+                apt: this.props.location.state.apt,
                 photo: [
                     "http://advantageproperties.com/wp-content/uploads/2015/01/1010WMA-2F-02-LivRm-305-DSC_0183-small-Large.jpg",
                     "http://advantageproperties.com/wp-content/uploads/2015/01/1010WMA-2F-03-LivRm-305-DSC_0137-c-small-Large.jpg",
@@ -73,8 +78,10 @@ class Detail extends Component {
                     "http://advantageproperties.com/wp-content/uploads/2015/01/1010WMA-2F-06-Bed1-305-DSC_0001-small-Large.jpg",
                     "http://advantageproperties.com/wp-content/uploads/2015/01/1010WMA-2F-07-Bath2-305-DSC_0054-small-Large.jpg"
                 ],
-                description: "HUGE, spacious apartment with 2 bathrooms! Secured building, washer & dryer right in the apartment and dishwasher. Covered parking available in the garage on the first floor. Secured Package Room to keep your delivered packages safe! Secured Bicycle Room on the first floor as well. FREE HIGH-SPEED GIGABIT INTERNET Internet service included! Covered parking available. Conveniently located just ONE BLOCK from the University of Illinois campus!"
-            }, this.markAddress);
+                description: this.props.location.state.apt.description
+            }, function () {
+                this.markAddress();
+            });
             console.log("setState!");
         }
     }
@@ -103,8 +110,13 @@ class Detail extends Component {
 
 
     render() {
+        const start = new Date(this.state.apt.dateStarted);
+        const end = new Date(this.state.apt.dateEnd);
         return(
             <div className="outdiv">
+                <head>
+                    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css"></link>
+                </head>
                 <Menu className="detailnav">
                     <Menu.Item>
                         <Link to="/">
@@ -125,41 +137,42 @@ class Detail extends Component {
                 <br/>
                 {this.renderMap(this.state.position)}
                 <div className="description">
-                <Table  className="descriptable">
-                    <thead>
+                    <Table  className="descriptable">
+                        <thead>
                         <tr>
                             <th colSpan="2">Detail</th>
                         </tr>
-                    </thead>
+                        </thead>
 
-                    <tbody>
+                        <tbody>
                         <tr>
                             <td className="boldtext">Owner</td>
-                            <td>Fanyin Ji</td>
+                            <td>{this.state.apt.assignedOwner}</td>
                         </tr>
                         <tr>
                             <td className="boldtext">Price</td>
-                            <td>Free</td>
+                            <td>${this.state.apt.price}</td>
                         </tr>
                         <tr>
                             <td className="boldtext">Preference of Gender to Sublease</td>
-                            <td>Female</td>
+                            <td>{this.state.apt.gender}</td>
                         </tr>
                         <tr>
                             <td className="boldtext">Subleasing Period</td>
-                            <td>Spring 2017</td>
+                            <td>{start.toDateString()} -- {end.toDateString()}</td>
                         </tr>
                         <tr>
                             <td className="boldtext">Contact Info</td>
-                            <td>2179796948</td>
+                            <td>{this.state.apt.contactEmail}
+                                <p>{this.state.apt.contactPhone}</p></td>
                         </tr>
                         <tr>
                             <td className="boldtext">Other</td>
-                            <td>Love cat</td>
+                            <td>{this.state.description}</td>
                         </tr>
-                    </tbody>
+                        </tbody>
 
-                </Table>
+                    </Table>
                 </div>
 
                 <div className="bottombutton">
