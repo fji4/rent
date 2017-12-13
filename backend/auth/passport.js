@@ -28,7 +28,7 @@ module.exports = function(passport) {
     },
 
     function(req, email, password, done) {
-        process.nextTick(function () {
+        // process.nextTick(function () {
             User.findOne({'local.email': email}, function (err, user) {
                 if (err) {
                     return done(err);
@@ -40,15 +40,9 @@ module.exports = function(passport) {
                     newUser.local.email = email;
                     newUser.local.password = newUser.generateHash(password);
                     // newUser.local.userPic = req.param.userPic;
-                    // newUser.local.name = req.param.name;
-                    // newUser.local.description = req.param.description;
-                    // newUser.local.ownedApt = req.param.ownedApt;
-                    // newUser.local.userPic = req.param.userPic;
-                    // //     name        : String,
-                    // //     description : String,
-                    // //     ownedApt   : {type:[String],default: []},
-                    // // wishList    : {type:[String],default: []},
-                    // // userPic     : String
+
+
+
                     newUser.save(function (err) {
                         if(err)
                             throw err;
@@ -56,7 +50,7 @@ module.exports = function(passport) {
                     });
                 }
             });
-        })
+        // })
     })
     );
 
@@ -66,9 +60,11 @@ module.exports = function(passport) {
         passwordField: 'password',
         passReqToCallback : true
     },
-    function(email, password, done) {
+    function(req,email, password, done) {
+        console.log("---------",email, password);
         User.findOne({'local.email': email}, function(err, user) {
             if ( err ) {
+                // console.log(err);
                 return done(err);
             } else if ( !user || !user.validPassword(password) ) {
                 return done(null, false);

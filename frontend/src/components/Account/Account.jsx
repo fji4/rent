@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Item, Tab, List } from 'semantic-ui-react'
-import { Input, Menu, Form, TextArea, Dropdown } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 
 require('./Account.scss');
@@ -101,10 +100,13 @@ class Account extends Component {
                     }
                     <Tab menu={{ secondary: true, pointing: true }} panes={panes} />
                 </div>
+
+
             </div>
         )
     }
 }
+
 
 class Houselist extends Component {
     render() {

@@ -13,6 +13,11 @@ module.exports = function(router, passport) {
 
     router.post('/register',
         passport.authenticate('local-signup'),
+            // {
+        //     successRedirect : '/sublease', // redirect to the secure profile section
+        //     failureRedirect : '/', // redirect back to the signup page if there is an error
+        //     failureFlash : true // allow flash messages
+        // }),
         function(req, res) {
             res.status(200).json({ user: req.user.email
             });
@@ -22,7 +27,7 @@ module.exports = function(router, passport) {
         passport.authenticate('local-login'),
         function(req, res) {
             console.log(req.isAuthenticated());
-            res.status(200).json({ user: req.user.email
+            res.status(200).json({ user: req.user
             });
 
         });
@@ -341,20 +346,20 @@ module.exports = function(router, passport) {
 
 
     idRoute.put(function(req,res) {
-        if (!req.body.name) {
+        if (!req.body.local.name) {
             return res.status(500).send({
                 message: "Name is required",
                 data: []
             });
         }
-        if (!req.body.email) {
+        if (!req.body.local.email) {
             return res.status(500).send({
                 message: "email is required",
                 data: []
             });
         }
 
-        User.findOne({email: req.body.email}, function (err, user) {
+        User.findOne({email: req.body.local.email}, function (err, user) {
             if (err) {
                 return res.status(500).send({
                     message: err,
@@ -384,19 +389,19 @@ module.exports = function(router, passport) {
 
 
                         if (req.body.name) {
-                            user.name = req.body.name;
+                            user.name = req.body.local.name;
                         }
                         if (req.body.description) {
-                            user.description = req.body.description;
+                            user.description = req.body.local.description;
                         }
                         if (req.body.wishList) {
-                            user.wishList = req.body.wishList;
+                            user.wishList = req.body.local.wishList;
                         }
                         if (req.body.ownedApt) {
-                            user.ownedApt = req.body.ownedApt;
+                            user.ownedApt = req.body.local.ownedApt;
                         }
                         if (req.body.userPic) {
-                            user.userPic = req.body.userPic;
+                            user.userPic = req.body.local.userPic;
                         }
 
                         user.save(function (err) {
