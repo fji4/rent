@@ -278,7 +278,7 @@ class SearchList extends Component {
                 }
 
                 else if (this.state.complete == "notcomplete") {
-                    axios.get('http://localhost:3000/api/apartment?sort={"price": -1}&where={"gender":"female","completed":false}')
+                    axios.get('/api/apartment?sort={"price": -1}&where={"gender":"female","completed":false}')
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
                             this.setState({apartments:resp.data.data, originapartments: resp.data.data});
@@ -430,7 +430,7 @@ class SearchList extends Component {
 
             else if (this.state.priceRanking == "hightolow") {
                 if (this.state.complete == "complete") {
-                    axios.get('http://localhost:3000/api/apartment?sort={"price": -1}&where={"completed":true}')
+                    axios.get('/api/apartment?sort={"price": -1}&where={"completed":true}')
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
                             this.setState({apartments:resp.data.data, originapartments: resp.data.data});
@@ -456,7 +456,7 @@ class SearchList extends Component {
 
             else {
                 if (this.state.complete == "complete") {
-                    axios.get('http://localhost:3000/api/apartment?where={"completed":true}')
+                    axios.get('/api/apartment?where={"completed":true}')
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
                             this.setState({apartments:resp.data.data, originapartments: resp.data.data});
