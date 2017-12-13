@@ -48,12 +48,13 @@ class SubleaseForm extends Component {
 
     onSubmit(e){
         console.log('submit the ofrm',this.state);
+        console.log('2ddddd22img is ddd',this.state.img);
         const cur_user = this.props.location.cur_user;
         console.log("dddddd",cur_user);
         // const cur_user = this.state.cur_user;
         // console.log(cur_user);
-
-        axios.post('/api/apartment',{
+        console.log('2222222img is ',this.state.img);
+        var data = {
             location:this.state.address,
             city:this.state.city,
             price:this.state.price,
@@ -65,10 +66,12 @@ class SubleaseForm extends Component {
             dateStarted: this.state.startDate,
             dateEnd:this.state.endDate,
             complete:false,
-            img:this.state.img
+            img: this.state.img
+        };
 
-        }).then(function (response) {
-            console.log(response);
+
+        axios.post('/api/apartment',data).then(function (response) {
+            console.log('response',response);
         }).catch(error => {
             console.log(error.response)
         });

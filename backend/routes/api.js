@@ -128,7 +128,8 @@ module.exports = function(router, passport) {
             datePosted: req.body.datePosted,
             dateStarted: req.body.dateStarted,
             dateEnd: req.body.dateEnd,
-            completed:req.body.completed
+            completed:req.body.completed,
+            img:req.body.img
         };
         Apartment.create(aptAdd,function (err, apt) {
                 if(err){

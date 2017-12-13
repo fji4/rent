@@ -62,6 +62,7 @@ class Detail extends Component {
     }
 
     componentDidMount() {
+        console.log("sssss",this.props.location);
         if (this.refs.myRef) {
             var temp = this.props.location.state.apt.location;
             temp += ' ';
@@ -70,19 +71,14 @@ class Detail extends Component {
             this.setState({
                 address: temp,
                 apt: this.props.location.state.apt,
-                photo: [
-                    "http://advantageproperties.com/wp-content/uploads/2015/01/1010WMA-2F-02-LivRm-305-DSC_0183-small-Large.jpg",
-                    "http://advantageproperties.com/wp-content/uploads/2015/01/1010WMA-2F-03-LivRm-305-DSC_0137-c-small-Large.jpg",
-                    "http://advantageproperties.com/wp-content/uploads/2015/01/1010WMA-2F-04-Kit-305-DSC_0136-small-Large.jpg",
-                    "http://advantageproperties.com/wp-content/uploads/2015/01/1010WMA-2F-05-Kit-305-DSC_0125-small-Large.jpg",
-                    "http://advantageproperties.com/wp-content/uploads/2015/01/1010WMA-2F-06-Bed1-305-DSC_0001-small-Large.jpg",
-                    "http://advantageproperties.com/wp-content/uploads/2015/01/1010WMA-2F-07-Bath2-305-DSC_0054-small-Large.jpg"
-                ],
+                photo: this.props.location.state.apt.img,
                 description: this.props.location.state.apt.description
             }, function () {
                 this.markAddress();
+                console.log("photo info",this.state.photo);
             });
             console.log("setState!");
+
         }
     }
 
@@ -100,9 +96,13 @@ class Detail extends Component {
     }
 
     renderPhoto(n) {
+        var photo = this.state.photo[n];
+        console.log('photo is ', photo);
         return (
             <Carousel.Item key={n}>
-                <Image  src={this.state.photo[n]}/>
+                <Image  src={require('../../../../'+photo)}/>
+                {/*src={this.state.photo[n]}*/}
+                {/*{require('/images/image-name.png')}*/}
             </Carousel.Item>
         )
     }
