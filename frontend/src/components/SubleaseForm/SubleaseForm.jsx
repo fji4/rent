@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
 import { Sidebar, Segment, Button, Menu, Image, Icon, Header } from 'semantic-ui-react'
-import { Input,Form,TextArea,Dropdown } from 'semantic-ui-react'
-<<<<<<< HEAD
+import { Input, Form, TextArea, Dropdown, Modal } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
-=======
->>>>>>> 925b4f15f125f524084c84f4954d6833044e444a
 
 // import {Navbar, Nav, NavItem, Button, Glyphicon} from 'react-bootstrap'
 // import Sidebar from 'react-bootstrap-sidebar'
@@ -31,9 +28,11 @@ class SubleaseForm extends Component {
                     user:{},
                     cur_user:{},
                     login: false,
-                    once : true
+                    once: true,
+                    apartmentt: null,
+                    submitted: false
                 };
-        this. onSubmit = this.onSubmit.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
         this.setUser = this.setUser.bind(this);
         this.onFormSubmit = this.onFormSubmit.bind(this);
         this.onImgChange = this.onImgChange.bind(this);
@@ -53,22 +52,13 @@ class SubleaseForm extends Component {
     onSubmit(e){
         console.log('submit the ofrm',this.state);
         const cur_user = this.props.location.cur_user;
-        console.log("dddddd",cur_user);
-        // const cur_user = this.state.cur_user;
-        // console.log(cur_user);
-<<<<<<< HEAD
-=======
-
->>>>>>> 925b4f15f125f524084c84f4954d6833044e444a
+        console.log("dddddd", cur_user);
         axios.post('/api/apartment',{
             location:this.state.address,
             city:this.state.city,
             price:this.state.price,
-<<<<<<< HEAD
             assignedOwner:cur_user,
-=======
-            assignedOwner:cur_user._id,
->>>>>>> 925b4f15f125f524084c84f4954d6833044e444a
+
             gender:this.state.gender,
             contactEmail :cur_user.local.email,
             description:this.state.description,
@@ -80,14 +70,19 @@ class SubleaseForm extends Component {
 
         }).then(function (response) {
             console.log(response);
-<<<<<<< HEAD
-            console.log("response.data.data:" , response.data.data)
-            this.setState({ cur_user: response.data.data })
-=======
->>>>>>> 925b4f15f125f524084c84f4954d6833044e444a
-        }).catch(error => {
-            console.log(error.response)
-        });
+            console.log("response.data.data:", response.data.data)
+            var temp = response.data.data
+            this.setState({ apartmentt: temp, submitted: true }, function () {
+                console.log("apartmentt: ", this.state.apartmentt)
+                console.log("submitted:", this.state.submitted)
+
+            })
+            //console.log("apartmentt: ", this.state.apartmentt)
+
+            }.bind(this))
+        //    .catch(error => {
+        //    console.log("err: ", error.response)
+        //});
 
     }
 
@@ -127,7 +122,7 @@ class SubleaseForm extends Component {
     onFormSubmit(e){
         e.preventDefault(); // Stop form submit
         this.fileUpload(this.state.file).then((response)=>{
-            console.log(response);
+            console.log("onformsubmit: ", response);
 
             console.log('data is ',response.data);
             var img_path = response.data[0].path;
@@ -174,11 +169,12 @@ class SubleaseForm extends Component {
     render(){
         const cur_user = this.props.location.cur_user;
         if (!this.state.login) {
+            console.log("login user ")
             this.setState({ cur_user: cur_user, login: true })
         }
         console.log("cur_user is what  ",cur_user,this.state.cur_user);
         return(
-            <div className = "form" >
+            <div className = "formm" >
 
                 <div id="subFnavBar">
                     <h1> Subleasing </h1>
@@ -220,55 +216,8 @@ class SubleaseForm extends Component {
     }
 }
 
-class Nav extends Component{
-    render() {
-        const { activeItem } = this.props.activeItem;
-
-        return (
-            <Menu secondary>
-                <Menu.Item name='home' active={activeItem === 'home'} onClick={this.props.handleItemClick} />
-                <Menu.Item name='notification' active={activeItem === 'notification'} onClick={this.props.handleItemClick} />
-                <Menu.Item name='message' active={activeItem === 'message'} onClick={this.props.handleItemClick} />
-                <Menu.Menu position='right'>
-                    <Menu.Item>
-                        <Input icon='search' placeholder='Search...' />
-                    </Menu.Item>
-                    {/*<Menu.Item  onClick={this.props.handleItemClick}>*/}
-
-                        <Dropdown icon='user' pointing = 'right' className='link item'>
-
-                                <Dropdown.Menu>
-                                    <Dropdown.Item>Username</Dropdown.Item>
-                                    <Dropdown.Item>
-                                        <Dropdown text='Contact' pointing='right' className='link item'>
-                                            <Dropdown.Menu>
-                                                <Dropdown.Header>phone</Dropdown.Header>
-                                                <Dropdown.Item>email</Dropdown.Item>
-                                            </Dropdown.Menu>
-                                        </Dropdown>
-                                    </Dropdown.Item>
-
-                                <Dropdown.Item>History</Dropdown.Item>
-                                <Dropdown.Item>Watch List</Dropdown.Item>
-                                </Dropdown.Menu>
-                        </Dropdown>
-                </Menu.Menu>
-            </Menu>
-        )
-    }
-}
 
 
-
-class LeftBar extends Component {
-    render(){
-        return(
-            <div>
-
-            </div>
-        )
-    }
-}
 
 class ImageForm extends Component {
     constructor(props) {
@@ -283,7 +232,7 @@ class ImageForm extends Component {
     onFormSubmit(e){
         e.preventDefault() // Stop form submit
         this.fileUpload(this.state.file).then((response)=>{
-            console.log(response.data);
+            console.log("imageform: ", response.data);
         })
     }
     onChange(e) {
@@ -332,7 +281,7 @@ class ImageForm extends Component {
             <h1>Image Upload</h1>
 
             <input type="file" onChange={this.onChange} />
-            <button type="submit">Upload</button>
+            <Button type="submit">Upload</Button>
         </form>
 
         )
@@ -375,39 +324,24 @@ class Sublease extends Component {
         return(
             <div className="sublease">
                 <h2>Sublease Form</h2>
-                {/*<Input placeholder='address...' />*/}
                 <Form onSubmit={this.props.onSubmit}>
 
-                    <Form.Input label='Username' placeholder='Username' onChange = {this.props.handleUsername}/>
                     <Form.Select label = "preference of gender to sublease" options={preference} value = {preference.value} placeholder='Gender' onChange = {this.props.handleGender} />
                     <Form.Input label = "address" placeholder = 'address' onChange = {this.props.handleAddress}/>
                     <Form.Input label = "city" placeholder = 'city' onChange = {this.props.handleCity}/>
                     <Form.Input label = "start date" type = "date"  onChange = {this.props.handleStartDate}/>
                     <Form.Input label = "end date" type = "date" onChange = {this.props.handleEndDate}/>
-                    <Form.Input label = "price" placeholder = "price" onChange = {this.props.handlePrice}/>
-                    {/*<Form.Input label = "description" placeholder = "description"/>*/}
-                    <Form.Field control={TextArea} label='description' placeholder='Tell us more about the apartment...' onChange = {this.props.handleDescription}/>
+                    <Form.Input label="price" placeholder="price" onChange={this.props.handlePrice} />
+                    <Form.Input label='description' placeholder='Tell us more about the apartment...'
+                        onChange={this.props.handleDescription} />
+                    
 
-                    {/*<Form.Input type="file" name="img" multiple />*/}
-                    {/*<form className="uploader" encType="multipart/form-data">*/}
-                        {/*<input type="file" id="file" />*/}
-                    {/*</form>*/}
-                    <Form.Group>
-                        <p>Image Upload: After hitting submit, you could submit the second image</p>>
-                        <Form.Input input={{ multiple: true }} type = "file" onChange={this.props.onImgChange}/>
-                        <Form.Button content='Submit' onClick = {this.props.onFormSubmit}/>
-                    </Form.Group>
-                    {/*<Form.Group>*/}
-                        {/*<Form.Input label = "Image Upload" type = "file" onChange={this.props.onImgChange}/>*/}
-                        {/*<Form.Button content='Submit' onClick = {this.props.onFormSubmit}/>*/}
-                    {/*</Form.Group>*/}
-                    {/*<ImageForm />*/}
-
+                    
                     <br/>
-                    <br />
-                    <Button className="submit">
-                        submit
-                    </Button>
+                    
+                    <Button className="submit" type="submit" >
+                        Submit
+                    </Button>                    
 
                 </Form>
 

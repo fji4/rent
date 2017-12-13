@@ -169,8 +169,7 @@ class Account extends Component {
                         </Item.Group>
                     </div>
                 </Tab.Pane>
-            },
-            { menuItem: 'Tab 3', render: () => <Tab.Pane attached={false}>Tab 3 Content</Tab.Pane> },
+            }
         ]
         return (
             <div id="everything">

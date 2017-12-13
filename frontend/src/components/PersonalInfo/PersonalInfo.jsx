@@ -11,11 +11,8 @@ class PersonalInfo extends Component {
     constructor(props) {
         super(props);
         this.state = {
-<<<<<<< HEAD
-            user_id: "5a30c336bb1e555a6865369c",
-=======
+
             user_id: "",
->>>>>>> 925b4f15f125f524084c84f4954d6833044e444a
             logged_in: false,
             register: false,
             cur_user: {
@@ -86,7 +83,7 @@ class PersonalInfo extends Component {
     render() {
 
         //console.log(this.props.location.cur_user)
-        if (!(this.state.logged_in)) {
+        if (!this.state.logged_in) {
             console.log("chishichishi", this.state.logged_in)
             //this.setState({ cur_user: this.props.location.cur_user })
             //axios.get('/api/users/' + this.props.location.cur_user._id)
@@ -159,7 +156,6 @@ class PersonalInfo extends Component {
                         </h1>
                         <Form onSubmit={this.onSubmit} id="theForm">
                             <div>sldkfj</div>
-                            <Form.Input label='Username' placeholder={this.state.cur_user.local.name} onChange={this.onChangeName} />
                             <Form.Input label="description" placeholder={this.state.cur_user.local.name} onChange={this.onChangeDescription}/>
                             <form className="uploader" encType="multipart/form-data">
                                 <input type="file" id="file" />
