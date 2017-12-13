@@ -17,6 +17,10 @@ Make sure you put your own database URI into `config/index.json`.
 ## how to setup branch
 https://stackoverflow.com/questions/1519006/how-do-you-create-a-remote-git-branch
 
+## google map api key
+AIzaSyDeS_Giswu2KngF138sF4-5uX2Y8euZDKs
+
+
 
 backend schemas:
 users schema{
@@ -45,7 +49,7 @@ apartment schema{
     userPic     : String
 }
 
-query ÓÐcount  where sort select
+query ï¿½ï¿½count  where sort select
 
 get example:
 if (!(this.state.logged_in)) {
@@ -57,3 +61,4 @@ if (!(this.state.logged_in)) {
 }
 if (this.state.cur_user)
     console.log(this.state.cur_user.name)
+

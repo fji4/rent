@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Button, Card, Modal, Header,Input, Icon } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
-import styles from './styles.scss'
+import styles from './Home.scss'
 
 class Home extends Component {
     constructor(props) {
@@ -21,7 +21,10 @@ class Home extends Component {
                 password: '',
                 email: ''
             },
-            message: ''
+            message: '',
+            users: [],
+            cur_user: "",
+            src: ""
         };
         this.checklogin = this.checklogin.bind(this);
         this.onSignupSubmit = this.onSignupSubmit.bind(this);
@@ -35,6 +38,7 @@ class Home extends Component {
         this.closeregister = this.closeregister.bind(this);
         this.onChangeEmail = this.onChangeEmail.bind(this);
         this.onChangePassword = this.onChangePassword.bind(this);
+        this.onHandleUser = this.onHandleUser.bind(this);
     }
 
 
@@ -69,6 +73,8 @@ class Home extends Component {
     }
 
     onSubmit(e) {
+        this.onHandleUser(e);
+
         console.log("enter onSubmit");
         e.preventDefault();
 
@@ -98,10 +104,37 @@ class Home extends Component {
             }
         });
         xhr.send(formData);
+        this.setState({ log_in: false })
     }
 
     //keep track of the current user.
+    onHandleUser(e){
+        console.log("enter handle current_user");
 
+        axios.get('/api/users')
+            .then(function(response){
+                console.log('response is', response);
+                var user = response.data.data;
+                this.setState({
+                    users:user
+                });
+                const users = this.state.users;
+                console.log("users is 111",this.state.users);
+                const email = this.state.login_user.email;
+                console.log("handleuser email",email);
+                console.log(users.length,users);
+                for(var i = 0; i < users.length; i++){
+                    console.log("enter for loop",i, users[i].local.email);
+                    if(users[i].local.email === email){
+                        console.log(users[i].local.email);
+                        this.setState({cur_user:users[i]});
+                        console.log("cur-user is ",this.state.cur_user);
+                        break;
+                    }
+                }
+                console.log("users is ",this.state.users);
+            }.bind(this));
+    }
 
 
 
@@ -140,13 +173,13 @@ class Home extends Component {
     }
 
     onChangeEmailSignUp(e){
-            console.log("target is ",e);
-            const user = this.state.register_user;
-            console.log(e.target);
-            user.email = e.target.value;
-            this.setState({
-                register_user: user
-            })
+        console.log("target is ",e);
+        const user = this.state.register_user;
+        console.log(e.target);
+        user.email = e.target.value;
+        this.setState({
+            register_user: user
+        })
     }
 
     onChangePasswordSignUp(e) {
@@ -159,17 +192,32 @@ class Home extends Component {
 
     checklogin(e){
         console.log("!!!!!!!!!!!!checklogin!!!!!!!!!!",this.state.logged_in);
-        e.preventDefault();
         if(this.state.logged_in){
             console.log("looged in here");
-            this.props.history.push('/sublease');
+            //this.props.history.push('/sublease');
         }else{
+            console.log("show log modal");
+            e.preventDefault();
+            this.setState({ log_in: true, register: false });
+            if (e.target.source = "acc") {
+                this.setState({ src: "acc" })
+            }
+            else {
+                this.setState({ src: "but" })
+            }
+        }
+    }
+    checkloginAcc(e) {
+        console.log("!!!!!!!!!!!!checklogin acc!!!!!!!!!!", this.state.logged_in);
+        if (this.state.logged_in) {
+            console.log("looged in here");
+            //this.props.history.push('/account');
+        } else {
             console.log("show log modal");
             e.preventDefault();
             this.setState({ log_in: true, register: false });
         }
     }
-
 
     showlog(e) {
         console.log("show log modal")
@@ -212,15 +260,19 @@ class Home extends Component {
                     }
                     <div className="home_acc">
                         <div>Home</div>
-                        <div onClick={this.showlog}>Account</div>
+                        <div>
+                            <Link to={{ pathname: "/account", cur_user: this.state.cur_user, state: this.state.logged_in }} onClick={this.checklogin} source="acc">
+                                Account
+                            </Link>
+                        </div>
                     </div>
 
                     <h1>Subleasing</h1>
                 </div>
                 <div className="content">
                     <ul>
-                        <li><SubButton showlog={this.showlog} checklogin = {this.checklogin} /></li>
-                        <li><RentButton /></li>
+                        <li><SubButton showlog={this.showlog} checklogin={this.checklogin} user={this.state.cur_user} login={this.state.logged_in} source="but"/></li>
+                        <li><RentButton user = {this.state.cur_user} login = {this.state.logged_in}/></li>
                     </ul>
                 </div>
 
@@ -231,7 +283,7 @@ class Home extends Component {
                     <Modal.Header>Log In</Modal.Header>
                     <Icon name="close" onClick={this.closelog} />
                     <Modal.Content>
-                        <form className="ui form" onSubmit = {this.onSubmit} >
+                        <form className="ui form" onSubmit = {this.onSubmit}>
                             <div className="field">
                                 <label>Email</label>
                                 <Input type="text" name="email" placeholder="email" onChange={this.onChangeEmail}>
@@ -244,9 +296,10 @@ class Home extends Component {
                             </div>
                             <p>{this.state.message}</p>
                             <div>
-                                <button className="ui button" type="submit">Submit</button>
+                                <button className="ui button" type="submit" >Submit</button>
                             </div>
                         </form>
+
                         <div className="reg">
                             <div> You don't have an account?</div>
                             <div><Button onClick={this.showregister}>register</Button></div>
@@ -264,9 +317,9 @@ class Home extends Component {
                     <Modal.Content>
                         <form className="ui form" onSubmit={this.onSignupSubmit}>
                             {/*<div className="field">*/}
-                                {/*<label>Username</label>*/}
-                                {/*<Input type="text" name="username" placeholder="username" onChange={this.onChangeNameSignUp}>*/}
-                                {/*</Input>*/}
+                            {/*<label>Username</label>*/}
+                            {/*<Input type="text" name="username" placeholder="username" onChange={this.onChangeNameSignUp}>*/}
+                            {/*</Input>*/}
                             {/*</div>*/}
                             <div className="field">
                                 <label>Email</label>
@@ -278,11 +331,7 @@ class Home extends Component {
                                 <Input type="password" name="password" placeholder="password" onChange={this.onChangePasswordSignUp}>
                                 </Input>
                             </div>
-                            <div className="field">
-                                <label>Re-enter Password</label>
-                                <Input type="password" name="re-password" placeholder="confirm password">
-                                </Input>
-                            </div>
+
                             <div>
                                 <button className="ui button" type="submit">Submit</button>
                             </div>
@@ -295,33 +344,7 @@ class Home extends Component {
                     </Modal.Content>
                 </Modal>
 
-                {
-                    //<div className="Model"
-                    //    id="log"
-                    //    style={{ display: this.log_in }}
-                    //>
-                    //    <i className="close icon"></i>
-                    //    <form className="ui form">
-                    //        <div class="field">
-                    //            <label>Username</label>
-                    //            <input type="text" name="username" placeholder="username">
-                    //            </input>
-                    //        </div>
-                    //        <div className="field">
-                    //            <label>Password</label>
-                    //            <input type="text" name="password" placeholder="password">
-                    //            </input>
-                    //        </div>
-                    //        <div className="but">
-                    //            <button className="ui button" type="submit">Submit</button>
-                    //        </div>
-                    //    </form>
-                    //    <div className="reg">
-                    //        <div> You don't have an account?</div>
-                    //        <div><Button>register</Button></div>
-                    //    </div >
-                    //</div>
-                }
+
 
 
                 {
@@ -346,13 +369,17 @@ class Home extends Component {
 
             </div>
         )
-    } 
+    }
 }
 
 class SubButton extends Component {
     render() {
         return (
-            <div><Button className="theButtons" id="subb" onClick={this.props.checklogin}>Want to sublease</Button></div>
+            <div>
+                <Link to={{ pathname: "/sublease", cur_user: this.props.user, state: this.props.login }} onClick={this.props.checklogin}>
+                    <Button className="theButtons" id="subb">Want to sublease</Button>
+                </Link>
+            </div>
         )
     }
 }
@@ -360,7 +387,7 @@ class SubButton extends Component {
 class RentButton extends Component {
     render() {
         return (
-            <div><Link to="/SearchList"><Button id="rentb" className="theButtons">Want to rent</Button></Link></div>
+            <div><Link to = {{pathname:"/SearchList", cur_user:this.props.user, state:this.props.login}}><Button id="rentb" className="theButtons">Want to rent</Button></Link></div>
         )
     }
 }

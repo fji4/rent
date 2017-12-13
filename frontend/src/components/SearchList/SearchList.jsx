@@ -23,7 +23,7 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
     >
         {/*{props.isMarkerShown && <Marker position={{ lat: props.markers[0].lat, lng: props.markers[0].lng }} />}*/}
 
-            {props.markers ? props.markers.map(marker => (
+        {props.markers ? props.markers.map(marker => (
                 <Marker
                     clickable
                     key={marker.lat}
@@ -31,7 +31,7 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
                     onClick={() => {
                         console.log("click");
                         props.history.push('/detail');
-            }}
+                    }}
                 />
             )) : null}
 
@@ -40,12 +40,12 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
 
 const ApartmentList = props => {
     const apartmentItems = props.apartments.map(apartment => {
-            return (
-                <ApartmentListItem
-                    key={apartment._id}
-                    apartment={apartment}
-                />
-            );
+        return (
+            <ApartmentListItem
+                key={apartment._id}
+                apartment={apartment}
+            />
+        );
 
     });
 
@@ -69,13 +69,13 @@ const ApartmentListItem = ({apartment}) => {
             <Card.Content>
                 <Card.Header>
                     <Link to={{ pathname: '/detail', state: { apt: apartment} }}>
-                    {apartment.location}
+                        {apartment.location}
                     </Link>
                 </Card.Header>
                 <Card.Meta><span className="gender">{`Restrict to ${apartment.gender}`}</span></Card.Meta>
                 <Card.Meta className="date">
                     Subleasing Time: <p>{start.toDateString()} -- {end.toDateString()}</p>
-                    </Card.Meta>
+                </Card.Meta>
             </Card.Content>
             <Card.Content extra>
                 <a>
@@ -543,7 +543,7 @@ class SearchList extends Component {
     }
 
     componentWillMount() {
-       this.wholeOnChange();
+        this.wholeOnChange();
         console.log("before render");
     }
 
@@ -613,60 +613,60 @@ class SearchList extends Component {
     render() {
         return(
 
-             <body>
-                <header>
-                    <Menu fluid borderless stackable size="large" className="detailnav">
+            <body>
+            <header>
+                <Menu fluid borderless stackable size="large" className="detailnav">
+                    <Menu.Item>
+                        <Link to="/">
+                            <Icon name='home'/>
+                        </Link>
+                    </Menu.Item>
+
+                    <Menu.Menu className="periodnav">
+                        <Menu.Item>Start Date</Menu.Item>
                         <Menu.Item>
-                            <Link to="/">
-                                <Icon name='home'/>
-                            </Link>
+                            <DatePicker
+                                selected={this.state.startDate}
+                                onChange={this.handleStartChange.bind(this)}
+                            />
+                        </Menu.Item>
+                        <Menu.Item>End Date</Menu.Item>
+
+
+                        <Menu.Item>
+                            <DatePicker
+                                selected={this.state.endDate}
+                                onChange={this.handleEndtChange.bind(this)}
+                            />
                         </Menu.Item>
 
-                        <Menu.Menu className="periodnav">
-                            <Menu.Item>Start Date</Menu.Item>
-                            <Menu.Item>
-                                <DatePicker
-                                    selected={this.state.startDate}
-                                    onChange={this.handleStartChange.bind(this)}
-                                />
-                            </Menu.Item>
-                            <Menu.Item>End Date</Menu.Item>
 
-
-                            <Menu.Item>
-                                <DatePicker
-                                    selected={this.state.endDate}
-                                    onChange={this.handleEndtChange.bind(this)}
-                                />
-                            </Menu.Item>
-
-
-                            <Menu.Item>
-                                <Button onClick={() => this.dateRangeChange()}>Submit</Button>
-                            </Menu.Item>
-                        </Menu.Menu>
-
-                        <Menu.Item position="right">
-                            <Link to="/account">
-                                <Icon  name='user'/>
-                            </Link>
+                        <Menu.Item>
+                            <Button onClick={() => this.dateRangeChange()}>Submit</Button>
                         </Menu.Item>
-                    </Menu>
-                </header>
+                    </Menu.Menu>
+
+                    <Menu.Item position="right">
+                        <Link to="/account">
+                            <Icon  name='user'/>
+                        </Link>
+                    </Menu.Item>
+                </Menu>
+            </header>
 
 
 
-                <div className='row'>
-                    <div className='column small'>
-                        {this.renderMap()}
+            <div className='row'>
+                <div className='column small'>
+                    {this.renderMap()}
 
 
-                        <div className='ui form'>
-                            <div className='grouped fields'>
+                    <div className='ui form'>
+                        <div className='grouped fields'>
                             <div className='field'>
                                 <div className='filters'>
 
-                                  {/*<Checkbox label='Prices Low to High' size='big' />*/}
+                                    {/*<Checkbox label='Prices Low to High' size='big' />*/}
                                     <div>Price Range</div>
                                     <br/>
                                     <InputRange
@@ -678,44 +678,44 @@ class SearchList extends Component {
                                         onChange={value => this.priceRangeChange(value)} />
                                 </div>
                             </div>
-                                <br/>
+                            <br/>
 
-                                <div className ='field'>
-                                    <Form.Field control={Select} lable='Price Ranking'
-                                                options={[{ key: 'as', text: 'Low to High', value: 'lowtohigh' },
-                                                    { key: 'de', text: 'High to Low', value: 'hightolow' },]}
-                                              value={this.state.priceRanking}
-                                                placeholder='Price Ranking' onChange={this.priceRankingChange.bind(this)}/>
-                                </div>
-
-                                <div className ='field' id="genderdrop">
-                                    <Form.Field control={Select} label='Gender' options={options}
-                                                placeholder='Gender' onChange={this.genderChange.bind(this)}/>
-                                </div>
-
-                                <div className ='field'>
-                                    <Form.Field control={Select} label='Is the subleasing completed?'
-                                                options={[{ key: 'y', text: 'Completed', value: 'complete' },
-                                                    { key: 'n', text: 'Not Completed', value: 'notcomplete' },]}
-                                                placeholder='Is the subleasing completed?'
-                                    onChange={this.completeChange.bind(this)}/>
-                                </div>
-
-
-
+                            <div className ='field'>
+                                <Form.Field control={Select} lable='Price Ranking'
+                                            options={[{ key: 'as', text: 'Low to High', value: 'lowtohigh' },
+                                                { key: 'de', text: 'High to Low', value: 'hightolow' },]}
+                                            value={this.state.priceRanking}
+                                            placeholder='Price Ranking' onChange={this.priceRankingChange.bind(this)}/>
                             </div>
 
-                        </div>
-                    </div>
-                    <div className='column large'>
-                        <div className="List">
-                    {this.state.apartments ? <ApartmentList apartments={this.state.apartments}/> : null}
-                        </div>
-                    </div>
+                            <div className ='field' id="genderdrop">
+                                <Form.Field control={Select} label='Gender' options={options}
+                                            placeholder='Gender' onChange={this.genderChange.bind(this)}/>
+                            </div>
 
+                            <div className ='field'>
+                                <Form.Field control={Select} label='Is the subleasing completed?'
+                                            options={[{ key: 'y', text: 'Completed', value: 'complete' },
+                                                { key: 'n', text: 'Not Completed', value: 'notcomplete' },]}
+                                            placeholder='Is the subleasing completed?'
+                                            onChange={this.completeChange.bind(this)}/>
+                            </div>
+
+
+
+                        </div>
+
+                    </div>
+                </div>
+                <div className='column large'>
+                    <div className="List">
+                        {this.state.apartments ? <ApartmentList apartments={this.state.apartments}/> : null}
+                    </div>
                 </div>
 
-             </body>
+            </div>
+
+            </body>
         )
     }
 }

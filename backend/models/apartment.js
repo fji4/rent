@@ -6,16 +6,24 @@ var apartmentSchema = mongoose.Schema({
     price: {type:String,required: true},
     assignedOwner: String,
     gender: String,
-    contactPhone: {type:String, default:""},
+    // contactPhone: {type:String, default:""},
     contactEmail: {type: String, default:""},
     description: String,
     datePosted: {type: Date, default: Date.now()},
     dateStarted: {type: Date, required: true},
     dateEnd: {type: Date, required: true},
     completed:{type:Boolean, default: false},
-    img : {type:[String], default: []}
+    img : {type:[String], default: []},
+    // author: {
+    //     id: {
+    //         type: mongoose.Schema.Types.ObjectId,
+    //         ref: 'User'
+    //     },
+    //     username: String,
+    //     img: String
+    // }
 
 });
 
-module.exports= mongoose.model('Apartment',apartmentSchema);
 
+module.exports= mongoose.model('Apartment',apartmentSchema);

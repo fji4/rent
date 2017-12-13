@@ -10,3 +10,4 @@ frontend/dist/*
 .vs/
 .vs/*
 ./frontend/dist/js/app.js
+
