@@ -240,18 +240,11 @@ class Sublease extends Component {
                     <Form.Input label = "price" placeholder = "price" />
                     {/*<Form.Input label = "description" placeholder = "description"/>*/}
                     <Form.Field control={TextArea} label='description' placeholder='Tell us more about the apartment...' />
-<<<<<<< HEAD
+
                     <Form.Input type="file" name="img" multiple />
                     <form className="uploader" encType="multipart/form-data">
                         <input type="file" id="file" />
                     </form>
-=======
-                    {/*<Form.Input type="file" name="img" multiple />*/}
-                    {/*<form className="uploader" encType="multipart/form-data">*/}
-                        {/*<input type="file" id="file" />*/}
-                    {/*</form>*/}
-                    <ImageForm />
->>>>>>> notShaking
 
                     <br/>
                     <Form.Checkbox label='I agree to the Terms and Conditions'  />
