@@ -4,10 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --use_strict index.js",
+    "start": "nodemon index.js",
     "dev": "webpack"
   },
-  "author": "Simon Lu <shlu2@illinois.edu>",
   "license": "ISC",
   "dependencies": {
     "axios": "^0.17.1",
