@@ -13,9 +13,16 @@ var apartmentSchema = mongoose.Schema({
     dateStarted: {type: Date, required: true},
     dateEnd: {type: Date, required: true},
     completed:{type:Boolean, default: false},
-    img : {type:[String], default: []}
+    img : {type:[String], default: []},
+    // author: {
+    //     id: {
+    //         type: mongoose.Schema.Types.ObjectId,
+    //         ref: 'User'
+    //     },
+    //     username: String,
+    //     img: String
+    // }
 
 });
 
 module.exports= mongoose.model('Apartment',apartmentSchema);
-
