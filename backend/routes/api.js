@@ -122,7 +122,7 @@ module.exports = function(router, passport) {
             price: req.body.price,
             assignedOwner: req.body.assignedOwner,
             gender: req.body.gender,
-            contactPhone: req.body.contactPhone,
+            // contactPhone: req.body.contactPhone,
             contactEmail: req.body.contactEmail,
             description: req.body.description,
             datePosted: req.body.datePosted,
@@ -205,9 +205,10 @@ module.exports = function(router, passport) {
                 if(req.body.contactEmail){
                     apt.contactEmail = req.body.assignedUserName;
                 }
-                if(req.body.contactPhone){
-                    apt.contactPhone = req.body.contactPhone;
-                }
+                // if(req.body.contactPhone){
+                //     apt.contactPhone = req.body.contactPhone;
+                // }
+
                 if(req.body.description){
                     apt.description = req.body.description;
                 }
@@ -346,33 +347,7 @@ module.exports = function(router, passport) {
 
 
     idRoute.put(function(req,res) {
-        if (!req.body.local.name) {
-            return res.status(500).send({
-                message: "Name is required",
-                data: []
-            });
-        }
-        if (!req.body.local.email) {
-            return res.status(500).send({
-                message: "email is required",
-                data: []
-            });
-        }
-
-        User.findOne({email: req.body.local.email}, function (err, user) {
-            if (err) {
-                return res.status(500).send({
-                    message: err,
-                    data: []
-                });
-            } else if (user && (user._id != req.params.id)) {
-                // console.log(user._id, req.params.id);
-                return res.status(500).send({
-                    message: "multiple user with same email",
-                    data: []
-                });
-
-            } else {
+                console.log(req.params);
                 User.findById(req.params.id, function (err, user) {
                     if (err) {
                         // console.log('user');
@@ -386,22 +361,21 @@ module.exports = function(router, passport) {
                             data: []
                         });
                     } else {
-
-
+                        console.log(req.body);
                         if (req.body.name) {
-                            user.name = req.body.local.name;
+                            user.local.name = req.body.name;
                         }
                         if (req.body.description) {
-                            user.description = req.body.local.description;
+                            user.local.description = req.body.description;
                         }
                         if (req.body.wishList) {
-                            user.wishList = req.body.local.wishList;
+                            user.local.wishList = req.body.wishList;
                         }
                         if (req.body.ownedApt) {
-                            user.ownedApt = req.body.local.ownedApt;
+                            user.local.ownedApt = req.body.ownedApt;
                         }
                         if (req.body.userPic) {
-                            user.userPic = req.body.local.userPic;
+                            user.local.userPic = req.body.userPic;
                         }
 
                         user.save(function (err) {
@@ -423,8 +397,8 @@ module.exports = function(router, passport) {
                 });
 
 
-            }
-        });
+
+
     });
 
 
