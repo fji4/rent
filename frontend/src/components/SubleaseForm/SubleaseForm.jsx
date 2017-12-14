@@ -206,12 +206,11 @@ class SubleaseForm extends Component {
                         <Link to={{ pathname: "/searchlist", cur_user: this.state.cur_user, state: this.state.login }}>Search</Link>
                     </div>
                     <div>
-                        <Link to={{ pathname: "/" }} >
+                        <Link to={{ pathname: "/" ,cur_user: this.state.cur_user, state: this.state.logged_in  }}> 
                             Home
                         </Link>
                     </div>
                 </div>
-z
 
                 <Sublease
                     handleUsername = {this.handleUsername}

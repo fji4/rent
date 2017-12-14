@@ -25,7 +25,8 @@ class Home extends Component {
             users: [],
 
             cur_user: "",
-            src: ""
+            src: "",
+            set: false
         };
         this.checklogin = this.checklogin.bind(this);
         this.onSignupSubmit = this.onSignupSubmit.bind(this);
@@ -247,12 +248,12 @@ class Home extends Component {
 
     render() {
         console.log("start")
-        if (this.props.location.cur_user)
-            this.setState({ logged_in: false })
+        //if (this.props.location.cur_user)
+        //    this.setState({ logged_in: false })
         if (!(this.state.logged_in)) {
             console.log("chishichishi", this.state.logged_in)
             if (this.props.location.cur_user != undefined) {
-                this.setState({ cur_user: this.props.location.cur_user })
+                this.setState({ cur_user: this.props.location.cur_user, logged_in:true })
                 console.log("zhendechishi", this.props.location.cur_user)
                 axios.get('/api/users/' + this.props.location.cur_user._id)
                     .then(function (resp) {
@@ -261,7 +262,6 @@ class Home extends Component {
                     }.bind(this)
                     )
             }
-
         }
         if (this.state.cur_user)
             console.log("shit", this.state.cur_user)

@@ -219,7 +219,7 @@ class Account extends Component {
                 }
 
                 <Menu secondary id="navibar">
-                    <Menu.Item name='home'><Link to={{ pathname: "/" }}> Home </Link></Menu.Item>
+                    <Menu.Item name='home'><Link to={{ pathname: "/" ,cur_user: this.state.cur_user, state: this.state.logged_in  }}> Home </Link></Menu.Item>
                     <Menu.Item name='rent'><Link to={{ pathname: "/searchlist" }}>Rent</Link></Menu.Item>
                     <Menu.Menu position='right'>
 
