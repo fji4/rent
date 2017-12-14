@@ -60,10 +60,19 @@ const ApartmentListItem = ({apartment}) => {
     // const imageUrl = "http://image.tmdb.org/t/p/w150/"+ props.video.poster_path;
     const start = new Date(apartment.dateStarted);
     const end = new Date(apartment.dateEnd);
+    var img = ";"
+    if (apartment.img.length) {
+        img = apartment.img[0];
+    }
+    else {
+        img = 'http://advantageproperties.com/wp-content/uploads/2015/01/1010WMA-2F-04-Kit-305-DSC_0136-small-Large.jpg';
+
+    }
+
     return (
 
         <Card>
-            <Image fluid src='http://advantageproperties.com/wp-content/uploads/2015/01/1010WMA-2F-04-Kit-305-DSC_0136-small-Large.jpg' />
+            <Image fluid src={img} />
             {/*<Image fluid src='uploads/Cosmos02.jpg' />*/}
             <Card.Content>
                 <Card.Header>
@@ -576,7 +585,7 @@ class SearchList extends Component {
                         </Link>
                     </Menu.Item>
 
-                    <Menu.Menu className="periodnav">
+                    <Menu.Menu className="periodnav" position="right">
                         <Menu.Item>Start Date</Menu.Item>
                         <Menu.Item>
                             <DatePicker
@@ -600,11 +609,6 @@ class SearchList extends Component {
                         </Menu.Item>
                     </Menu.Menu>
 
-                    <Menu.Item position="right">
-                        <Link to="/account">
-                            <Icon  name='user'/>
-                        </Link>
-                    </Menu.Item>
                 </Menu>
             </header>
 
