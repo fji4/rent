@@ -76,24 +76,20 @@ class Account extends Component {
                     ownedApt: []
                 }
             },
-            cur_apt: {}
+            cur_apt: [],
+            rendered: false
         }
 
     }
 
-
-    //this.props.location.list
-
-    render() {
-
-        //get the info of current user
+    houselist() {
 
         console.log(this.props.location.cur_user)
         if (!(this.state.logged_in)) {
             console.log("chishichishi", this.state.logged_in)
             //this.setState({ cur_user: this.props.location.cur_user })
-            //axios.get('/api/users/' + this.props.location.cur_user._id)
-            axios.get('/api/users/5a2f8f5bec914341c368a321')
+            axios.get('/api/users/' + this.props.location.cur_user._id)
+            //axios.get('/api/users/5a2f8f5bec914341c368a321')
 
                 .then(function (resp) {
                     console.log("set new user!\n" + resp.data.data.local.ownedApt)
@@ -101,6 +97,41 @@ class Account extends Component {
                 }.bind(this)
                 )
         }
+
+        console.log("house");
+        var aptlist = [];
+        console.log(this.state.cur_user.local.ownedApt)
+        console.log("length: ", this.state.cur_user.local.ownedApt.length)
+        if(!this.state.rendered){
+            for (var i = 0; i < this.state.cur_user.local.ownedApt.length; i++) {
+                console.log(i)
+                var apt_id = this.state.cur_user.local.ownedApt[i]
+                axios.get('/api/apartment/' + apt_id)
+                    .then(function (resp) {
+                        console.log("response: ", resp.data.data)
+                        aptlist.push(resp.data.data);
+                        console.log("aptlist: ", aptlist)
+                        this.setState({ cur_apt: aptlist, rendered: true })
+
+                    }.bind(this)
+                    );
+            }
+        }
+
+        console.log(this.state.cur_apt)
+        return (
+            <div>
+                <ApartmentList apartments={this.state.cur_apt} />
+            </div>
+            )
+    }
+    //this.props.location.list
+
+    render() {
+
+        //get the info of current user
+
+
 
 
         const panes = [
@@ -139,97 +170,31 @@ class Account extends Component {
                             }
 
                             {
-                                console.log("cur_user.local: " , this.state.cur_user.local)
+                                console.log("cur_user.local: ", this.state.cur_user.local.ownedApt)
                             }
                             {
-                                    this.state.cur_user.local.ownedApt.map((apt_id) => {
-                                        axios.get('/api/apartment/' + apt_id)
-                                            .then(function (resp) {
-                                                this.setState({cur_apt: resp.data.data})
-                                                console.log("sdf", this.state.cur_apt)
-                                            }.bind(this)
-                                        );
-                                        console.log("cur_apt: ", this.state.cur_apt);
-                                        if (!this.state.cur_apt)
-                                            return (
-                                                <Item.Content verticalAlign='middle' key="1">error this house no longer available</Item.Content>
+                                //this.state.cur_user.local.ownedApt.map((apt_id) => {
+                                //            axios.get('/api/apartment/' + apt_id)
+                                //                .then(function (resp) {
+                                //                    this.setState({cur_apt: resp.data.data})
+                                //                    console.log("sdf", this.state.cur_apt)
+                                //                }.bind(this)
+                                //            );
+                                //            console.log("cur_apt: ", this.state.cur_apt);
+                                //            return (
+                                //                <div>
+                                //                    <ApartmentListItem apartment={this.state.cur_apt} />
+                                //                </div>
+                                //                )
 
-                                            )
-                                        else if (!this.state.cur_apt.completed)
-                                        return (
+                                //                ;
+                                //        }
+                                //)
 
-
-
-                                            //<Item.Content verticalAlign='middle' key="this.state.cur_apt._id">
-                                            //    <Link to={{ pathname: "/detail", state: { apt: this.state.cur_apt } }}>
-                                            //        <div>
-                                            //        <Item.Image size='tiny' src='https://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=0ahUKEwjojbv6hIbYAhXLNSYKHSxcAAsQjRwIBw&url=http%3A%2F%2Fwww.ntc.edu.ph%2Fprogram%2Fcollege-arts-and-sciences&psig=AOvVaw1c9DTgWOpTkC4DpTthxllb&ust=1513221703399248' />
-                                            //        {this.state.cur_apt.location}</div>
-                                            //    </Link>
-                                            //</Item.Content>
-
-                                            <div>
-                                                <ApartmentListItem apartment={this.state.cur_apt}/>
-                                            </div>
-                                        )
-                                            ;
-                                    }
-                                    )
                             }
+                            {this.houselist()}
+
                             
-                            
-                    </div>
-                </Tab.Pane>
-            },
-            {
-                menuItem: 'Completed', render: () => <Tab.Pane attached={false}>
-                <div className="content2">
-                            {
-                                //<Item>
-                                //    <Item.Image size='tiny' src='https://www.americanflex.com.br/skin/adminhtml/default/default/lib/jlukic_semanticui/examples/assets/images/wireframe/image.png' />
-                                //    <Item.Content verticalAlign='middle'>Content A</Item.Content>
-                                //</Item>
-
-                                //<Item>
-                                //    <Item.Image size='tiny' src='https://www.americanflex.com.br/skin/adminhtml/default/default/lib/jlukic_semanticui/examples/assets/images/wireframe/image.png' />
-                                //    <Item.Content verticalAlign='middle'>Content B</Item.Content>
-                                //</Item>
-
-                                //<Item>
-                                //    <Item.Image size='tiny' src='https://www.americanflex.com.br/skin/adminhtml/default/default/lib/jlukic_semanticui/examples/assets/images/wireframe/image.png' />
-                                //    <Item.Content content='Content C' verticalAlign='middle' />
-                                //</Item>
-                            }
-                            {
-                                this.state.cur_user.local.ownedApt.map((apt_id) => {
-                                    axios.get('/api/apartment/' + apt_id)
-                                        .then(function (resp) {
-                                            this.setState({ cur_apt: resp.data.data })
-                                            console.log("sdf", this.state.cur_apt)
-                                        }.bind(this)
-                                        );
-                                    console.log("cur_apt: ", this.state.cur_apt);
-                                    if (!this.state.cur_apt)
-                                        return (
-                                            <Item.Content verticalAlign='middle' key="1">error this house no longer available</Item.Content>
-
-                                        )
-                                    else if (this.state.cur_apt.completed)
-                                        return (
-                                            //<Item.Content verticalAlign='middle' key="this.state.cur_apt.">
-                                            //    <Link to={{ pathname: "/detail", state: { apt: this.state.cur_apt._id } }}>
-                                            //        <Item.Image size='tiny' src='https://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=0ahUKEwjojbv6hIbYAhXLNSYKHSxcAAsQjRwIBw&url=http%3A%2F%2Fwww.ntc.edu.ph%2Fprogram%2Fcollege-arts-and-sciences&psig=AOvVaw1c9DTgWOpTkC4DpTthxllb&ust=1513221703399248' />
-                                            //        <div>{this.state.cur_apt.location}</div>
-                                            //    </Link>
-                                            //</Item.Content>
-                                            <div>
-                                                <ApartmentListItem apartment={this.state.cur_apt} />
-                                            </div>
-                                        );
-                                }
-                                )
-                            }
-
                     </div>
                 </Tab.Pane>
             }
@@ -344,28 +309,6 @@ class Account extends Component {
 }
 
 
-class Houselist extends Component {
-    render() {
-        return (
 
-            <Item.Group divided>
-                <Item>
-                    <Item.Image size='tiny' src='https://www.americanflex.com.br/skin/adminhtml/default/default/lib/jlukic_semanticui/examples/assets/images/wireframe/image.png' />
-                    <Item.Content verticalAlign='middle'>Content A</Item.Content>
-                </Item>
-
-                <Item>
-                    <Item.Image size='tiny' src='https://www.americanflex.com.br/skin/adminhtml/default/default/lib/jlukic_semanticui/examples/assets/images/wireframe/image.png' />
-                    <Item.Content verticalAlign='middle'>Content B</Item.Content>
-                </Item>
-
-                <Item>
-                    <Item.Image size='tiny' src='https://www.americanflex.com.br/skin/adminhtml/default/default/lib/jlukic_semanticui/examples/assets/images/wireframe/image.png' />
-                    <Item.Content content='Content C' verticalAlign='middle' />
-                </Item>
-            </Item.Group>
-        );
-    }
-}
 
 export default Account
