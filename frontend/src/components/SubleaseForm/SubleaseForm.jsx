@@ -49,24 +49,24 @@ class SubleaseForm extends Component {
         this.handleDescription = this.handleDescription.bind(this);
     };
 
-    onSubmit(e){
-        console.log('submit the ofrm',this.state);
+    onSubmit(e) {
+        console.log('submit the ofrm', this.state);
         const cur_user = this.props.location.cur_user;
         console.log("dddddd", cur_user);
-        axios.post('/api/apartment',{
-            location:this.state.address,
-            city:this.state.city,
-            price:this.state.price,
-            assignedOwner:cur_user,
+        axios.post('/api/apartment', {
+            location: this.state.address,
+            city: this.state.city,
+            price: this.state.price,
+            assignedOwner: cur_user,
 
-            gender:this.state.gender,
-            contactEmail :cur_user.local.email,
-            description:this.state.description,
-            datePosted:Date.now(),
+            gender: this.state.gender,
+            contactEmail: cur_user.local.email,
+            description: this.state.description,
+            datePosted: Date.now(),
             dateStarted: this.state.startDate,
-            dateEnd:this.state.endDate,
-            complete:false,
-            img:this.state.img
+            dateEnd: this.state.endDate,
+            complete: false,
+            img: this.state.img
 
         }).then(function (response) {
             console.log(response);
@@ -77,12 +77,28 @@ class SubleaseForm extends Component {
                 console.log("submitted:", this.state.submitted)
 
             })
+            console.log(cur_user);
+            var array = cur_user.local.ownedApt;
+            console.log("array is ", array);
+            console.log(this.state.apartmentt);
+            array.push(this.state.apartmentt._id);
+            console.log('array', array);
+            axios.put('/api/users/' + cur_user._id, {
+                ownedApt: array
+            }
+            )
+                .then((response) => {
+                    console.log(response)
+                }, (err) => {
+                    console.log(err)
+                })
             //console.log("apartmentt: ", this.state.apartmentt)
 
-            }.bind(this))
+        }.bind(this))
         //    .catch(error => {
         //    console.log("err: ", error.response)
         //});
+
 
     }
 
