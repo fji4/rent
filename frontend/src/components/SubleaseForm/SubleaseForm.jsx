@@ -49,6 +49,7 @@ class SubleaseForm extends Component {
         this.handleDescription = this.handleDescription.bind(this);
     };
 
+
     onSubmit(e){
         console.log('submit the ofrm',this.state);
         const cur_user = this.props.location.cur_user;
@@ -77,12 +78,28 @@ class SubleaseForm extends Component {
                 console.log("submitted:", this.state.submitted)
 
             })
+            console.log(cur_user);
+            var array = cur_user.local.ownedApt;
+            console.log("array is ", array);
+            console.log(this.state.apartmentt);
+            array.push(this.state.apartmentt._id);
+            console.log('array', array);
+            axios.put('/api/users/'+cur_user._id,{
+                    ownedApt: array
+                }
+            )
+                .then((response) => {
+                    console.log(response)
+                }, (err) => {
+                    console.log(err)
+                })
             //console.log("apartmentt: ", this.state.apartmentt)
 
             }.bind(this))
         //    .catch(error => {
         //    console.log("err: ", error.response)
         //});
+
 
     }
 
