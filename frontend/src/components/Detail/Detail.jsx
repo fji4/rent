@@ -117,18 +117,13 @@ class Detail extends Component {
                 <head>
                     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css"></link>
                 </head>
-                <Menu fluid borderless stackable size="large" className="detailnav">
+                <Menu fluid borderless stackable size="massive" className="detailnav">
                     <Menu.Item>
                         <Link to="/">
                             <Icon name='home'/>
                         </Link>
                     </Menu.Item>
 
-                    <Menu.Item position="right">
-                        <Link to="/account">
-                            <Icon name='user'/>
-                        </Link>
-                    </Menu.Item>
                 </Menu>
 
                 <h1 ref="myRef" className="addressCenter">{this.state.address}</h1>

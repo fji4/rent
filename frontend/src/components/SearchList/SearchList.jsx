@@ -576,7 +576,7 @@ class SearchList extends Component {
                         </Link>
                     </Menu.Item>
 
-                    <Menu.Menu className="periodnav">
+                    <Menu.Menu className="periodnav" position="right">
                         <Menu.Item>Start Date</Menu.Item>
                         <Menu.Item>
                             <DatePicker
@@ -600,11 +600,6 @@ class SearchList extends Component {
                         </Menu.Item>
                     </Menu.Menu>
 
-                    <Menu.Item position="right">
-                        <Link to="/account">
-                            <Icon  name='user'/>
-                        </Link>
-                    </Menu.Item>
                 </Menu>
             </header>
 
