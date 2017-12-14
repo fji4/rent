@@ -96,7 +96,7 @@ class Home extends Component {
                     message: 'Successfully logged in!',
                     logged_in: true
                 })
-
+                this.setState({ log_in: false })
                 console.log("set the state logged in to true");
             } else {
                 this.setState({
@@ -105,7 +105,8 @@ class Home extends Component {
             }
         });
         xhr.send(formData);
-        this.setState({ log_in: false })
+
+
     }
 
     //keep track of the current user.
@@ -162,7 +163,7 @@ class Home extends Component {
                     logged_in: true,
                     log_in: false
                 });
-                this.props.history.push('/');
+                // this.props.history.push('/');
             } else {
                 console.log('The form is invalid');
                 this.setState({
@@ -224,7 +225,7 @@ class Home extends Component {
         console.log("show log modal")
         e.preventDefault()
 
-        this.setState({ log_in: true, register: false })
+        this.setState({ log_in: true, register: false, message: "" })
     }
 
     closelog(e) {
@@ -236,7 +237,7 @@ class Home extends Component {
     showregister(e) {
         console.log("show register modal")
         e.preventDefault()
-        this.setState({ register: true, log_in: false })
+        this.setState({ register: true, log_in: false, message: "" })
     }
 
     closeregister(e) {
