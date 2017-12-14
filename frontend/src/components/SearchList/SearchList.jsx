@@ -26,7 +26,7 @@ const MyMapComponent = withScriptjs(withGoogleMap((props) =>
         {props.markers ? props.markers.map(marker => (
                 <Marker
                     clickable
-                    key={marker.lat}
+                    key={marker.__proto__}
                     position={{ lat: marker.lat, lng: marker.lng }}
                     onClick={() => {
                         props.history.push('/detail');
@@ -101,7 +101,8 @@ class SearchList extends Component {
             gender: "",
             complete: "",
             startDate: null,
-            endDate: null
+            endDate: null,
+            firstRender: true
 
         };
 
@@ -160,6 +161,7 @@ class SearchList extends Component {
     }
 
     wholeOnChange() {
+        console.log("wholechange")
         this.setState({position:[]});
         if (this.state.gender == "male") {
             if (this.state.priceRanking == "lowtohigh") {
@@ -167,7 +169,7 @@ class SearchList extends Component {
                     axios.get('/api/apartment?sort={"price": 1}&where={"gender":"male","completed":true}')
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
-                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            this.setState({originapartments: resp.data.data});
                         }.bind(this));
                 }
 
@@ -175,7 +177,7 @@ class SearchList extends Component {
                     axios.get('/api/apartment?sort={"price": 1}&where={"gender":"male","completed":false}')
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
-                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            this.setState({originapartments: resp.data.data});
                         }.bind(this));
                 }
 
@@ -183,7 +185,7 @@ class SearchList extends Component {
                     axios.get('/api/apartment?sort={"price": 1}&where={"gender":"male"}')
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
-                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            this.setState({originapartments: resp.data.data});
                         }.bind(this));
                 }
             }
@@ -193,7 +195,7 @@ class SearchList extends Component {
                     axios.get('/api/apartment?sort={"price": -1}&where={"gender":"male","completed":true}')
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
-                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            this.setState({originapartments: resp.data.data});
                         }.bind(this));
                 }
 
@@ -201,7 +203,7 @@ class SearchList extends Component {
                     axios.get('/api/apartment?sort={"price": -1}&where={"gender":"male","completed":false}')
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
-                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            this.setState({originapartments: resp.data.data});
                         }.bind(this));
                 }
 
@@ -209,7 +211,7 @@ class SearchList extends Component {
                     axios.get('/api/apartment?sort={"price": -1}&where={"gender":"male"}')
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
-                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            this.setState({originapartments: resp.data.data});
                         }.bind(this));
                 }
             }
@@ -219,7 +221,7 @@ class SearchList extends Component {
                     axios.get('/api/apartment?where={"gender":"male","completed":true}')
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
-                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            this.setState({originapartments: resp.data.data});
                         }.bind(this));
                 }
 
@@ -227,7 +229,7 @@ class SearchList extends Component {
                     axios.get('/api/apartment?where={"gender":"male","completed":false}')
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
-                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            this.setState({originapartments: resp.data.data});
                         }.bind(this));
                 }
 
@@ -235,7 +237,7 @@ class SearchList extends Component {
                     axios.get('/api/apartment?where={"gender":"male"}')
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
-                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            this.setState({originapartments: resp.data.data});
                         }.bind(this));
                 }
             }
@@ -247,7 +249,7 @@ class SearchList extends Component {
                     axios.get('/api/apartment?sort={"price": 1}&where={"gender":"female","completed":true}')
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
-                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            this.setState({originapartments: resp.data.data});
                         }.bind(this));
                 }
 
@@ -255,7 +257,7 @@ class SearchList extends Component {
                     axios.get('/api/apartment?sort={"price": 1}&where={"gender":"female","completed":false}')
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
-                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            this.setState({originapartments: resp.data.data});
                         }.bind(this));
                 }
 
@@ -263,7 +265,7 @@ class SearchList extends Component {
                     axios.get('/api/apartment?sort={"price": 1}&where={"gender":"female"}')
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
-                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            this.setState({originapartments: resp.data.data});
                         }.bind(this));
                 }
             }
@@ -273,7 +275,7 @@ class SearchList extends Component {
                     axios.get('/api/apartment?sort={"price": -1}&where={"gender":"female","completed":true}')
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
-                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            this.setState({originapartments: resp.data.data});
                         }.bind(this));
                 }
 
@@ -281,7 +283,7 @@ class SearchList extends Component {
                     axios.get('/api/apartment?sort={"price": -1}&where={"gender":"female","completed":false}')
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
-                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            this.setState({originapartments: resp.data.data});
                         }.bind(this));
                 }
 
@@ -289,7 +291,7 @@ class SearchList extends Component {
                     axios.get('/api/apartment?sort={"price": -1}&where={"gender":"female"}')
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
-                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            this.setState({originapartments: resp.data.data});
                         }.bind(this));
                 }
             }
@@ -299,7 +301,7 @@ class SearchList extends Component {
                     axios.get('/api/apartment?where={"gender":"female","completed":true}')
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
-                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            this.setState({originapartments: resp.data.data});
                         }.bind(this));
                 }
 
@@ -307,7 +309,7 @@ class SearchList extends Component {
                     axios.get('/api/apartment?where={"gender":"female","completed":false}')
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
-                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            this.setState({originapartments: resp.data.data});
                         }.bind(this));
                 }
 
@@ -315,7 +317,7 @@ class SearchList extends Component {
                     axios.get('/api/apartment?where={"gender":"female"}')
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
-                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            this.setState({originapartments: resp.data.data});
                         }.bind(this));
                 }
             }
@@ -327,7 +329,7 @@ class SearchList extends Component {
                     axios.get('/api/apartment?sort={"price": 1}&where={"gender":"neither","completed":true}')
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
-                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            this.setState({originapartments: resp.data.data});
                         }.bind(this));
                 }
 
@@ -335,7 +337,7 @@ class SearchList extends Component {
                     axios.get('/api/apartment?sort={"price": 1}&where={"gender":"neither","completed":false}')
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
-                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            this.setState({originapartments: resp.data.data});
                         }.bind(this));
                 }
 
@@ -343,7 +345,7 @@ class SearchList extends Component {
                     axios.get('/api/apartment?sort={"price": 1}&where={"gender":"neither"}')
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
-                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            this.setState({originapartments: resp.data.data});
                         }.bind(this));
                 }
             }
@@ -353,7 +355,7 @@ class SearchList extends Component {
                     axios.get('/api/apartment?sort={"price": -1}&where={"gender":"neither","completed":true}')
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
-                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            this.setState({originapartments: resp.data.data});
                         }.bind(this));
                 }
 
@@ -361,7 +363,7 @@ class SearchList extends Component {
                     axios.get('/api/apartment?sort={"price": -1}&where={"gender":"neither","completed":false}')
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
-                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            this.setState({originapartments: resp.data.data});
                         }.bind(this));
                 }
 
@@ -369,7 +371,7 @@ class SearchList extends Component {
                     axios.get('/api/apartment?sort={"price": -1}&where={"gender":"neither"}')
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
-                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            this.setState({originapartments: resp.data.data});
                         }.bind(this));
                 }
             }
@@ -379,7 +381,7 @@ class SearchList extends Component {
                     axios.get('/api/apartment?where={"gender":"neither","completed":true}')
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
-                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            this.setState({originapartments: resp.data.data});
                         }.bind(this));
                 }
 
@@ -387,7 +389,7 @@ class SearchList extends Component {
                     axios.get('/api/apartment?where={"gender":"neither","completed":false}')
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
-                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            this.setState({originapartments: resp.data.data});
                         }.bind(this));
                 }
 
@@ -395,7 +397,7 @@ class SearchList extends Component {
                     axios.get('/api/apartment?where={"gender":"neither"}')
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
-                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            this.setState({originapartments: resp.data.data});
                         }.bind(this));
                 }
             }
@@ -407,7 +409,7 @@ class SearchList extends Component {
                     axios.get('/api/apartment?sort={"price": 1}&where={"completed":true}')
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
-                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            this.setState({originapartments: resp.data.data});
                         }.bind(this));
                 }
 
@@ -415,7 +417,7 @@ class SearchList extends Component {
                     axios.get('/api/apartment?sort={"price": 1}&where={"completed":false}')
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
-                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            this.setState({originapartments: resp.data.data});
                         }.bind(this));
                 }
 
@@ -423,7 +425,7 @@ class SearchList extends Component {
                     axios.get('/api/apartment?sort={"price": 1}')
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
-                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            this.setState({originapartments: resp.data.data});
                         }.bind(this));
                 }
             }
@@ -433,7 +435,7 @@ class SearchList extends Component {
                     axios.get('/api/apartment?sort={"price": -1}&where={"completed":true}')
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
-                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            this.setState({originapartments: resp.data.data});
                         }.bind(this));
                 }
 
@@ -441,7 +443,7 @@ class SearchList extends Component {
                     axios.get('/api/apartment?sort={"price": -1}&where={"completed":false}')
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
-                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            this.setState({originapartments: resp.data.data});
                         }.bind(this));
                 }
 
@@ -449,7 +451,7 @@ class SearchList extends Component {
                     axios.get('/api/apartment?sort={"price": -1}')
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
-                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            this.setState({originapartments: resp.data.data});
                         }.bind(this));
                 }
             }
@@ -459,7 +461,7 @@ class SearchList extends Component {
                     axios.get('/api/apartment?where={"completed":true}')
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
-                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            this.setState({originapartments: resp.data.data});
                         }.bind(this));
                 }
 
@@ -467,7 +469,7 @@ class SearchList extends Component {
                     axios.get('/api/apartment?where={"completed":false}')
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
-                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            this.setState({originapartments: resp.data.data});
                         }.bind(this));
                 }
 
@@ -475,12 +477,14 @@ class SearchList extends Component {
                     axios.get('/api/apartment')
                         .then(function (resp) {
                             this.markAlladdress(resp.data.data);
-                            this.setState({apartments:resp.data.data, originapartments: resp.data.data});
+                            this.setState({originapartments: resp.data.data});
                         }.bind(this));
                 }
             }
 
         }
+        this.dateRangeChange();
+        this.priceRangeChange(this.state.value);
 
     }
 
@@ -502,11 +506,20 @@ class SearchList extends Component {
         })
     }
 
-    componentWillMount() {
-        this.wholeOnChange();
+    componentDidMount() {
+        if (this.state.firstRender){
+            console.log("first");
+            this.getApt();
+            this.setState({firstRender: false});
+        }
+        else{
+            console.log("second");
+            this.wholeOnChange();
+        }
     }
 
     getApt() {
+        console.log("getapt");
         axios.get('/api/apartment')
             .then(function (resp) {
                 this.markAlladdress(resp.data.data);
@@ -519,7 +532,7 @@ class SearchList extends Component {
         var address = addresses.replace(/ /g, '+');
         axios.get("https://maps.googleapis.com/maps/api/geocode/json?address="+address+"&key=AIzaSyDeS_Giswu2KngF138sF4-5uX2Y8euZDKs")
             .then(function(response){
-                // console.log(response);
+                // console.log(response.data.results[0].geometry.location);
                 this.setState({position: this.state.position.concat([response.data.results[0].geometry.location])})
             }.bind(this));
     }
