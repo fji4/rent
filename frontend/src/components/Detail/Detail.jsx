@@ -67,21 +67,30 @@ class Detail extends Component {
             temp += ' ';
             temp += this.props.location.state.apt.city;
             console.log(temp);
+            var arr =  [
+                "http://advantageproperties.com/wp-content/uploads/2015/01/1010WMA-2F-02-LivRm-305-DSC_0183-small-Large.jpg",
+                "http://advantageproperties.com/wp-content/uploads/2015/01/1010WMA-2F-03-LivRm-305-DSC_0137-c-small-Large.jpg",
+                "http://advantageproperties.com/wp-content/uploads/2015/01/1010WMA-2F-04-Kit-305-DSC_0136-small-Large.jpg",
+                "http://advantageproperties.com/wp-content/uploads/2015/01/1010WMA-2F-05-Kit-305-DSC_0125-small-Large.jpg",
+                "http://advantageproperties.com/wp-content/uploads/2015/01/1010WMA-2F-06-Bed1-305-DSC_0001-small-Large.jpg",
+                "http://advantageproperties.com/wp-content/uploads/2015/01/1010WMA-2F-07-Bath2-305-DSC_0054-small-Large.jpg"
+            ];
+            console.log(this.props.location.state.apt.img.length);
+            if(this.props.location.state.apt.img.length) {
+                arr = this.props.location.state.apt.img;
+                // this.setState({photo: this.props.location.state.apt.img})
+            }
             this.setState({
                 address: temp,
                 apt: this.props.location.state.apt,
-                photo: [
-                    "http://advantageproperties.com/wp-content/uploads/2015/01/1010WMA-2F-02-LivRm-305-DSC_0183-small-Large.jpg",
-                    "http://advantageproperties.com/wp-content/uploads/2015/01/1010WMA-2F-03-LivRm-305-DSC_0137-c-small-Large.jpg",
-                    "http://advantageproperties.com/wp-content/uploads/2015/01/1010WMA-2F-04-Kit-305-DSC_0136-small-Large.jpg",
-                    "http://advantageproperties.com/wp-content/uploads/2015/01/1010WMA-2F-05-Kit-305-DSC_0125-small-Large.jpg",
-                    "http://advantageproperties.com/wp-content/uploads/2015/01/1010WMA-2F-06-Bed1-305-DSC_0001-small-Large.jpg",
-                    "http://advantageproperties.com/wp-content/uploads/2015/01/1010WMA-2F-07-Bath2-305-DSC_0054-small-Large.jpg"
-                ],
+                photo: arr,
                 description: this.props.location.state.apt.description
             }, function () {
                 this.markAddress();
             });
+            console.log('dddddddddd',this.props.location.state.apt.img);
+
+
             console.log("setState!");
         }
     }
@@ -100,9 +109,14 @@ class Detail extends Component {
     }
 
     renderPhoto(n) {
+        console.log(this.props.location.state.apt.img);
+        var array = this.state.photo;
+        console.log(array[n])
+        {console.log('process',process.env, 'array,',array[n]);}
         return (
             <Carousel.Item key={n}>
-                <Image  src={this.state.photo[n]}/>
+
+                <Image  src={array[n]}/>
             </Carousel.Item>
         )
     }
